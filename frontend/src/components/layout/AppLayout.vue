@@ -1,24 +1,17 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-dark-950">
-    <!-- Background Decoration -->
-    <div class="pointer-events-none fixed inset-0 bg-mesh-gradient"></div>
-
+  <div class="flex h-screen bg-bg pl-2 py-2">
     <!-- Sidebar -->
     <AppSidebar />
 
     <!-- Main Content Area -->
-    <div
-      class="relative min-h-screen transition-all duration-300"
-      :class="[sidebarCollapsed ? 'lg:ml-[72px]' : 'lg:ml-64']"
+    <main
+      class="flex-1 overflow-y-auto scrollbar-hide"
+      :class="[sidebarCollapsed ? 'lg:ml-[68px]' : 'lg:ml-[280px]']"
     >
-      <!-- Header -->
-      <AppHeader />
-
-      <!-- Main Content -->
-      <main class="p-4 md:p-6 lg:p-8">
+      <div class="mx-auto w-full px-6 py-6">
         <slot />
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -30,7 +23,6 @@ import { useAuthStore } from '@/stores/auth'
 import { useOnboardingTour } from '@/composables/useOnboardingTour'
 import { useOnboardingStore } from '@/stores/onboarding'
 import AppSidebar from './AppSidebar.vue'
-import AppHeader from './AppHeader.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()

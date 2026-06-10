@@ -1,22 +1,23 @@
 <template>
-  <div class="stat-card">
-    <div :class="['stat-icon', iconClass]">
-      <component v-if="icon" :is="icon" class="h-6 w-6" aria-hidden="true" />
+  <div class="stat-card relative">
+    <!-- Icon top-right -->
+    <div v-if="icon" :class="['stat-icon absolute right-4 top-4', iconClass]">
+      <component :is="icon" class="h-5 w-5" aria-hidden="true" />
     </div>
-    <div class="min-w-0 flex-1">
-      <p class="stat-label truncate">{{ title }}</p>
-      <div class="mt-1 flex items-baseline gap-2">
-        <p class="stat-value" :title="String(formattedValue)">{{ formattedValue }}</p>
-        <span v-if="change !== undefined" :class="['stat-trend', trendClass]">
-          <Icon
-            v-if="changeType !== 'neutral'"
-            name="arrowUp"
-            size="xs"
-            :class="changeType === 'down' && 'rotate-180'"
-          />
-          {{ formattedChange }}
-        </span>
-      </div>
+    <!-- Mono label -->
+    <p class="stat-label truncate">{{ title }}</p>
+    <!-- Serif display value -->
+    <div class="mt-1 flex items-baseline gap-2">
+      <p class="stat-value font-display" :title="String(formattedValue)">{{ formattedValue }}</p>
+      <span v-if="change !== undefined" :class="['stat-trend', trendClass]">
+        <Icon
+          v-if="changeType !== 'neutral'"
+          name="arrowUp"
+          size="xs"
+          :class="changeType === 'down' && 'rotate-180'"
+        />
+        {{ formattedChange }}
+      </span>
     </div>
   </div>
 </template>
@@ -74,7 +75,7 @@ const trendClass = computed(() => {
   const classes: Record<ChangeType, string> = {
     up: 'stat-trend-up',
     down: 'stat-trend-down',
-    neutral: 'text-gray-500 dark:text-dark-400'
+    neutral: 'text-text-muted'
   }
   return classes[props.changeType]
 })

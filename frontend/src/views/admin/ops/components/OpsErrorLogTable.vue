@@ -1,57 +1,57 @@
 <template>
-  <div class="flex h-full min-h-0 flex-col bg-white dark:bg-dark-900">
+  <div class="flex h-full min-h-0 flex-col bg-bg-elevated">
     <!-- Loading State -->
     <div v-if="loading" class="flex flex-1 items-center justify-center py-10">
-      <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"></div>
+      <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-accent"></div>
     </div>
 
     <!-- Table Container -->
     <div v-else class="flex min-h-0 flex-1 flex-col">
-      <div class="min-h-0 flex-1 overflow-auto border-b border-gray-200 dark:border-dark-700">
+      <div class="min-h-0 flex-1 overflow-auto border-b border-border">
         <table class="w-full border-separate border-spacing-0">
-          <thead class="sticky top-0 z-10 bg-gray-50 dark:bg-dark-800">
+          <thead class="sticky top-0 z-10 bg-muted">
             <tr>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.time') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.type') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.endpoint') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.platform') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.model') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.group') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.user') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.apiKey') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.account') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.status') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.message') }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
+              <th class="border-b border-border px-4 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-text-muted">
                 {{ t('admin.ops.errorLog.action') }}
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100 dark:divide-dark-700">
+          <tbody class="divide-y divide-border">
             <tr v-if="rows.length === 0">
-              <td colspan="12" class="py-12 text-center text-sm text-gray-400 dark:text-dark-500">
+              <td colspan="12" class="py-12 text-center text-sm text-text-dim">
                 {{ t('admin.ops.errorLog.noErrors') }}
               </td>
             </tr>
@@ -59,13 +59,13 @@
             <tr
               v-for="log in rows"
               :key="log.id"
-              class="group cursor-pointer transition-colors hover:bg-gray-50/80 dark:hover:bg-dark-800/50"
+              class="group cursor-pointer transition-colors hover:bg-muted"
               @click="emit('openErrorDetail', log.id)"
             >
               <!-- Time -->
               <td class="whitespace-nowrap px-4 py-2">
                 <el-tooltip :content="log.request_id || log.client_request_id" placement="top" :show-after="500">
-                  <span class="font-mono text-xs font-medium text-gray-900 dark:text-gray-200">
+                  <span class="font-mono text-xs font-medium text-text">
                     {{ formatDateTime(log.created_at).split(' ')[1] }}
                   </span>
                 </el-tooltip>
@@ -87,17 +87,17 @@
               <td class="px-4 py-2">
                 <div class="max-w-[160px]">
                   <el-tooltip v-if="log.inbound_endpoint" :content="formatEndpointTooltip(log)" placement="top" :show-after="500">
-                    <span class="truncate font-mono text-[11px] text-gray-700 dark:text-gray-300">
+                    <span class="truncate font-mono text-[11px] text-text">
                       {{ log.inbound_endpoint }}
                     </span>
                   </el-tooltip>
-                  <span v-else class="text-xs text-gray-400">-</span>
+                  <span v-else class="text-xs text-text-dim">-</span>
                 </div>
               </td>
 
               <!-- Platform -->
               <td class="whitespace-nowrap px-4 py-2">
-                <span class="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-gray-600 dark:bg-dark-700 dark:text-gray-300">
+                <span class="inline-flex items-center rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold uppercase text-text-muted">
                   {{ log.platform || '-' }}
                 </span>
               </td>
@@ -107,18 +107,18 @@
                 <div class="max-w-[160px]">
                   <template v-if="hasModelMapping(log)">
                     <el-tooltip :content="modelMappingTooltip(log)" placement="top" :show-after="500">
-                      <span class="flex items-center gap-1 truncate font-mono text-[11px] text-gray-700 dark:text-gray-300">
+                      <span class="flex items-center gap-1 truncate font-mono text-[11px] text-text">
                         <span class="truncate">{{ log.requested_model }}</span>
-                        <span class="flex-shrink-0 text-gray-400">→</span>
-                        <span class="truncate text-primary-600 dark:text-primary-400">{{ log.upstream_model }}</span>
+                        <span class="flex-shrink-0 text-text-dim">→</span>
+                        <span class="truncate text-accent">{{ log.upstream_model }}</span>
                       </span>
                     </el-tooltip>
                   </template>
                   <template v-else>
-                    <span v-if="displayModel(log)" class="truncate font-mono text-[11px] text-gray-700 dark:text-gray-300" :title="displayModel(log)">
+                    <span v-if="displayModel(log)" class="truncate font-mono text-[11px] text-text" :title="displayModel(log)">
                       {{ displayModel(log) }}
                     </span>
-                    <span v-else class="text-xs text-gray-400">-</span>
+                    <span v-else class="text-xs text-text-dim">-</span>
                   </template>
                 </div>
               </td>
@@ -126,27 +126,27 @@
               <!-- Group -->
               <td class="px-4 py-2">
                  <el-tooltip v-if="log.group_id" :content="t('admin.ops.errorLog.id') + ' ' + log.group_id" placement="top" :show-after="500">
-                  <span class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
+                  <span class="max-w-[100px] truncate text-xs font-medium text-text">
                     {{ log.group_name || '-' }}
                   </span>
                 </el-tooltip>
-                <span v-else class="text-xs text-gray-400">-</span>
+                <span v-else class="text-xs text-text-dim">-</span>
               </td>
 
               <!-- User -->
               <td class="px-4 py-2">
                 <el-tooltip v-if="log.user_id" :content="t('admin.ops.errorLog.userId') + ' ' + log.user_id" placement="top" :show-after="500">
-                  <span class="block max-w-[140px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
+                  <span class="block max-w-[140px] truncate text-xs font-medium text-text">
                     {{ log.user_email || '-' }}
                   </span>
                 </el-tooltip>
-                <span v-else class="text-xs text-gray-400">-</span>
+                <span v-else class="text-xs text-text-dim">-</span>
               </td>
 
               <!-- API Key -->
               <td class="px-4 py-2">
                 <div v-if="log.api_key_id || log.api_key_name" class="flex max-w-[140px] items-center gap-1">
-                  <span class="truncate text-xs font-medium text-gray-900 dark:text-gray-200" :title="log.api_key_name || ('#' + log.api_key_id)">
+                  <span class="truncate text-xs font-medium text-text" :title="log.api_key_name || ('#' + log.api_key_id)">
                     {{ log.api_key_name || ('#' + log.api_key_id) }}
                   </span>
                   <span
@@ -156,17 +156,17 @@
                     {{ t('admin.ops.errorLog.keyDeletedBadge') }}
                   </span>
                 </div>
-                <span v-else class="text-xs text-gray-400">-</span>
+                <span v-else class="text-xs text-text-dim">-</span>
               </td>
 
               <!-- Account -->
               <td class="px-4 py-2">
                 <el-tooltip v-if="log.account_id" :content="t('admin.ops.errorLog.accountId') + ' ' + log.account_id" placement="top" :show-after="500">
-                  <span class="block max-w-[120px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
+                  <span class="block max-w-[120px] truncate text-xs font-medium text-text">
                     {{ log.account_name || '-' }}
                   </span>
                 </el-tooltip>
-                <span v-else class="text-xs text-gray-400">-</span>
+                <span v-else class="text-xs text-text-dim">-</span>
               </td>
 
               <!-- Status -->
@@ -188,7 +188,7 @@
                   </span>
                   <span
                     v-if="log.request_type != null && log.request_type > 0"
-                    class="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold text-gray-600 dark:bg-dark-700 dark:text-gray-300"
+                    class="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold text-text-muted"
                   >
                     {{ formatRequestType(log.request_type) }}
                   </span>
@@ -198,7 +198,7 @@
               <!-- Message (Response Content) -->
               <td class="px-4 py-2">
                 <div class="max-w-[200px]">
-                  <p class="truncate text-[11px] font-medium text-gray-600 dark:text-gray-400" :title="log.message">
+                  <p class="truncate text-[11px] font-medium text-text-muted" :title="log.message">
                     {{ formatSmartMessage(log.message) || '-' }}
                   </p>
                 </div>
@@ -207,7 +207,7 @@
               <!-- Actions -->
               <td class="whitespace-nowrap px-4 py-2 text-right" @click.stop>
                 <div class="flex items-center justify-end gap-3">
-                  <button type="button" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 text-xs font-bold" @click="emit('openErrorDetail', log.id)">
+                  <button type="button" class="text-accent hover:text-accent text-xs font-bold" @click="emit('openErrorDetail', log.id)">
                     {{ t('admin.ops.errorLog.details') }}
                   </button>
                 </div>
@@ -218,7 +218,7 @@
       </div>
 
       <!-- Pagination -->
-      <div class="bg-gray-50/50 dark:bg-dark-800/50">
+      <div class="bg-muted">
         <Pagination
           v-if="total > 0"
           :total="total"
@@ -301,11 +301,11 @@ function getTypeBadge(log: OpsErrorLog): { label: string; className: string } {
     return { label: t('admin.ops.errorLog.typeRouting'), className: 'bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30' }
   }
   if (phase === 'internal' && owner === 'platform') {
-    return { label: t('admin.ops.errorLog.typeInternal'), className: 'bg-gray-100 text-gray-800 ring-gray-600/20 dark:bg-dark-700 dark:text-gray-200 dark:ring-dark-500/40' }
+    return { label: t('admin.ops.errorLog.typeInternal'), className: 'bg-muted text-text ring-border' }
   }
 
     const fallback = phase || owner || t('common.unknown')
-    return { label: fallback, className: 'bg-gray-50 text-gray-700 ring-gray-600/10 dark:bg-dark-900 dark:text-gray-300 dark:ring-dark-700' }
+    return { label: fallback, className: 'bg-muted text-text ring-border' }
 }
 
 interface Props {
@@ -329,7 +329,7 @@ function getStatusClass(code: number): string {
   if (code >= 500) return 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30'
   if (code === 429) return 'bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30'
   if (code >= 400) return 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30'
-  return 'bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900/30 dark:text-gray-400 dark:ring-gray-500/30'
+  return 'bg-muted text-text-muted ring-border'
 }
 
 function formatSmartMessage(msg: string): string {

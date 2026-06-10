@@ -24,7 +24,7 @@ services:
   # OC Router Application
   # ===========================================================================
   oc-router:
-    image: weishaw/sub2api:latest
+    image: oc-router:local
     container_name: oc-router
     restart: unless-stopped
     ulimits:

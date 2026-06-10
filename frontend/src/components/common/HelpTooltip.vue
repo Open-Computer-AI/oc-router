@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
     <!-- Trigger Icon -->
     <slot name="trigger">
       <svg
-        class="h-4 w-4 cursor-help text-gray-400 transition-colors hover:text-primary-600 dark:text-gray-500 dark:hover:text-primary-400"
+        class="h-4 w-4 cursor-help text-text-dim transition-colors hover:text-accent"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
