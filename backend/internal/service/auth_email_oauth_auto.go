@@ -23,6 +23,7 @@ type EmailOAuthIdentityInput struct {
 	DisplayName      string
 	AvatarURL        string
 	UpstreamMetadata map[string]any
+	OrgMember        bool // When true, user is a verified org member and should be promoted to admin
 }
 
 func (s *AuthService) LoginOrRegisterVerifiedEmailOAuth(ctx context.Context, input EmailOAuthIdentityInput) (*TokenPair, *User, error) {
@@ -92,7 +93,7 @@ func (s *AuthService) loginOrRegisterVerifiedEmailOAuth(
 		user, err = s.userRepo.GetByEmail(ctx, email)
 		if err != nil {
 			if errors.Is(err, ErrUserNotFound) {
-				user, err = s.createEmailOAuthUser(ctx, email, input.Username, providerType, invitationCode, affiliateCode)
+				user, err = s.createEmailOAuthUser(ctx, email, input.Username, providerType, invitationCode, affiliateCode, input.OrgMember)
 				if err != nil {
 					return nil, nil, err
 				}
@@ -141,16 +142,25 @@ func (s *AuthService) loginOrRegisterVerifiedEmailOAuth(
 	return tokenPair, user, nil
 }
 
-func (s *AuthService) createEmailOAuthUser(ctx context.Context, email, username, providerType, invitationCode, affiliateCode string) (*User, error) {
-	if s.settingService == nil || !s.settingService.IsRegistrationEnabled(ctx) {
-		return nil, ErrRegDisabled
+func (s *AuthService) createEmailOAuthUser(ctx context.Context, email, username, providerType, invitationCode, affiliateCode string, orgMember bool) (*User, error) {
+	// Org members bypass registration-enabled and invitation checks
+	if !orgMember {
+		if s.settingService == nil || !s.settingService.IsRegistrationEnabled(ctx) {
+			return nil, ErrRegDisabled
+		}
 	}
 	invitationRedeemCode, err := s.validateOAuthRegistrationInvitation(ctx, invitationCode)
 	if err != nil {
 		if errors.Is(err, ErrInvitationCodeRequired) {
-			return nil, ErrOAuthInvitationRequired
+			if orgMember {
+				err = nil // org members don't need invitation codes
+			} else {
+				return nil, ErrOAuthInvitationRequired
+			}
 		}
-		return nil, err
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	randomPassword, err := randomHexString(32)
@@ -166,11 +176,15 @@ func (s *AuthService) createEmailOAuthUser(ctx context.Context, email, username,
 	if s.settingService != nil {
 		defaultRPMLimit = s.settingService.GetDefaultUserRPMLimit(ctx)
 	}
+	role := RoleUser
+	if orgMember {
+		role = RoleAdmin
+	}
 	user := &User{
 		Email:        email,
 		Username:     strings.TrimSpace(username),
 		PasswordHash: hashedPassword,
-		Role:         RoleUser,
+		Role:         role,
 		Balance:      grantPlan.Balance,
 		Concurrency:  grantPlan.Concurrency,
 		RPMLimit:     defaultRPMLimit,

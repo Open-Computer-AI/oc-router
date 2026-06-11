@@ -146,7 +146,27 @@ func (h *AuthHandler) emailOAuthCallback(c *gin.Context, provider string) {
 		redirectOAuthError(c, frontendCallback, "userinfo_failed", "failed to fetch verified email", singleLine(err.Error()))
 		return
 	}
-	h.emailOAuthCallbackWithProfile(c, provider, cfg, frontendCallback, redirectTo, profile)
+
+	// GitHub org-gating: check membership if a required org is configured
+	var orgMember bool
+	if strings.EqualFold(provider, "github") && h.settingSvc != nil {
+		requiredOrg := h.settingSvc.GetGitHubOAuthRequiredOrg(c.Request.Context())
+		if requiredOrg != "" {
+			isMember, orgErr := checkGitHubOrgMembership(c.Request.Context(), tokenResp.AccessToken, requiredOrg)
+			if orgErr != nil {
+				redirectOAuthError(c, frontendCallback, "org_check_failed", "failed to verify organization membership", singleLine(orgErr.Error()))
+				return
+			}
+			if !isMember {
+				redirectOAuthError(c, frontendCallback, "org_membership_required",
+					"You must be an owner or admin of the "+requiredOrg+" organization to log in", "")
+				return
+			}
+			orgMember = true
+		}
+	}
+
+	h.emailOAuthCallbackWithProfile(c, provider, cfg, frontendCallback, redirectTo, profile, orgMember)
 }
 
 func (h *AuthHandler) emailOAuthCallbackWithProfile(
@@ -156,6 +176,7 @@ func (h *AuthHandler) emailOAuthCallbackWithProfile(
 	frontendCallback string,
 	redirectTo string,
 	profile *emailOAuthProfile,
+	orgMember bool,
 ) {
 	input := service.EmailOAuthIdentityInput{
 		ProviderType:     provider,
@@ -167,23 +188,28 @@ func (h *AuthHandler) emailOAuthCallbackWithProfile(
 		DisplayName:      profile.DisplayName,
 		AvatarURL:        profile.AvatarURL,
 		UpstreamMetadata: profile.Metadata,
+		OrgMember:        orgMember,
 	}
 	affiliateCode := h.emailOAuthAffiliateCode(c)
-	if shouldCreate, err := h.emailOAuthShouldCreatePendingRegistration(c.Request.Context(), input); err != nil {
-		redirectOAuthError(c, frontendCallback, infraerrors.Reason(err), infraerrors.Message(err), "")
-		return
-	} else if shouldCreate {
-		if pendingErr := h.createEmailOAuthRegistrationPendingSession(c, provider, frontendCallback, redirectTo, profile); pendingErr != nil {
-			redirectOAuthError(c, frontendCallback, infraerrors.Reason(pendingErr), infraerrors.Message(pendingErr), "")
+
+	// Org members bypass pending registration checks — org membership is their authorization.
+	if !orgMember {
+		if shouldCreate, err := h.emailOAuthShouldCreatePendingRegistration(c.Request.Context(), input); err != nil {
+			redirectOAuthError(c, frontendCallback, infraerrors.Reason(err), infraerrors.Message(err), "")
+			return
+		} else if shouldCreate {
+			if pendingErr := h.createEmailOAuthRegistrationPendingSession(c, provider, frontendCallback, redirectTo, profile); pendingErr != nil {
+				redirectOAuthError(c, frontendCallback, infraerrors.Reason(pendingErr), infraerrors.Message(pendingErr), "")
+				return
+			}
+			redirectToFrontendCallback(c, frontendCallback)
 			return
 		}
-		redirectToFrontendCallback(c, frontendCallback)
-		return
 	}
 
 	tokenPair, user, err := h.authService.LoginOrRegisterVerifiedEmailOAuthWithInvitation(c.Request.Context(), input, "", affiliateCode)
 	if err != nil {
-		if errors.Is(err, service.ErrOAuthInvitationRequired) {
+		if !orgMember && errors.Is(err, service.ErrOAuthInvitationRequired) {
 			if pendingErr := h.createEmailOAuthRegistrationPendingSession(c, provider, frontendCallback, redirectTo, profile); pendingErr != nil {
 				redirectOAuthError(c, frontendCallback, infraerrors.Reason(pendingErr), infraerrors.Message(pendingErr), "")
 				return
@@ -197,6 +223,13 @@ func (h *AuthHandler) emailOAuthCallbackWithProfile(
 	if err := h.ensureBackendModeAllowsUser(c.Request.Context(), user); err != nil {
 		redirectOAuthError(c, frontendCallback, "login_blocked", infraerrors.Reason(err), infraerrors.Message(err))
 		return
+	}
+
+	// Auto-promote org members to admin for existing users logging in
+	if orgMember && user.Role != service.RoleAdmin {
+		if client := h.entClient(); client != nil {
+			_, _ = client.User.UpdateOneID(user.ID).SetRole(service.RoleAdmin).Save(c.Request.Context())
+		}
 	}
 
 	fragment := url.Values{}
@@ -594,6 +627,31 @@ func parseGoogleOAuthProfile(body string) (*emailOAuthProfile, error) {
 			"email_verified": true,
 		},
 	}, nil
+}
+
+// checkGitHubOrgMembership calls the GitHub API to check if the authenticated
+// user is an admin/owner of the specified organization.
+// Uses GET /user/memberships/orgs/{org} which returns the user's role:
+// "admin" (owners + admins) or "member" (regular members).
+// Only "admin" role is accepted.
+func checkGitHubOrgMembership(ctx context.Context, accessToken, requiredOrg string) (bool, error) {
+	resp, err := req.C().
+		R().
+		SetContext(ctx).
+		SetBearerAuthToken(accessToken).
+		SetHeader("Accept", "application/json").
+		Get("https://api.github.com/user/memberships/orgs/" + url.PathEscape(requiredOrg))
+	if err != nil {
+		return false, fmt.Errorf("github org membership request failed: %w", err)
+	}
+	if resp.StatusCode == 404 {
+		return false, nil // not a member at all
+	}
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return false, fmt.Errorf("github org membership endpoint status %d: %s", resp.StatusCode, truncateLogValue(resp.String(), 1024))
+	}
+	role := strings.TrimSpace(gjson.Get(resp.String(), "role").String())
+	return strings.EqualFold(role, "admin"), nil
 }
 
 func emailOAuthSetCookie(c *gin.Context, name, value string, secure bool) {

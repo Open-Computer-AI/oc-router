@@ -522,6 +522,7 @@ export interface SystemSettings {
   github_oauth_client_secret_configured: boolean;
   github_oauth_redirect_url: string;
   github_oauth_frontend_redirect_url: string;
+  github_oauth_required_org: string;
   google_oauth_enabled: boolean;
   google_oauth_client_id: string;
   google_oauth_client_secret_configured: boolean;
@@ -768,6 +769,7 @@ export interface UpdateSettingsRequest {
   github_oauth_client_secret?: string;
   github_oauth_redirect_url?: string;
   github_oauth_frontend_redirect_url?: string;
+  github_oauth_required_org?: string;
   google_oauth_enabled?: boolean;
   google_oauth_client_id?: string;
   google_oauth_client_secret?: string;

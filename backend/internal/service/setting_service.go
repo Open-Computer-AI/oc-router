@@ -313,7 +313,7 @@ const (
 	defaultGitHubOAuthToken      = "https://github.com/login/oauth/access_token"
 	defaultGitHubOAuthUserInfo   = "https://api.github.com/user"
 	defaultGitHubOAuthEmails     = "https://api.github.com/user/emails"
-	defaultGitHubOAuthScopes     = "read:user user:email"
+	defaultGitHubOAuthScopes     = "read:user user:email read:org"
 	defaultGitHubOAuthFrontend   = "/auth/oauth/callback"
 	defaultGoogleOAuthAuthorize  = "https://accounts.google.com/o/oauth2/v2/auth"
 	defaultGoogleOAuthToken      = "https://oauth2.googleapis.com/token"
@@ -835,7 +835,7 @@ func (s *SettingService) GetPublicSettings(ctx context.Context) (*PublicSettings
 		LoginAgreementDocuments:          loginAgreementDocuments,
 		TurnstileEnabled:                 settings[SettingKeyTurnstileEnabled] == "true",
 		TurnstileSiteKey:                 settings[SettingKeyTurnstileSiteKey],
-		SiteName:                         s.getStringOrDefault(settings, SettingKeySiteName, "Sub2API"),
+		SiteName:                         s.getStringOrDefault(settings, SettingKeySiteName, "OC Router"),
 		SiteLogo:                         settings[SettingKeySiteLogo],
 		SiteSubtitle:                     s.getStringOrDefault(settings, SettingKeySiteSubtitle, "Subscription to API Conversion Platform"),
 		APIBaseURL:                       settings[SettingKeyAPIBaseURL],
@@ -1770,6 +1770,7 @@ func (s *SettingService) buildSystemSettingsUpdates(ctx context.Context, setting
 	if settings.GitHubOAuthClientSecret != "" {
 		updates[SettingKeyGitHubOAuthClientSecret] = strings.TrimSpace(settings.GitHubOAuthClientSecret)
 	}
+	updates[SettingKeyGitHubOAuthRequiredOrg] = strings.TrimSpace(settings.GitHubOAuthRequiredOrg)
 	updates[SettingKeyGoogleOAuthEnabled] = strconv.FormatBool(settings.GoogleOAuthEnabled)
 	updates[SettingKeyGoogleOAuthClientID] = strings.TrimSpace(settings.GoogleOAuthClientID)
 	updates[SettingKeyGoogleOAuthRedirectURL] = settings.GoogleOAuthRedirectURL
@@ -2123,6 +2124,19 @@ func (s *SettingService) validateDefaultSubscriptionGroups(ctx context.Context, 
 	}
 
 	return nil
+}
+
+// GetGitHubOAuthRequiredOrg returns the required GitHub organization for login gating.
+// Returns empty string if not configured (no org restriction).
+func (s *SettingService) GetGitHubOAuthRequiredOrg(ctx context.Context) string {
+	if s == nil || s.settingRepo == nil {
+		return ""
+	}
+	vals, err := s.settingRepo.GetMultiple(ctx, []string{SettingKeyGitHubOAuthRequiredOrg})
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(vals[SettingKeyGitHubOAuthRequiredOrg])
 }
 
 func (s *SettingService) GetEmailOAuthProviderConfig(ctx context.Context, provider string) (config.EmailOAuthProviderConfig, error) {
@@ -2480,7 +2494,7 @@ func (s *SettingService) IsTotpEncryptionKeyConfigured() bool {
 func (s *SettingService) GetSiteName(ctx context.Context) string {
 	value, err := s.settingRepo.GetValue(ctx, SettingKeySiteName)
 	if err != nil || value == "" {
-		return "Sub2API"
+		return "OC Router"
 	}
 	return value
 }
@@ -2672,7 +2686,7 @@ func (s *SettingService) InitializeDefaultSettings(ctx context.Context) error {
 		SettingKeyLoginAgreementUpdatedAt:                   defaultLoginAgreementDate,
 		SettingKeyLoginAgreementDocuments:                   loginAgreementDocumentsJSON,
 		SettingKeyAPIKeyACLTrustForwardedIP:                 "false",
-		SettingKeySiteName:                                  "Sub2API",
+		SettingKeySiteName:                                  "OC Router",
 		SettingKeySiteLogo:                                  "",
 		SettingKeyPurchaseSubscriptionEnabled:               "false",
 		SettingKeyPurchaseSubscriptionURL:                   "",
@@ -2701,6 +2715,7 @@ func (s *SettingService) InitializeDefaultSettings(ctx context.Context) error {
 		SettingKeyGitHubOAuthClientSecret:                   "",
 		SettingKeyGitHubOAuthRedirectURL:                    "",
 		SettingKeyGitHubOAuthFrontendRedirectURL:            defaultGitHubOAuthFrontend,
+		SettingKeyGitHubOAuthRequiredOrg:                    "",
 		SettingKeyGoogleOAuthEnabled:                        "false",
 		SettingKeyGoogleOAuthClientID:                       "",
 		SettingKeyGoogleOAuthClientSecret:                   "",
@@ -2861,7 +2876,7 @@ func (s *SettingService) parseSettings(settings map[string]string) *SystemSettin
 		TurnstileSiteKey:                 settings[SettingKeyTurnstileSiteKey],
 		TurnstileSecretKeyConfigured:     settings[SettingKeyTurnstileSecretKey] != "",
 		APIKeyACLTrustForwardedIP:        apiKeyACLTrustForwardedIP,
-		SiteName:                         s.getStringOrDefault(settings, SettingKeySiteName, "Sub2API"),
+		SiteName:                         s.getStringOrDefault(settings, SettingKeySiteName, "OC Router"),
 		SiteLogo:                         settings[SettingKeySiteLogo],
 		SiteSubtitle:                     s.getStringOrDefault(settings, SettingKeySiteSubtitle, "Subscription to API Conversion Platform"),
 		APIBaseURL:                       settings[SettingKeyAPIBaseURL],
@@ -3227,6 +3242,7 @@ func (s *SettingService) parseSettings(settings map[string]string) *SystemSettin
 	result.GitHubOAuthClientSecretConfigured = result.GitHubOAuthClientSecret != ""
 	result.GitHubOAuthRedirectURL = strings.TrimSpace(gitHubEffective.RedirectURL)
 	result.GitHubOAuthFrontendRedirectURL = strings.TrimSpace(gitHubEffective.FrontendRedirectURL)
+	result.GitHubOAuthRequiredOrg = strings.TrimSpace(settings[SettingKeyGitHubOAuthRequiredOrg])
 
 	googleEffective := s.effectiveEmailOAuthConfig(settings, "google")
 	result.GoogleOAuthEnabled = googleEffective.Enabled

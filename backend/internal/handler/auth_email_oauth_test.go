@@ -49,7 +49,7 @@ func TestEmailOAuthCallbackRequiresPendingRegistrationWhenInvitationEnabled(t *t
 		ClientSecret:        "github-secret",
 		RedirectURL:         "https://app.example/api/v1/auth/oauth/github/callback",
 		FrontendRedirectURL: "/auth/oauth/callback",
-	}, "/auth/oauth/callback", "/dashboard", profile)
+	}, "/auth/oauth/callback", "/dashboard", profile, false)
 
 	require.Equal(t, http.StatusFound, recorder.Code)
 	location := recorder.Header().Get("Location")
@@ -110,7 +110,7 @@ func TestEmailOAuthCallbackExistingEmailLogsInWhenInvitationEnabled(t *testing.T
 		Email:         "existing@example.com",
 		EmailVerified: true,
 		Username:      "existing",
-	})
+	}, false)
 
 	require.Equal(t, http.StatusFound, recorder.Code)
 	location := recorder.Header().Get("Location")
@@ -159,7 +159,7 @@ func TestEmailOAuthCallbackCreatesPasswordRegistrationSessionForNewEmail(t *test
 		Email:         "aff-user@example.com",
 		EmailVerified: true,
 		Username:      "aff-user",
-	})
+	}, false)
 
 	require.Equal(t, http.StatusFound, recorder.Code)
 	require.NotContains(t, recorder.Header().Get("Location"), "access_token=")

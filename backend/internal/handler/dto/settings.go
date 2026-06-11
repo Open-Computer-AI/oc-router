@@ -121,6 +121,7 @@ type SystemSettings struct {
 	GitHubOAuthClientSecretConfigured bool   `json:"github_oauth_client_secret_configured"`
 	GitHubOAuthRedirectURL            string `json:"github_oauth_redirect_url"`
 	GitHubOAuthFrontendRedirectURL    string `json:"github_oauth_frontend_redirect_url"`
+	GitHubOAuthRequiredOrg            string `json:"github_oauth_required_org"`
 	GoogleOAuthEnabled                bool   `json:"google_oauth_enabled"`
 	GoogleOAuthClientID               string `json:"google_oauth_client_id"`
 	GoogleOAuthClientSecretConfigured bool   `json:"google_oauth_client_secret_configured"`

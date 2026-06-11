@@ -231,6 +231,7 @@ const (
 	SettingKeyGitHubOAuthClientSecret        = "github_oauth_client_secret"
 	SettingKeyGitHubOAuthRedirectURL         = "github_oauth_redirect_url"
 	SettingKeyGitHubOAuthFrontendRedirectURL = "github_oauth_frontend_redirect_url"
+	SettingKeyGitHubOAuthRequiredOrg         = "github_oauth_required_org"
 	SettingKeyGoogleOAuthEnabled             = "google_oauth_enabled"
 	SettingKeyGoogleOAuthClientID            = "google_oauth_client_id"
 	SettingKeyGoogleOAuthClientSecret        = "google_oauth_client_secret"

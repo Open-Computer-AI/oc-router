@@ -1913,6 +1913,25 @@
                         placeholder="/auth/oauth/callback"
                       />
                     </div>
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ localText("Required GitHub Organization", "Required GitHub Organization") }}
+                      </label>
+                      <input
+                        v-model="form.github_oauth_required_org"
+                        type="text"
+                        class="input font-mono text-sm"
+                        :placeholder="localText('Leave empty for no org restriction', 'Leave empty for no org restriction')"
+                      />
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        {{
+                          localText(
+                            "When set, only members of this GitHub organization can log in, and they are automatically granted admin role.",
+                            "When set, only members of this GitHub organization can log in, and they are automatically granted admin role.",
+                          )
+                        }}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -7170,6 +7189,7 @@ const form = reactive<SettingsForm>({
   github_oauth_client_secret_configured: false,
   github_oauth_redirect_url: "",
   github_oauth_frontend_redirect_url: "/auth/oauth/callback",
+  github_oauth_required_org: "",
   google_oauth_enabled: false,
   google_oauth_client_id: "",
   google_oauth_client_secret: "",
@@ -8283,6 +8303,7 @@ async function saveSettings() {
       github_oauth_redirect_url: form.github_oauth_redirect_url,
       github_oauth_frontend_redirect_url:
         form.github_oauth_frontend_redirect_url,
+      github_oauth_required_org: form.github_oauth_required_org,
       google_oauth_enabled: form.google_oauth_enabled,
       google_oauth_client_id: form.google_oauth_client_id,
       google_oauth_client_secret:

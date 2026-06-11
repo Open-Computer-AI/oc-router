@@ -206,6 +206,7 @@ func (h *SettingHandler) GetSettings(c *gin.Context) {
 		GitHubOAuthClientSecretConfigured:      settings.GitHubOAuthClientSecretConfigured,
 		GitHubOAuthRedirectURL:                 settings.GitHubOAuthRedirectURL,
 		GitHubOAuthFrontendRedirectURL:         settings.GitHubOAuthFrontendRedirectURL,
+		GitHubOAuthRequiredOrg:                 settings.GitHubOAuthRequiredOrg,
 		GoogleOAuthEnabled:                     settings.GoogleOAuthEnabled,
 		GoogleOAuthClientID:                    settings.GoogleOAuthClientID,
 		GoogleOAuthClientSecretConfigured:      settings.GoogleOAuthClientSecretConfigured,
@@ -483,6 +484,7 @@ type UpdateSettingsRequest struct {
 	GitHubOAuthClientSecret        string `json:"github_oauth_client_secret"`
 	GitHubOAuthRedirectURL         string `json:"github_oauth_redirect_url"`
 	GitHubOAuthFrontendRedirectURL string `json:"github_oauth_frontend_redirect_url"`
+	GitHubOAuthRequiredOrg         string `json:"github_oauth_required_org"`
 	GoogleOAuthEnabled             bool   `json:"google_oauth_enabled"`
 	GoogleOAuthClientID            string `json:"google_oauth_client_id"`
 	GoogleOAuthClientSecret        string `json:"google_oauth_client_secret"`
@@ -1544,6 +1546,7 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		GitHubOAuthClientSecret:                req.GitHubOAuthClientSecret,
 		GitHubOAuthRedirectURL:                 req.GitHubOAuthRedirectURL,
 		GitHubOAuthFrontendRedirectURL:         req.GitHubOAuthFrontendRedirectURL,
+		GitHubOAuthRequiredOrg:                 req.GitHubOAuthRequiredOrg,
 		GoogleOAuthEnabled:                     req.GoogleOAuthEnabled,
 		GoogleOAuthClientID:                    req.GoogleOAuthClientID,
 		GoogleOAuthClientSecret:                req.GoogleOAuthClientSecret,
@@ -1986,6 +1989,7 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		GitHubOAuthClientSecretConfigured:      updatedSettings.GitHubOAuthClientSecretConfigured,
 		GitHubOAuthRedirectURL:                 updatedSettings.GitHubOAuthRedirectURL,
 		GitHubOAuthFrontendRedirectURL:         updatedSettings.GitHubOAuthFrontendRedirectURL,
+		GitHubOAuthRequiredOrg:                 updatedSettings.GitHubOAuthRequiredOrg,
 		GoogleOAuthEnabled:                     updatedSettings.GoogleOAuthEnabled,
 		GoogleOAuthClientID:                    updatedSettings.GoogleOAuthClientID,
 		GoogleOAuthClientSecretConfigured:      updatedSettings.GoogleOAuthClientSecretConfigured,
