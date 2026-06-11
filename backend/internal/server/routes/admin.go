@@ -18,10 +18,7 @@ func RegisterAdminRoutes(
 ) {
 	admin := v1.Group("/admin")
 	admin.Use(gin.HandlerFunc(adminAuth))
-	admin.Use(middleware.AdminComplianceGuard(settingService))
 	{
-		registerAdminComplianceRoutes(admin, h)
-
 		registerDashboardRoutes(admin, h)
 
 		registerUserManagementRoutes(admin, h)

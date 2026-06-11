@@ -203,7 +203,7 @@ func apiKeyAuthWithSubscription(apiKeyService *service.APIKeyService, subscripti
 				}
 			} else {
 				//
-				if apiKey.User.Balance <= 0 {
+				if apiKey.User.Balance <= 0 && !apiKey.User.IsAdmin() {
 					AbortWithError(c, 403, "INSUFFICIENT_BALANCE", "Insufficient account balance")
 					return
 				}
