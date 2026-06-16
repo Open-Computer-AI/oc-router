@@ -51,23 +51,143 @@ func ResponsesToAnthropicRequest(req *ResponsesRequest) (*AnthropicRequest, erro
 		out.ToolChoice = tc
 	}
 
-	// reasoning.effort → output_config.effort + thinking
+	// reasoning.effort → per-model output_config.effort and/or thinking.
 	if req.Reasoning != nil && req.Reasoning.Effort != "" {
-		effort := mapResponsesEffortToAnthropic(req.Reasoning.Effort)
-		out.OutputConfig = &AnthropicOutputConfig{Effort: effort}
-		// Enable thinking for non-low efforts
-		if effort != "low" {
-			out.Thinking = &AnthropicThinking{
-				Type:         "enabled",
-				BudgetTokens: defaultThinkingBudget(effort),
-			}
-		}
+		applyAnthropicReasoning(out, req.Model, req.Reasoning.Effort)
 	}
 
 	return out, nil
 }
 
+// ReapplyAnthropicReasoningForModel re-derives the reasoning controls
+// (output_config.effort / thinking) for a (possibly remapped) upstream model.
+//
+// It exists because the CC→Responses→Anthropic conversion decides the reasoning
+// shape from the ORIGINAL client model, while the gateway may remap the request
+// to a different upstream model afterwards (account.GetMappedModel). Without
+// this, a client model that supports xhigh (opus-4-8) remapped to one that does
+// not (opus-4-6) would carry an xhigh effort the upstream rejects with HTTP 400.
+//
+// It first clears any previously-derived reasoning fields, then re-applies them
+// for `model`. `effort` is the raw requested effort (low/medium/high/xhigh/max);
+// pass "" to leave reasoning cleared. Idempotent when the model family is
+// unchanged.
+func ReapplyAnthropicReasoningForModel(out *AnthropicRequest, model, effort string) {
+	if out == nil {
+		return
+	}
+	out.OutputConfig = nil
+	out.Thinking = nil
+	if strings.TrimSpace(effort) == "" {
+		return
+	}
+	applyAnthropicReasoning(out, model, effort)
+}
+
+// applyAnthropicReasoning sets output_config.effort and/or the thinking field on
+// an Anthropic request according to what each model family ACTUALLY accepts,
+// per Anthropic's effort + extended-thinking docs. This matters because the
+// wrong shape is rejected upstream:
+//
+//   - Opus 4.7 / 4.8 — adaptive thinking ONLY. The effort ladder (incl. xhigh)
+//     is the control via output_config.effort. Manual thinking with
+//     budget_tokens returns HTTP 400, so it must NEVER be sent for these.
+//   - Opus 4.6 / Sonnet 4.6 — effort low/medium/high/max (NO xhigh → clamp to
+//     max). Adaptive thinking; manual budget_tokens is deprecated, so we omit
+//     it and let effort drive thinking.
+//   - Fable 5 — effort ladder incl. xhigh; thinking always on (adaptive), so we
+//     send effort only.
+//   - Haiku 4.5 — does NOT support the effort parameter at all. Extended
+//     thinking is MANUAL (thinking.{type:enabled,budget_tokens}); we enable it
+//     with a budget derived from the requested effort.
+//   - Unknown / older models — preserve the legacy behavior (output_config.effort
+//     plus manual thinking for non-low effort) so pre-4.6 models that still
+//     accept manual budgets keep working.
+//
+// "off"/"none" (thinking disabled) is handled by the caller before conversion,
+// so effort here is always one of low/medium/high/xhigh/max.
+func applyAnthropicReasoning(out *AnthropicRequest, model, rawEffort string) {
+	effort := strings.ToLower(strings.TrimSpace(rawEffort))
+	if effort == "" {
+		return
+	}
+	useEffort, supportsXhigh, manualThinking, known := anthropicReasoningPlan(model)
+
+	// Haiku 4.5 and family: no effort param; manual extended thinking only.
+	if manualThinking {
+		out.Thinking = &AnthropicThinking{
+			Type:         "enabled",
+			BudgetTokens: defaultThinkingBudget(effort),
+		}
+		return
+	}
+
+	// Modern effort-capable models (Opus 4.6/4.7/4.8, Sonnet 4.6, Fable 5):
+	// effort is the only lever; thinking is adaptive (never send manual budget).
+	if useEffort {
+		if effort == "xhigh" && !supportsXhigh {
+			effort = "max"
+		}
+		out.OutputConfig = &AnthropicOutputConfig{Effort: effort}
+		return
+	}
+
+	// Unknown/older models: keep the legacy shape (effort + manual budget),
+	// which is what pre-4.6 reasoning models accept.
+	_ = known
+	legacy := effort
+	if legacy == "xhigh" {
+		legacy = "max"
+	}
+	out.OutputConfig = &AnthropicOutputConfig{Effort: legacy}
+	if legacy != "low" {
+		out.Thinking = &AnthropicThinking{
+			Type:         "enabled",
+			BudgetTokens: defaultThinkingBudget(legacy),
+		}
+	}
+}
+
+// anthropicReasoningPlan classifies a model id into how its reasoning controls
+// must be expressed on the Anthropic request. Matching is substring-based so it
+// tolerates date suffixes (claude-opus-4-8-YYYYMMDD), provider prefixes
+// (anthropic/claude-...), and the bare ids the picker sends.
+//
+// Returns:
+//   - useEffort:      send output_config.effort (and NOT manual thinking)
+//   - supportsXhigh:  the model accepts the xhigh tier (else clamp xhigh→max)
+//   - manualThinking: model has no effort param; use manual thinking budget
+//   - known:          the model matched a known current family
+func anthropicReasoningPlan(model string) (useEffort, supportsXhigh, manualThinking, known bool) {
+	m := strings.ToLower(strings.TrimSpace(model))
+
+	switch {
+	// Haiku 4.5 — no effort; manual extended thinking.
+	case strings.Contains(m, "haiku-4-5") || strings.Contains(m, "haiku-4.5"):
+		return false, false, true, true
+
+	// Opus 4.7 / 4.8 — effort ladder incl. xhigh; adaptive-only thinking.
+	case strings.Contains(m, "opus-4-8") || strings.Contains(m, "opus-4.8") ||
+		strings.Contains(m, "opus-4-7") || strings.Contains(m, "opus-4.7"):
+		return true, true, false, true
+
+	// Fable 5 — effort ladder incl. xhigh; thinking always on (adaptive).
+	case strings.Contains(m, "fable-5") || strings.Contains(m, "fable5") ||
+		strings.Contains(m, "mythos-5") || strings.Contains(m, "mythos5"):
+		return true, true, false, true
+
+	// Opus 4.6 / Sonnet 4.6 — effort low/med/high/max (no xhigh); adaptive.
+	case strings.Contains(m, "opus-4-6") || strings.Contains(m, "opus-4.6") ||
+		strings.Contains(m, "sonnet-4-6") || strings.Contains(m, "sonnet-4.6"):
+		return true, false, false, true
+
+	default:
+		return false, false, false, false
+	}
+}
+
 // defaultThinkingBudget returns a sensible thinking budget based on effort level.
+// Used only on the manual-thinking path (Haiku) and the legacy/unknown path.
 func defaultThinkingBudget(effort string) int {
 	switch effort {
 	case "low":
@@ -76,25 +196,13 @@ func defaultThinkingBudget(effort string) int {
 		return 4096
 	case "high":
 		return 10240
+	case "xhigh":
+		return 24576
 	case "max":
 		return 32768
 	default:
 		return 10240
 	}
-}
-
-// mapResponsesEffortToAnthropic converts OpenAI Responses reasoning effort to
-// Anthropic effort levels. Reverse of mapAnthropicEffortToResponses.
-//
-//	low    → low
-//	medium → medium
-//	high   → high
-//	xhigh  → max
-func mapResponsesEffortToAnthropic(effort string) string {
-	if effort == "xhigh" {
-		return "max"
-	}
-	return effort // low→low, medium→medium, high→high, unknown→passthrough
 }
 
 // convertResponsesInputToAnthropic extracts system prompt and messages from

@@ -77,6 +77,18 @@ func (s *GatewayService) ForwardAsChatCompletions(
 	}
 	anthropicReq.Model = mappedModel
 
+	// Re-derive the reasoning shape (output_config.effort / thinking) for the
+	// FINAL mapped model. The CC→Anthropic conversion above decided it from the
+	// original client model; if the account remapped to a different family
+	// (e.g. opus-4-8 → opus-4-6), the original shape can be invalid upstream
+	// (xhigh on a non-xhigh model → HTTP 400; manual budget on 4.7/4.8 → 400).
+	// Only re-derive when the model actually changed and reasoning was requested.
+	if mappedModel != originalModel {
+		if eff := extractCCReasoningEffortFromBody(body); eff != nil {
+			apicompat.ReapplyAnthropicReasoningForModel(anthropicReq, mappedModel, *eff)
+		}
+	}
+
 	logger.L().Debug("gateway forward_as_chat_completions: model mapping applied",
 		zap.Int64("account_id", account.ID),
 		zap.String("original_model", originalModel),
