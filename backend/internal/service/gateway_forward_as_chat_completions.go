@@ -194,16 +194,83 @@ func (s *GatewayService) ForwardAsChatCompletions(
 	reasoningEffort := extractCCReasoningEffortFromBody(body)
 
 	// 14. Handle normal response
-	// Read Anthropic SSE → convert to Responses events → convert to CC format
+	// Read Anthropic SSE → convert to Responses events → convert to CC format.
+	// jsonMode is true when the client requested response_format json_object /
+	// json_schema; the buffered handler then unwraps any markdown code fence the
+	// model wrapped the JSON in so strict json.loads() callers (e.g. memory
+	// derivers) get bare JSON.
+	jsonMode := isJSONObjectResponseFormat(body)
 	var result *ForwardResult
 	var handleErr error
 	if clientStream {
 		result, handleErr = s.handleCCStreamingFromAnthropic(resp, c, originalModel, mappedModel, reasoningEffort, startTime, includeUsage)
 	} else {
-		result, handleErr = s.handleCCBufferedFromAnthropic(resp, c, originalModel, mappedModel, reasoningEffort, startTime)
+		result, handleErr = s.handleCCBufferedFromAnthropic(resp, c, originalModel, mappedModel, reasoningEffort, startTime, jsonMode)
 	}
 
 	return result, handleErr
+}
+
+// isJSONObjectResponseFormat reports whether the Chat Completions request asked
+// for a JSON response (OpenAI response_format.type of "json_object" or
+// "json_schema"). Read directly from the raw body via gjson so no request DTO
+// needs to carry the field.
+func isJSONObjectResponseFormat(body []byte) bool {
+	t := strings.TrimSpace(gjson.GetBytes(body, "response_format.type").String())
+	return t == "json_object" || t == "json_schema"
+}
+
+// stripJSONCodeFence removes a single wrapping markdown code fence from s when
+// the entire (trimmed) string is one fenced block, e.g.:
+//
+//	```json\n{ ... }\n```   ->   { ... }
+//	```\n[ ... ]\n```        ->   [ ... ]
+//
+// It only unwraps when both an opening ``` (optionally tagged, e.g. ```json)
+// and a closing ``` are present; otherwise s is returned unchanged, so
+// non-fenced content and already-bare JSON pass through untouched.
+func stripJSONCodeFence(s string) string {
+	t := strings.TrimSpace(s)
+	if !strings.HasPrefix(t, "```") {
+		return s
+	}
+	nl := strings.IndexByte(t, '\n')
+	if nl < 0 {
+		return s // opening fence with no body
+	}
+	inner := t[nl+1:]
+	i := strings.LastIndex(inner, "```")
+	if i < 0 {
+		return s // no closing fence — leave untouched
+	}
+	return strings.TrimSpace(inner[:i])
+}
+
+// stripJSONFenceFromChoices unwraps a markdown code fence from each choice's
+// assistant text content in place. Message.Content is a JSON-encoded string
+// (json.RawMessage), so it is decoded, unwrapped, and re-encoded only when the
+// content actually changed.
+func stripJSONFenceFromChoices(resp *apicompat.ChatCompletionsResponse) {
+	if resp == nil {
+		return
+	}
+	for i := range resp.Choices {
+		raw := resp.Choices[i].Message.Content
+		if len(raw) == 0 {
+			continue
+		}
+		var text string
+		if err := json.Unmarshal(raw, &text); err != nil {
+			continue // not a plain string (e.g. multi-part content) — skip
+		}
+		stripped := stripJSONCodeFence(text)
+		if stripped == text {
+			continue
+		}
+		if rb, err := json.Marshal(stripped); err == nil {
+			resp.Choices[i].Message.Content = rb
+		}
+	}
 }
 
 // extractCCReasoningEffortFromBody reads reasoning effort from a Chat Completions
@@ -233,6 +300,7 @@ func (s *GatewayService) handleCCBufferedFromAnthropic(
 	mappedModel string,
 	reasoningEffort *string,
 	startTime time.Time,
+	jsonMode bool,
 ) (*ForwardResult, error) {
 	requestID := resp.Header.Get("x-request-id")
 
@@ -326,6 +394,13 @@ func (s *GatewayService) handleCCBufferedFromAnthropic(
 	// Chain: Anthropic → Responses → Chat Completions
 	responsesResp := apicompat.AnthropicToResponsesResponse(finalResp)
 	ccResp := apicompat.ResponsesToChatCompletions(responsesResp, originalModel)
+
+	// For response_format json_object/json_schema, unwrap any markdown code
+	// fence the model wrapped the JSON in so strict json.loads() callers get
+	// bare JSON (e.g. the Honcho memory deriver).
+	if jsonMode {
+		stripJSONFenceFromChoices(ccResp)
+	}
 
 	if s.responseHeaderFilter != nil {
 		responseheaders.WriteFilteredHeaders(c.Writer.Header(), resp.Header, s.responseHeaderFilter)

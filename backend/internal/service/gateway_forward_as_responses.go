@@ -511,8 +511,16 @@ func (s *GatewayService) handleResponsesStreamingResponse(
 }
 
 // appendRawJSON appends a JSON fragment string to existing raw JSON.
+//
+// A tool_use content_block_start seeds Input with an empty object "{}"; the
+// real arguments arrive as subsequent input_json_delta fragments. Appending
+// those fragments onto the "{}" seed would yield invalid JSON like
+// `{}{"q":1}`, which then surfaces in tool_calls[].function.arguments and
+// breaks strict JSON parsers. Treat an empty/whitespace or "{}" seed as empty
+// so the fragments assemble into valid JSON. A tool call with no argument
+// deltas keeps its "{}" (correct empty-object arguments) untouched.
 func appendRawJSON(existing json.RawMessage, fragment string) json.RawMessage {
-	if len(existing) == 0 {
+	if len(existing) == 0 || string(bytes.TrimSpace(existing)) == "{}" {
 		return json.RawMessage(fragment)
 	}
 	return json.RawMessage(string(existing) + fragment)
