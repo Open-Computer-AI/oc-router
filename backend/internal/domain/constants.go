@@ -73,6 +73,8 @@ const (
 var DefaultAntigravityModelMapping = map[string]string{
 	// Claude
 	"claude-fable-5":             "claude-fable-5",           // official model
+	"claude-sonnet-5":            "claude-sonnet-5",          // official model
+	"claude-sonnet-5-0":          "claude-sonnet-5",          // alias mapping
 	"claude-opus-4-8":            "claude-opus-4-8",          // official model
 	"claude-opus-4-7":            "claude-opus-4-7",          // official model
 	"claude-opus-4-6-thinking":   "claude-opus-4-6-thinking", // official model
@@ -113,8 +115,8 @@ var DefaultAntigravityModelMapping = map[string]string{
 	// Gemini 3 image
 	"gemini-3-pro-image":         "gemini-3.1-flash-image",
 	"gemini-3-pro-image-preview": "gemini-3.1-flash-image",
-	"gpt-oss-120b-medium":    "gpt-oss-120b-medium",
-	"tab_flash_lite_preview": "tab_flash_lite_preview",
+	"gpt-oss-120b-medium":        "gpt-oss-120b-medium",
+	"tab_flash_lite_preview":     "tab_flash_lite_preview",
 }
 
 // DefaultBedrockModelMapping
@@ -124,6 +126,9 @@ var DefaultAntigravityModelMapping = map[string]string{
 var DefaultBedrockModelMapping = map[string]string{
 	// Claude Fable
 	"claude-fable-5": "anthropic.claude-fable-5",
+	// Claude Sonnet 5
+	"claude-sonnet-5":   "us.anthropic.claude-sonnet-5-0-v1",
+	"claude-sonnet-5-0": "us.anthropic.claude-sonnet-5-0-v1",
 	// Claude Opus
 	"claude-opus-4-8":          "us.anthropic.claude-opus-4-8-v1",
 	"claude-opus-4-7":          "us.anthropic.claude-opus-4-7-v1",

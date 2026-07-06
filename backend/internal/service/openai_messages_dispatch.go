@@ -3,13 +3,12 @@ package service
 import "strings"
 
 const (
-	defaultOpenAIMessagesDispatchOpusMappedModel   = "gpt-5.4"
-	defaultOpenAIMessagesDispatchSonnetMappedModel = "gpt-5.3-codex"
+	defaultOpenAIMessagesDispatchOpusMappedModel   = "gpt-5.5-xhigh"
+	defaultOpenAIMessagesDispatchSonnetMappedModel = "gpt-5.5-xhigh"
 	defaultOpenAIMessagesDispatchHaikuMappedModel  = "gpt-5.4-mini"
 )
 
 func normalizeOpenAIMessagesDispatchMappedModel(model string) string {
-	model = NormalizeOpenAICompatRequestedModel(strings.TrimSpace(model))
 	return strings.TrimSpace(model)
 }
 
