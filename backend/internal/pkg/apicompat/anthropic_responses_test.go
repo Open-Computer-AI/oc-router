@@ -1651,6 +1651,35 @@ func TestAnthropicToResponsesResponse_NoCacheTokens(t *testing.T) {
 	assert.Nil(t, out.Usage.InputTokensDetails)
 }
 
+func TestAnthropicToResponsesResponse_PreservesRefusalExplanation(t *testing.T) {
+	t.Parallel()
+
+	resp := &AnthropicResponse{
+		ID:         "msg_refusal",
+		Model:      "claude-fable-5",
+		StopReason: "refusal",
+		StopDetails: &AnthropicStopDetails{
+			Type:        "refusal",
+			Category:    "cyber",
+			Explanation: "This request was blocked by the upstream safety policy.",
+		},
+		Usage: AnthropicUsage{InputTokens: 10, OutputTokens: 1},
+	}
+
+	responses := AnthropicToResponsesResponse(resp)
+	require.Equal(t, "incomplete", responses.Status)
+	require.NotNil(t, responses.IncompleteDetails)
+	require.Equal(t, "content_filter", responses.IncompleteDetails.Reason)
+	require.Len(t, responses.Output, 1)
+	require.Len(t, responses.Output[0].Content, 1)
+	require.Equal(t, resp.StopDetails.Explanation, responses.Output[0].Content[0].Text)
+
+	chat := ResponsesToChatCompletions(responses, resp.Model)
+	require.Len(t, chat.Choices, 1)
+	require.Equal(t, "content_filter", chat.Choices[0].FinishReason)
+	require.JSONEq(t, `"This request was blocked by the upstream safety policy."`, string(chat.Choices[0].Message.Content))
+}
+
 func TestAnthropicEventToResponses_CacheTokensRoundTripFromMessageStart(t *testing.T) {
 	state := NewAnthropicEventToResponsesState()
 

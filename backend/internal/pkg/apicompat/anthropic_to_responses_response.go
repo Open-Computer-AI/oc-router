@@ -66,6 +66,18 @@ func AnthropicToResponsesResponse(resp *AnthropicResponse) *ResponsesResponse {
 		}
 	}
 
+	// Anthropic refusals can contain no content blocks at all. Preserve the
+	// structured explanation as text so OpenAI-compatible clients do not see an
+	// empty assistant message with a misleading successful finish reason.
+	if resp.StopReason == "refusal" && len(msgParts) == 0 && resp.StopDetails != nil {
+		if explanation := resp.StopDetails.Explanation; explanation != "" {
+			msgParts = append(msgParts, ResponsesContentPart{
+				Type: "output_text",
+				Text: explanation,
+			})
+		}
+	}
+
 	// Assemble message output item from text parts
 	if len(msgParts) > 0 {
 		outputs = append(outputs, ResponsesOutput{
@@ -91,7 +103,11 @@ func AnthropicToResponsesResponse(resp *AnthropicResponse) *ResponsesResponse {
 	// Map stop_reason → status
 	out.Status = anthropicStopReasonToResponsesStatus(resp.StopReason, resp.Content)
 	if out.Status == "incomplete" {
-		out.IncompleteDetails = &ResponsesIncompleteDetails{Reason: "max_output_tokens"}
+		reason := "max_output_tokens"
+		if resp.StopReason == "refusal" {
+			reason = "content_filter"
+		}
+		out.IncompleteDetails = &ResponsesIncompleteDetails{Reason: reason}
 	}
 
 	// Usage
@@ -119,6 +135,8 @@ func AnthropicToResponsesResponse(resp *AnthropicResponse) *ResponsesResponse {
 func anthropicStopReasonToResponsesStatus(stopReason string, blocks []AnthropicContentBlock) string {
 	switch stopReason {
 	case "max_tokens":
+		return "incomplete"
+	case "refusal":
 		return "incomplete"
 	case "end_turn", "tool_use", "stop_sequence":
 		return "completed"
@@ -163,6 +181,8 @@ type AnthropicEventToResponsesState struct {
 	OutputTokens             int
 	CacheReadInputTokens     int
 	CacheCreationInputTokens int
+	StopReason               string
+	StopDetails              *AnthropicStopDetails
 }
 
 // NewAnthropicEventToResponsesState returns an initialised stream state.
@@ -208,8 +228,8 @@ func FinalizeAnthropicResponsesStream(state *AnthropicEventToResponsesState) []R
 	// Close any open item
 	events = append(events, closeCurrentResponsesItem(state)...)
 
-	// Emit response.completed
-	events = append(events, makeResponsesCompletedEvent(state, "completed", nil))
+	status, incompleteDetails := anthropicStreamCompletion(state.StopReason)
+	events = append(events, makeResponsesCompletedEvent(state, status, incompleteDetails))
 	state.CompletedSent = true
 	return events
 }
@@ -417,6 +437,14 @@ func anthToResHandleMessageDelta(evt *AnthropicStreamEvent, state *AnthropicEven
 			state.CacheCreationInputTokens = evt.Usage.CacheCreationInputTokens
 		}
 	}
+	if evt.Delta != nil {
+		if evt.Delta.StopReason != "" {
+			state.StopReason = evt.Delta.StopReason
+		}
+		if evt.Delta.StopDetails != nil {
+			state.StopDetails = evt.Delta.StopDetails
+		}
+	}
 
 	return nil
 }
@@ -432,13 +460,23 @@ func anthToResHandleMessageStop(state *AnthropicEventToResponsesState) []Respons
 	events = append(events, closeCurrentResponsesItem(state)...)
 
 	// Determine status
-	status := "completed"
-	var incompleteDetails *ResponsesIncompleteDetails
+	status, incompleteDetails := anthropicStreamCompletion(state.StopReason)
 
 	// Emit response.completed
 	events = append(events, makeResponsesCompletedEvent(state, status, incompleteDetails))
 	state.CompletedSent = true
 	return events
+}
+
+func anthropicStreamCompletion(stopReason string) (string, *ResponsesIncompleteDetails) {
+	switch stopReason {
+	case "max_tokens":
+		return "incomplete", &ResponsesIncompleteDetails{Reason: "max_output_tokens"}
+	case "refusal":
+		return "incomplete", &ResponsesIncompleteDetails{Reason: "content_filter"}
+	default:
+		return "completed", nil
+	}
 }
 
 // --- helper functions ---

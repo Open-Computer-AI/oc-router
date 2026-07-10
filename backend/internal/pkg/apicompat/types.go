@@ -128,8 +128,18 @@ type AnthropicResponse struct {
 	Content      []AnthropicContentBlock `json:"content"`
 	Model        string                  `json:"model"`
 	StopReason   string                  `json:"stop_reason"`
+	StopDetails  *AnthropicStopDetails   `json:"stop_details,omitempty"`
 	StopSequence *string                 `json:"stop_sequence,omitempty"`
 	Usage        AnthropicUsage          `json:"usage"`
+}
+
+// AnthropicStopDetails carries structured refusal metadata returned by newer
+// Claude models. It must survive compatibility conversion so an empty refusal
+// is not exposed to OpenAI clients as a successful completion.
+type AnthropicStopDetails struct {
+	Type        string `json:"type,omitempty"`
+	Category    string `json:"category,omitempty"`
+	Explanation string `json:"explanation,omitempty"`
 }
 
 // AnthropicUsage holds token counts in Anthropic format.
@@ -179,8 +189,9 @@ type AnthropicDelta struct {
 	Signature string `json:"signature,omitempty"`
 
 	// message_delta fields
-	StopReason   string  `json:"stop_reason,omitempty"`
-	StopSequence *string `json:"stop_sequence,omitempty"`
+	StopReason   string                `json:"stop_reason,omitempty"`
+	StopDetails  *AnthropicStopDetails `json:"stop_details,omitempty"`
+	StopSequence *string               `json:"stop_sequence,omitempty"`
 }
 
 // ---------------------------------------------------------------------------

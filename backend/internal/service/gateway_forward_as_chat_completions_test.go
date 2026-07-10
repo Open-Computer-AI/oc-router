@@ -107,3 +107,59 @@ func TestHandleCCStreamingFromAnthropic_PreservesMessageStartCacheUsageAndReason
 	require.Equal(t, "medium", *result.ReasoningEffort)
 	require.Contains(t, rec.Body.String(), `[DONE]`)
 }
+
+func TestHandleCCBufferedFromAnthropic_PreservesRefusal(t *testing.T) {
+	t.Parallel()
+	gin.SetMode(gin.TestMode)
+
+	rec := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rec)
+	resp := &http.Response{
+		Header: http.Header{"x-request-id": []string{"rid_cc_refusal_buffered"}},
+		Body: io.NopCloser(strings.NewReader(strings.Join([]string{
+			`event: message_start`,
+			`data: {"type":"message_start","message":{"id":"msg_refusal","type":"message","role":"assistant","content":[],"model":"claude-fable-5","stop_reason":null,"stop_details":null,"usage":{"input_tokens":10,"output_tokens":1}}}`,
+			``,
+			`event: message_delta`,
+			`data: {"type":"message_delta","delta":{"stop_reason":"refusal","stop_details":{"type":"refusal","category":"cyber","explanation":"Blocked by upstream safety policy."}},"usage":{"output_tokens":1}}`,
+			``,
+		}, "\n"))),
+	}
+
+	svc := &GatewayService{}
+	result, err := svc.handleCCBufferedFromAnthropic(resp, c, "claude-fable-5", "claude-fable-5", nil, time.Now(), false)
+	require.NoError(t, err)
+	require.NotNil(t, result)
+	require.Contains(t, rec.Body.String(), `"content":"Blocked by upstream safety policy."`)
+	require.Contains(t, rec.Body.String(), `"finish_reason":"content_filter"`)
+}
+
+func TestHandleCCStreamingFromAnthropic_PreservesRefusal(t *testing.T) {
+	t.Parallel()
+	gin.SetMode(gin.TestMode)
+
+	rec := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rec)
+	resp := &http.Response{
+		Header: http.Header{"x-request-id": []string{"rid_cc_refusal_stream"}},
+		Body: io.NopCloser(strings.NewReader(strings.Join([]string{
+			`event: message_start`,
+			`data: {"type":"message_start","message":{"id":"msg_refusal","type":"message","role":"assistant","content":[],"model":"claude-fable-5","stop_reason":null,"stop_details":null,"usage":{"input_tokens":10,"output_tokens":1}}}`,
+			``,
+			`event: message_delta`,
+			`data: {"type":"message_delta","delta":{"stop_reason":"refusal","stop_details":{"type":"refusal","category":"cyber","explanation":"Blocked by upstream safety policy."}},"usage":{"output_tokens":1}}`,
+			``,
+			`event: message_stop`,
+			`data: {"type":"message_stop"}`,
+			``,
+		}, "\n"))),
+	}
+
+	svc := &GatewayService{}
+	result, err := svc.handleCCStreamingFromAnthropic(resp, c, "claude-fable-5", "claude-fable-5", nil, time.Now(), false)
+	require.NoError(t, err)
+	require.NotNil(t, result)
+	require.Contains(t, rec.Body.String(), `"content":"Blocked by upstream safety policy."`)
+	require.Contains(t, rec.Body.String(), `"finish_reason":"content_filter"`)
+	require.Contains(t, rec.Body.String(), `[DONE]`)
+}

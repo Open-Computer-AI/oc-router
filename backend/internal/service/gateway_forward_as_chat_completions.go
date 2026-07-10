@@ -347,6 +347,7 @@ func (s *GatewayService) handleCCBufferedFromAnthropic(
 			}
 			if event.Delta != nil && event.Delta.StopReason != "" && finalResp != nil {
 				finalResp.StopReason = event.Delta.StopReason
+				finalResp.StopDetails = event.Delta.StopDetails
 			}
 		}
 		if event.Type == "content_block_start" && event.ContentBlock != nil && finalResp != nil {
@@ -512,6 +513,28 @@ func (s *GatewayService) handleCCStreamingFromAnthropic(
 		// Also capture usage from message_start (carries cache fields)
 		if event.Type == "message_start" && event.Message != nil {
 			mergeAnthropicUsage(&usage, event.Message.Usage)
+		}
+
+		// Anthropic refusal streams may contain no content blocks. Emit the
+		// structured explanation as a final content delta; the compatibility
+		// state below maps the terminal reason to finish_reason=content_filter.
+		if event.Type == "message_delta" && event.Delta != nil &&
+			event.Delta.StopReason == "refusal" && event.Delta.StopDetails != nil {
+			explanation := strings.TrimSpace(event.Delta.StopDetails.Explanation)
+			if explanation != "" {
+				if disconnected := writeChunk(apicompat.ChatCompletionsChunk{
+					ID:      ccState.ID,
+					Object:  "chat.completion.chunk",
+					Created: ccState.Created,
+					Model:   originalModel,
+					Choices: []apicompat.ChatChunkChoice{{
+						Index: 0,
+						Delta: apicompat.ChatDelta{Content: &explanation},
+					}},
+				}); disconnected {
+					return true
+				}
+			}
 		}
 
 		// Chain: Anthropic event → Responses events → CC chunks
