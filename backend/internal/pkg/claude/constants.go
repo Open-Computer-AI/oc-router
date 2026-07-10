@@ -5,7 +5,6 @@ package claude
 
 // Beta header
 //
-//
 // (src/transform/cc_mimicry.py)
 //
 // ""
@@ -28,7 +27,6 @@ const (
 )
 
 // DroppedBetas
-//
 var DroppedBetas = []string{}
 
 // DefaultBetaHeader Claude Code
@@ -69,12 +67,10 @@ const CLICurrentVersion = "2.1.161"
 
 // FullClaudeCodeMimicryBetas ""
 //
-//
-//
 //   - OAuth +
 //   - OAuth + haiku：Anthropic
 //   - API-key
-//   -
+//     -
 func FullClaudeCodeMimicryBetas() []string {
 	return []string{
 		BetaClaudeCode,
@@ -144,6 +140,12 @@ var DefaultModels = []Model{
 		Type:        "model",
 		DisplayName: "Claude Opus 4.8",
 		CreatedAt:   "2026-05-29T00:00:00Z",
+	},
+	{
+		ID:          "claude-sonnet-5",
+		Type:        "model",
+		DisplayName: "Claude Sonnet 5",
+		CreatedAt:   "2026-06-30T00:00:00Z",
 	},
 	{
 		ID:          "claude-sonnet-4-6",

@@ -61,6 +61,14 @@ func TestReasoning_Fable5_EffortInclXhigh_NoManualThinking(t *testing.T) {
 	require.Nil(t, out.Thinking)
 }
 
+// Sonnet 5: effort ladder incl. xhigh; thinking adaptive (no manual budget).
+func TestReasoning_Sonnet5_EffortInclXhigh_NoManualThinking(t *testing.T) {
+	out := anthReqWithEffort(t, "claude-sonnet-5", "xhigh")
+	require.NotNil(t, out.OutputConfig)
+	require.Equal(t, "xhigh", out.OutputConfig.Effort)
+	require.Nil(t, out.Thinking)
+}
+
 // Haiku 4.5: NO effort param; manual extended thinking with a budget.
 func TestReasoning_Haiku45_ManualThinking_NoEffort(t *testing.T) {
 	for _, eff := range []string{"medium", "high", "xhigh", "max"} {
@@ -123,7 +131,7 @@ func TestReapplyAnthropicReasoningForModel(t *testing.T) {
 // The classifier itself, exercised directly for clarity.
 func TestAnthropicReasoningPlan(t *testing.T) {
 	cases := []struct {
-		model                                       string
+		model                                   string
 		useEffort, supportsXhigh, manual, known bool
 	}{
 		{"claude-opus-4-8", true, true, false, true},
@@ -131,6 +139,7 @@ func TestAnthropicReasoningPlan(t *testing.T) {
 		{"claude-opus-4-6", true, false, false, true},
 		{"claude-sonnet-4-6", true, false, false, true},
 		{"claude-fable-5", true, true, false, true},
+		{"claude-sonnet-5", true, true, false, true},
 		{"claude-haiku-4-5", false, false, true, true},
 		{"claude-sonnet-4-5", false, false, false, false},
 		{"gpt-5.2", false, false, false, false},

@@ -166,9 +166,10 @@ func anthropicReasoningPlan(model string) (useEffort, supportsXhigh, manualThink
 	case strings.Contains(m, "haiku-4-5") || strings.Contains(m, "haiku-4.5"):
 		return false, false, true, true
 
-	// Opus 4.7 / 4.8 — effort ladder incl. xhigh; adaptive-only thinking.
+	// Opus 4.7 / 4.8 and Sonnet 5 — effort ladder incl. xhigh; adaptive-only thinking.
 	case strings.Contains(m, "opus-4-8") || strings.Contains(m, "opus-4.8") ||
-		strings.Contains(m, "opus-4-7") || strings.Contains(m, "opus-4.7"):
+		strings.Contains(m, "opus-4-7") || strings.Contains(m, "opus-4.7") ||
+		strings.Contains(m, "sonnet-5") || strings.Contains(m, "sonnet5"):
 		return true, true, false, true
 
 	// Fable 5 — effort ladder incl. xhigh; thinking always on (adaptive).

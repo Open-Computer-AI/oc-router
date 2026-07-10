@@ -69,7 +69,6 @@ const ClaudeAdaptiveHighThinkingBudgetTokens = Gemini25FlashThinkingBudgetLimit
 
 // ensureMaxTokensGreaterThanBudget > budget_tokens
 // Claude API
-//
 func ensureMaxTokensGreaterThanBudget(maxTokens, budgetTokens int) (int, bool) {
 	if budgetTokens > 0 && maxTokens <= budgetTokens {
 		return budgetTokens + MaxTokensBudgetPadding, true
@@ -205,6 +204,7 @@ var modelInfoMap = map[string]modelInfo{
 	"claude-opus-4-7":   {DisplayName: "Claude Opus 4.7", CanonicalID: "claude-opus-4-7"},
 	"claude-opus-4-5":   {DisplayName: "Claude Opus 4.5", CanonicalID: "claude-opus-4-5-20250929"},
 	"claude-opus-4-6":   {DisplayName: "Claude Opus 4.6", CanonicalID: "claude-opus-4-6"},
+	"claude-sonnet-5":   {DisplayName: "Claude Sonnet 5", CanonicalID: "claude-sonnet-5"},
 	"claude-sonnet-4-6": {DisplayName: "Claude Sonnet 4.6", CanonicalID: "claude-sonnet-4-6"},
 	"claude-sonnet-4-5": {DisplayName: "Claude Sonnet 4.5", CanonicalID: "claude-sonnet-4-5-20250929"},
 	"claude-haiku-4-5":  {DisplayName: "Claude Haiku 4.5", CanonicalID: "claude-haiku-4-5-20251001"},
@@ -402,8 +402,6 @@ func buildContents(messages []ClaudeMessage, toolIDToName map[string]string, isT
 }
 
 // DummyThoughtSignature
-//
-//
 const DummyThoughtSignature = "skip_thought_signature_validator"
 
 // buildParts
@@ -573,12 +571,12 @@ func maxOutputTokensLimit(model string) int {
 }
 
 // isAntigravityOpusHighTierModel +），
-//
 func isAntigravityOpusHighTierModel(model string) bool {
 	lower := strings.ToLower(model)
 	return strings.HasPrefix(lower, "claude-opus-4-6") ||
 		strings.HasPrefix(lower, "claude-opus-4-7") ||
-		strings.HasPrefix(lower, "claude-opus-4-8")
+		strings.HasPrefix(lower, "claude-opus-4-8") ||
+		strings.HasPrefix(lower, "claude-sonnet-5")
 }
 
 func buildGenerationConfig(req *ClaudeRequest) *GeminiGenerationConfig {
