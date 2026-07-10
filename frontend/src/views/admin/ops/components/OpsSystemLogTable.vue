@@ -207,6 +207,7 @@ const fetchHealth = async () => {
   try {
     health.value = await opsAPI.getSystemLogSinkHealth()
   } catch {
+    // Health probe is best-effort; ignore failures and leave the indicator unset.
   }
 }
 

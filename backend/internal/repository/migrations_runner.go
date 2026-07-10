@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS atlas_schema_revisions (
 `
 
 // migrationsAdvisoryLockID
-//
 const migrationsAdvisoryLockID int64 = 694208311321144027
 const migrationsLockRetryInterval = 500 * time.Millisecond
 const nonTransactionalMigrationSuffix = "_notx.sql"
@@ -60,7 +59,6 @@ type migrationChecksumCompatibilityRule struct {
 
 // migrationChecksumCompatibilityRules
 // 「+ + 」
-//
 var migrationChecksumCompatibilityRules = map[string]migrationChecksumCompatibilityRule{
 	"054_drop_legacy_cache_columns.sql":                       newMigrationChecksumCompatibilityRule("82de761156e03876653e7a6a4eee883cd927847036f779b0b9f34c42a8af7a7d", "182c193f3359946cf094090cd9e57d5c3fd9abaffbc1e8fc378646b8a6fa12b4"),
 	"061_add_usage_log_request_type.sql":                      newMigrationChecksumCompatibilityRule("66207e7aa5dd0429c2e2c0fabdaf79783ff157fa0af2e81adff2ee03790ec65c", "08a248652cbab7cfde147fc6ef8cda464f2477674e20b718312faa252e0481c0", "222b4a09c797c22e5922b6b172327c824f5463aaa8760e4f621bc5c22e2be0f3"),
@@ -82,6 +80,7 @@ var migrationChecksumCompatibilityRules = map[string]migrationChecksumCompatibil
 // -
 //
 //   - ctx:
+//
 //   - db:
 //
 //   - error:
@@ -94,17 +93,16 @@ func ApplyMigrations(ctx context.Context, db *sql.DB) error {
 
 // applyMigrationsFS
 //
+//	1.
+//	2.
+//	3.
+//	   -
+//	   -
+//	5.
 //
-//  1.
-//  2.
-//  3.
-//     -
-//     -
-//  5.
-//
-//   - ctx:
-//   - db:
-//   - fsys:
+//	 - ctx:
+//	 - db:
+//	 - fsys:
 func applyMigrationsFS(ctx context.Context, db *sql.DB, fsys fs.FS) error {
 	if db == nil {
 		return errors.New("nil sql db")

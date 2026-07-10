@@ -53,7 +53,6 @@ func (c apiKeyAuthCacheConfig) negativeEnabled() bool {
 }
 
 // jitterTTL
-//
 func (c apiKeyAuthCacheConfig) jitterTTL(ttl time.Duration) time.Duration {
 	if ttl <= 0 {
 		return ttl

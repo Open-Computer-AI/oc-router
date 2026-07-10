@@ -239,7 +239,6 @@ func GetAPIKeyFromContext(c *gin.Context) (*service.APIKey, bool) {
 }
 
 // SetOpsFallbackAPIKey
-//
 func SetOpsFallbackAPIKey(c *gin.Context, apiKey *service.APIKey) {
 	if c == nil || apiKey == nil {
 		return

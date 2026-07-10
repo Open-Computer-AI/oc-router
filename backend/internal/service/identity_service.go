@@ -70,8 +70,6 @@ func NewIdentityService(cache IdentityCache) *IdentityService {
 }
 
 // GetOrCreateFingerprint
-//
-//
 func (s *IdentityService) GetOrCreateFingerprint(ctx context.Context, accountID int64, headers http.Header) (*Fingerprint, error) {
 	cached, err := s.cache.GetFingerprint(ctx, accountID)
 	if err == nil && cached != nil {
@@ -138,7 +136,6 @@ func (s *IdentityService) createFingerprintFromHeaders(headers http.Header) *Fin
 
 // mergeHeadersIntoFingerprint
 // → →
-//
 func mergeHeadersIntoFingerprint(fp *Fingerprint, headers http.Header) {
 	// User-Agent：
 	if ua := headers.Get("User-Agent"); ua != "" {
@@ -169,7 +166,6 @@ func getHeaderOrDefault(headers http.Header, key, defaultValue string) string {
 }
 
 // ApplyFingerprint *
-//
 func (s *IdentityService) ApplyFingerprint(req *http.Request, fp *Fingerprint) {
 	if fp == nil {
 		return
@@ -202,11 +198,6 @@ func (s *IdentityService) ApplyFingerprint(req *http.Request, fp *Fingerprint) {
 }
 
 // RewriteUserID
-//
-//
-//
-//
-//
 func (s *IdentityService) RewriteUserID(body []byte, accountID int64, accountUUID, cachedClientID, fingerprintUA string) ([]byte, error) {
 	if len(body) == 0 || accountUUID == "" || cachedClientID == "" {
 		return body, nil
@@ -255,11 +246,6 @@ func (s *IdentityService) RewriteUserID(body []byte, accountID int64, accountUUI
 }
 
 // RewriteUserIDWithMasking
-//
-//
-//
-//
-//
 func (s *IdentityService) RewriteUserIDWithMasking(ctx context.Context, body []byte, account *Account, accountUUID, cachedClientID, fingerprintUA string) ([]byte, error) {
 	//
 	newBody, err := s.RewriteUserID(body, account.ID, accountUUID, cachedClientID, fingerprintUA)
@@ -400,7 +386,6 @@ func extractProduct(ua string) string {
 }
 
 // isNewerVersion
-//
 func isNewerVersion(newUA, cachedUA string) bool {
 	newProduct := extractProduct(newUA)
 	cachedProduct := extractProduct(cachedUA)

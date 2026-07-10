@@ -161,7 +161,6 @@ func TestComputeEffective_BadJSONFallsBackToCfg(t *testing.T) {
 	}
 }
 
-//
 type fakeCleanupReloader struct {
 	calls int
 	last  context.Context

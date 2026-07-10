@@ -11,11 +11,8 @@ import (
 
 // stripMessageCacheControl $.messages[*].content[*].cache_control。
 //
-//
-//
 // ""
 // ""，
-//
 func stripMessageCacheControl(body []byte) []byte {
 	messages := gjson.GetBytes(body, "messages")
 	if !messages.IsArray() {
@@ -46,8 +43,9 @@ func stripMessageCacheControl(body []byte) []byte {
 }
 
 // addMessageCacheBreakpoints
-//  1.
-//  2. ≥ 4 =user
+//
+//	1.
+//	2. ≥ 4 =user
 //
 // + system prompt block
 // + tools[-1]
@@ -55,8 +53,6 @@ func stripMessageCacheControl(body []byte) []byte {
 // cache_control ttl
 //   - →
 //   - {"type":"ephemeral","ttl": claude.DefaultCacheControlTTL}
-//
-//
 func addMessageCacheBreakpoints(body []byte) []byte {
 	messages := gjson.GetBytes(body, "messages")
 	if !messages.IsArray() {
@@ -155,7 +151,6 @@ func injectCacheControlOnLastContentBlock(body []byte, idx int, msg *gjson.Resul
 }
 
 // mustJSONString
-//
 func mustJSONString(s string) string {
 	return fmt.Sprintf("%q", s)
 }

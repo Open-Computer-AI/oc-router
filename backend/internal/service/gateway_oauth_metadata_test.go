@@ -61,8 +61,6 @@ func TestBuildOAuthMetadataUserID_UsesAccountUUIDWhenPresent(t *testing.T) {
 
 // TestBuildOAuthMetadataUserID_SessionIDStableAcrossTurns
 // metadata.user_id
-//
-//
 func TestBuildOAuthMetadataUserID_SessionIDStableAcrossTurns(t *testing.T) {
 	svc := &GatewayService{}
 	account := &Account{ID: 777, Type: AccountTypeOAuth, Extra: map[string]any{"account_uuid": "acc-uuid"}}

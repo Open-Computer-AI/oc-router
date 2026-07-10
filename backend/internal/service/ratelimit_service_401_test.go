@@ -132,7 +132,6 @@ func TestRateLimitService_HandleUpstreamError_OAuth401SetsTempUnschedulable(t *t
 // OpenAI OAuth 401
 // (
 // ),
-//
 func TestRateLimitService_HandleUpstreamError_OAuth401InvalidatorError(t *testing.T) {
 	repo := &rateLimitAccountRepoStub{}
 	invalidator := &tokenCacheInvalidatorRecorder{err: errors.New("boom")}
@@ -177,8 +176,6 @@ func TestRateLimitService_HandleUpstreamError_NonOAuth401(t *testing.T) {
 // TestRateLimitService_HandleUpstreamError_OAuth401DoesNotOverwriteCredentials
 //
 // → UpdateCredentials → SetCredentials
-//
-//
 func TestRateLimitService_HandleUpstreamError_OAuth401DoesNotOverwriteCredentials(t *testing.T) {
 	repo := &rateLimitAccountRepoStub{}
 	service := NewRateLimitService(repo, nil, &config.Config{}, nil, nil)
@@ -200,8 +197,6 @@ func TestRateLimitService_HandleUpstreamError_OAuth401DoesNotOverwriteCredential
 	require.Nil(t, repo.lastCredentials, "no credentials should have been persisted")
 }
 
-//
-//
 func TestRateLimitService_HandleUpstreamError_OAuth401NoRefreshTokenSetsError(t *testing.T) {
 	t.Run("openai_no_refresh_token", func(t *testing.T) {
 		repo := &rateLimitAccountRepoStub{}

@@ -1,5 +1,4 @@
 // Package repository
-//
 package repository
 
 import (
@@ -20,17 +19,17 @@ import (
 
 // InitEnt *sql.DB。
 //
-//  2.
-//  3.
-//  4.
+//	2.
+//	3.
+//	4.
 //
 //
 //
-//   - cfg:
+//	 - cfg:
 //
-//   - *ent.Client: Ent ORM
-//   - *sql.DB:
-//   - error:
+//	 - *ent.Client: Ent ORM
+//	 - *sql.DB:
+//	 - error:
 func InitEnt(cfg *config.Config) (*ent.Client, *sql.DB, error) {
 	if err := timezone.Init(cfg.Timezone); err != nil {
 		return nil, nil, err

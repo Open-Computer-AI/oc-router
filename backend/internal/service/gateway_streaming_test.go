@@ -220,7 +220,6 @@ func TestHandleStreamingResponse_SpecialCharactersInJSON(t *testing.T) {
 	require.Contains(t, body, "content_block_delta", "响应应包含转发的 SSE 事件")
 }
 
-//
 // *UpstreamFailoverError
 func TestHandleStreamingResponse_StreamReadErrorBeforeOutput_TriggersFailover(t *testing.T) {
 	gin.SetMode(gin.TestMode)
@@ -259,7 +258,6 @@ func TestHandleStreamingResponse_StreamReadErrorBeforeOutput_TriggersFailover(t 
 	require.NotContains(t, rec.Body.String(), "stream_read_error")
 }
 
-//
 // SSE
 func TestHandleStreamingResponse_StreamReadErrorAfterOutput_PassesThrough(t *testing.T) {
 	gin.SetMode(gin.TestMode)

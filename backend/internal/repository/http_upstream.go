@@ -62,7 +62,6 @@ const (
 var errUpstreamClientLimitReached = errors.New("upstream client cache limit reached")
 
 // poolSettings
-//
 type poolSettings struct {
 	maxIdleConns          int           // max total idle connections
 	maxIdleConnsPerHost   int           // max idle connections per host
@@ -98,7 +97,6 @@ type openAIHTTP2FallbackState struct {
 
 // httpUpstreamService
 //
-//
 // -
 // -
 // - +
@@ -116,7 +114,6 @@ type httpUpstreamService struct {
 
 // NewHTTPUpstream
 //
-//
 //   - cfg:
 //
 //   - service.HTTPUpstream
@@ -130,14 +127,19 @@ func NewHTTPUpstream(cfg *config.Config) service.HTTPUpstream {
 // Do
 //
 //   - req: HTTP
+//
 //   - proxyURL:
+//
 //   - accountID:
+//
 //   - accountConcurrency:
 //
 //   - *http.Response: HTTP
+//
 //   - error:
 //
-//   -
+//     -
+//
 //   - inFlight > 0
 func (s *httpUpstreamService) Do(req *http.Request, proxyURL string, accountID int64, accountConcurrency int) (*http.Response, error) {
 	if err := s.validateRequestHost(req); err != nil {
@@ -364,13 +366,17 @@ func (s *httpUpstreamService) acquireClientWithProfile(proxyURL string, accountI
 // getOrCreateClient
 //
 //   - proxyURL:
+//
 //   - accountID:
+//
 //   - accountConcurrency:
 //
 //   - *upstreamClientEntry:
 //
 //   - proxy:
+//
 //   - account:
+//
 //   - account_proxy: +
 func (s *httpUpstreamService) getOrCreateClient(proxyURL string, accountID int64, accountConcurrency int) (*upstreamClientEntry, error) {
 	return s.getClientEntry(proxyURL, accountID, accountConcurrency, service.HTTPUpstreamProfileDefault, false, false)
@@ -484,7 +490,6 @@ func (s *httpUpstreamService) removeClientLocked(key string, entry *upstreamClie
 
 // evictIdleLocked
 //
-//
 //   - now:
 func (s *httpUpstreamService) evictIdleLocked(now time.Time) {
 	ttl := s.clientIdleTTL()
@@ -528,7 +533,6 @@ func (s *httpUpstreamService) evictOldestIdleLocked() bool {
 }
 
 // evictOverLimitLocked
-//
 func (s *httpUpstreamService) evictOverLimitLocked() bool {
 	maxClients := s.maxUpstreamClients()
 	if maxClients <= 0 {
@@ -545,7 +549,6 @@ func (s *httpUpstreamService) evictOverLimitLocked() bool {
 }
 
 // getIsolationMode
-//
 //
 //   - string:
 func (s *httpUpstreamService) getIsolationMode() string {
@@ -589,10 +592,10 @@ func (s *httpUpstreamService) clientIdleTTL() time.Duration {
 // resolvePoolSettings
 //
 //   - isolation:
+//
 //   - accountConcurrency:
 //
 //   - poolSettings:
-//
 func (s *httpUpstreamService) resolvePoolSettings(isolation string, accountConcurrency int) poolSettings {
 	settings := defaultPoolSettings(s.cfg)
 	if (isolation == config.ConnectionPoolIsolationAccount || isolation == config.ConnectionPoolIsolationAccountProxy) && accountConcurrency > 0 {
@@ -633,13 +636,17 @@ func buildPoolKey(settings poolSettings, protocolMode string) string {
 // buildCacheKey
 //
 //   - isolation:
+//
 //   - proxyKey:
+//
 //   - accountID:
 //
 //   - string:
 //
 //   - proxy "proxy:{proxyKey}"
+//
 //   - account "account:{accountID}"
+//
 //   - account_proxy "account:{accountID}|proxy:{proxyKey}"
 func buildCacheKey(isolation, proxyKey string, accountID int64, protocolMode string) string {
 	var base string
@@ -884,11 +891,12 @@ func (s *openAIHTTP2FallbackState) recordFailure(now time.Time, threshold int, w
 
 // normalizeProxyURL
 //
-//
 //   - raw:
 //
 //   - string: "direct"）
+//
 //   - *url.URL:
+//
 //   - error:
 func normalizeProxyURL(raw string) (string, *url.URL, error) {
 	_, parsed, err := proxyurl.Parse(raw)
@@ -963,9 +971,11 @@ func defaultPoolSettings(cfg *config.Config) poolSettings {
 // buildUpstreamTransport
 //
 //   - settings:
+//
 //   - proxyURL:
 //
 //   - *http.Transport:
+//
 //   - error:
 //
 // Transport
@@ -1001,16 +1011,20 @@ func buildUpstreamTransport(settings poolSettings, proxyURL *url.URL, protocolMo
 
 // buildUpstreamTransportWithTLSFingerprint
 //
-//
 //   - settings:
+//
 //   - proxyURL:
+//
 //   - profile: TLS
 //
 //   - *http.Transport:
+//
 //   - error:
 //
 //   - nil/
+//
 //   - http/https: HTTP + utls
+//
 //   - socks5: SOCKS5 + utls
 func buildUpstreamTransportWithTLSFingerprint(settings poolSettings, proxyURL *url.URL, profile *tlsfingerprint.Profile) (*http.Transport, error) {
 	transport := &http.Transport{
@@ -1055,7 +1069,6 @@ func buildUpstreamTransportWithTLSFingerprint(settings poolSettings, proxyURL *u
 }
 
 // trackedBody
-//
 type trackedBody struct {
 	io.ReadCloser // original response body
 	once          sync.Once
@@ -1063,7 +1076,6 @@ type trackedBody struct {
 }
 
 // Close
-//
 func (b *trackedBody) Close() error {
 	err := b.ReadCloser.Close()
 	if b.onClose != nil {
@@ -1074,8 +1086,8 @@ func (b *trackedBody) Close() error {
 
 // wrapTrackedBody
 //
-//
 //   - body:
+//
 //   - onClose:
 //
 //   - io.ReadCloser:
@@ -1087,8 +1099,6 @@ func wrapTrackedBody(body io.ReadCloser, onClose func()) io.ReadCloser {
 }
 
 // decompressResponseBody
-//
-//
 func decompressResponseBody(resp *http.Response) {
 	if resp == nil || resp.Body == nil {
 		return

@@ -12,7 +12,6 @@ import (
 const timeoutCounterPrefix = "timeout_count:account:"
 
 // timeoutCounterIncrScript
-//
 var timeoutCounterIncrScript = redis.NewScript(`
 	local key = KEYS[1]
 	local ttl = tonumber(ARGV[1])

@@ -533,7 +533,6 @@ func (r *proxyRepository) SweepExpiredProxies(ctx context.Context, now time.Time
 }
 
 // sweepOneExpiredProxy +
-//
 func (r *proxyRepository) sweepOneExpiredProxy(ctx context.Context, proxyID int64, target *int64, change bool) (int64, error) {
 	//
 	tx, txErr := r.client.Tx(ctx)

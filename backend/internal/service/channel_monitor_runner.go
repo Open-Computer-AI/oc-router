@@ -20,8 +20,9 @@ type MonitorScheduler interface {
 }
 
 // monitorRunnerSvc
-//   -
-//   -
+//
+//	-
+//	-
 //
 // *ChannelMonitorService
 // + encryptor *ChannelMonitorService
@@ -33,14 +34,14 @@ type monitorRunnerSvc interface {
 // ChannelMonitorRunner
 //
 //   - + ticker（
+//
 //   - Start
+//
 //   - Service
 //
-//   -
-//
+//     -
 //
 // ChannelMonitorService.RunDailyMaintenance（+ heartbeat），
-//
 type ChannelMonitorRunner struct {
 	svc            monitorRunnerSvc
 	settingService *SettingService
@@ -73,7 +74,6 @@ type scheduledMonitor struct {
 // settingService
 //
 // pool
-//
 func NewChannelMonitorRunner(svc *ChannelMonitorService, settingService *SettingService) *ChannelMonitorRunner {
 	return newChannelMonitorRunner(svc, settingService)
 }
@@ -93,7 +93,6 @@ func newChannelMonitorRunner(svc monitorRunnerSvc, settingService *SettingServic
 }
 
 // Start
-//
 func (r *ChannelMonitorRunner) Start() {
 	if r == nil || r.svc == nil {
 		return
@@ -121,8 +120,8 @@ func (r *ChannelMonitorRunner) Start() {
 
 // Schedule
 //   - m.Enabled=false → (m.ID)
-//   -
-//   -
+//     -
+//     -
 func (r *ChannelMonitorRunner) Schedule(m *ChannelMonitor) {
 	if r == nil || m == nil {
 		return
@@ -173,7 +172,6 @@ func (r *ChannelMonitorRunner) Schedule(m *ChannelMonitor) {
 }
 
 // Unschedule
-//
 func (r *ChannelMonitorRunner) Unschedule(id int64) {
 	if r == nil {
 		return
@@ -209,7 +207,6 @@ func (r *ChannelMonitorRunner) Stop() {
 }
 
 // runScheduled ""），
-//
 func (r *ChannelMonitorRunner) runScheduled(ctx context.Context, task *scheduledMonitor) {
 	defer r.wg.Done()
 
@@ -248,7 +245,6 @@ func (r *ChannelMonitorRunner) fire(ctx context.Context, task *scheduledMonitor)
 }
 
 // tryAcquireInFlight
-//
 func (r *ChannelMonitorRunner) tryAcquireInFlight(id int64) bool {
 	r.inFlightMu.Lock()
 	defer r.inFlightMu.Unlock()
@@ -267,7 +263,6 @@ func (r *ChannelMonitorRunner) releaseInFlight(id int64) {
 }
 
 // runOne
-//
 func (r *ChannelMonitorRunner) runOne(id int64, name string) {
 	ctx, cancel := context.WithTimeout(context.Background(), monitorRequestTimeout+monitorPingTimeout+monitorRunOneBuffer)
 	defer cancel()

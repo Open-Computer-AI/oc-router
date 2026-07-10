@@ -12,8 +12,9 @@ import (
 )
 
 // TestGetErrorLogByID_DeletedKeyOwner
-//  1.
-//  2.
+//
+//	1.
+//	2.
 func TestGetErrorLogByID_DeletedKeyOwner(t *testing.T) {
 	ctx := context.Background()
 	_, _ = integrationDB.ExecContext(ctx, "TRUNCATE ops_error_logs RESTART IDENTITY CASCADE")

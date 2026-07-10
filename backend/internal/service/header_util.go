@@ -8,7 +8,6 @@ import (
 // headerWireCasing
 // Go → X-App），
 //
-//
 // (claude-cli/2.1.81)
 var headerWireCasing = map[string]string{
 	// Title case
@@ -44,7 +43,6 @@ var headerWireCasing = map[string]string{
 }
 
 // headerWireOrder
-//
 var headerWireOrder = []string{
 	"Accept",
 	"X-Stainless-Retry-Count",
@@ -82,7 +80,6 @@ func init() {
 }
 
 // resolveWireCasing
-//
 func resolveWireCasing(key string) string {
 	if wk, ok := headerWireCasing[strings.ToLower(key)]; ok {
 		return wk
@@ -144,7 +141,6 @@ func getHeaderRaw(h http.Header, key string) string {
 }
 
 // sortHeadersByWireOrder
-//
 func sortHeadersByWireOrder(h http.Header) []string {
 	// > actual map key
 	present := make(map[string]string, len(h))

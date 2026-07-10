@@ -14,8 +14,9 @@ import (
 // SubscriptionPlan holds the schema definition for the SubscriptionPlan entity.
 //
 // SubscriptionPlan
-//   -
-//   -
+//
+//	-
+//	-
 type SubscriptionPlan struct {
 	ent.Schema
 }

@@ -179,7 +179,6 @@ func (s *GeminiMessagesCompatService) resolvePlatformAndSchedulingMode(ctx conte
 
 // tryStickySessionHit
 //
-//
 // tryStickySessionHit attempts to get account from sticky session.
 // Returns account if hit and usable; clears session and returns nil if account unavailable.
 func (s *GeminiMessagesCompatService) tryStickySessionHit(
@@ -270,7 +269,6 @@ func (s *GeminiMessagesCompatService) isAccountUsableForRequestWithPrecheck(
 
 // isAccountValidForPlatform
 //
-//
 // isAccountValidForPlatform checks if account matches target platform.
 // Native platform matches directly; mixed scheduling mode requires antigravity to enable mixed_scheduling.
 func (s *GeminiMessagesCompatService) isAccountValidForPlatform(account *Account, platform string, useMixedScheduling bool) bool {
@@ -302,7 +300,6 @@ func (s *GeminiMessagesCompatService) passesRateLimitPreCheckWithCache(ctx conte
 }
 
 // selectBestGeminiAccount + LRU + OAuth
-//
 //
 // selectBestGeminiAccount selects best account from candidates (priority + LRU + OAuth preferred).
 // Returns nil if no available account.
@@ -1600,8 +1597,6 @@ func (s *GeminiMessagesCompatService) ForwardNative(ctx context.Context, c *gin.
 }
 
 // checkErrorPolicyInLoop
-//
-//
 func (s *GeminiMessagesCompatService) checkErrorPolicyInLoop(
 	ctx context.Context, account *Account, resp *http.Response,
 ) (matched bool, rebuilt *http.Response) {

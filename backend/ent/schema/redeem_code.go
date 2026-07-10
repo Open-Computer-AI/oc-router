@@ -17,8 +17,8 @@ import (
 // RedeemCode holds the schema definition for the RedeemCode entity.
 //
 // RedeemCode
-//   -
 //
+//	-
 type RedeemCode struct {
 	ent.Schema
 }

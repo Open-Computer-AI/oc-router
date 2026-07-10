@@ -8,7 +8,6 @@ import (
 
 // TestIsOpenAIWSTokenEvent_TerminalEventsExcluded
 //
-//
 // """"（issue #2651）。
 func TestIsOpenAIWSTokenEvent_TerminalEventsExcluded(t *testing.T) {
 	cases := []struct {

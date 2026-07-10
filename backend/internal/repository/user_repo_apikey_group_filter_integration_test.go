@@ -91,7 +91,6 @@ func (s *UserRepoAPIKeyGroupFilterSuite) listByAPIKeyGroup(groupID int64) []serv
 	return users
 }
 
-//
 func (s *UserRepoAPIKeyGroupFilterSuite) TestFiltersUsersByAPIKeyGroup() {
 	g := s.mustCreateGroup("grp-target")
 	other := s.mustCreateGroup("grp-other")
@@ -103,7 +102,6 @@ func (s *UserRepoAPIKeyGroupFilterSuite) TestFiltersUsersByAPIKeyGroup() {
 	s.Require().Equal([]int64{hit.ID}, s.ids(s.listByAPIKeyGroup(g.ID)))
 }
 
-//
 func (s *UserRepoAPIKeyGroupFilterSuite) TestSoftDeletedAPIKeyExcluded() {
 	g := s.mustCreateGroup("grp-soft")
 	u := s.mustCreateUser("soft@test.com")

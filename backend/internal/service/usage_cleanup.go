@@ -20,7 +20,6 @@ const (
 //
 // start_time/end_time
 //
-//
 // - nil
 type UsageCleanupFilters struct {
 	StartTime   time.Time `json:"start_time"`
@@ -36,7 +35,6 @@ type UsageCleanupFilters struct {
 }
 
 // UsageCleanupTask
-//
 type UsageCleanupTask struct {
 	ID          int64
 	Status      string

@@ -16,7 +16,6 @@ var ErrUserPlatformQuotaNotFound = errors.New("user platform quota not found")
 var ErrUserPlatformQuotaFKViolation = errors.New("user platform quota snapshot FK violation")
 
 // UserPlatformQuotaSnapshot
-//
 type UserPlatformQuotaSnapshot struct {
 	UserID             int64
 	Platform           string

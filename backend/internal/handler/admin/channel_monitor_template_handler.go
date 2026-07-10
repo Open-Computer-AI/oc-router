@@ -193,7 +193,6 @@ type channelMonitorTemplateApplyRequest struct {
 }
 
 // Apply POST /api/v1/admin/channel-monitor-templates/:id/apply
-//
 func (h *ChannelMonitorRequestTemplateHandler) Apply(c *gin.Context) {
 	id, ok := parseTemplateID(c)
 	if !ok {
@@ -221,7 +220,6 @@ type associatedMonitorBriefResponse struct {
 }
 
 // AssociatedMonitors GET /api/v1/admin/channel-monitor-templates/:id/monitors
-//
 func (h *ChannelMonitorRequestTemplateHandler) AssociatedMonitors(c *gin.Context) {
 	id, ok := parseTemplateID(c)
 	if !ok {

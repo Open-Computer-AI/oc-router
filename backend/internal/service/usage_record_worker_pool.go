@@ -78,7 +78,6 @@ type UsageRecordWorkerPoolStats struct {
 }
 
 // UsageRecordWorkerPool “+ ”
-//
 type UsageRecordWorkerPool struct {
 	pool                  pond.Pool
 	taskTimeout           time.Duration
@@ -140,7 +139,6 @@ func NewUsageRecordWorkerPoolWithOptions(opts UsageRecordWorkerPoolOptions) *Usa
 }
 
 // Submit
-//
 func (p *UsageRecordWorkerPool) Submit(task UsageRecordTask) UsageRecordSubmitMode {
 	if p == nil || task == nil {
 		return UsageRecordSubmitModeDropped

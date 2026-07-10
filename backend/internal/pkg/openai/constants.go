@@ -44,12 +44,10 @@ const DefaultTestModel = "gpt-5.4"
 
 // DefaultInstructions default instructions for non-Codex CLI requests.
 //
-//
 //go:embed instructions.txt
 var DefaultInstructions string
 
 // instructionsGPT51 / instructionsGPT52
-//
 //
 //go:embed instructions_gpt5_1.txt
 var instructionsGPT51 string
@@ -62,8 +60,6 @@ var instructionsGPT52 string
 //   - gpt-5.2 → GPT-5.2 prompt
 //   - gpt-5.1 / gpt-5 → GPT-5.1 prompt
 //   - →
-//
-//
 func CodexBaseInstructionsForModel(model string) string {
 	m := strings.ToLower(strings.TrimSpace(model))
 	switch {

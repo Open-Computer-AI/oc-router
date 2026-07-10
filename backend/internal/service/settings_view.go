@@ -494,7 +494,7 @@ func DefaultBetaPolicySettings() *BetaPolicySettings {
 // OpenAI "fast "
 //   - "priority"（"fast"，"priority"）：fast
 //   - "flex"：
-//   -
+//     -
 //
 // */BetaPolicyScope*
 // anthropic-beta header
@@ -521,8 +521,6 @@ type OpenAIFastPolicySettings struct {
 }
 
 // DefaultOpenAIFastPolicySettings
-//
-//
 func DefaultOpenAIFastPolicySettings() *OpenAIFastPolicySettings {
 	return &OpenAIFastPolicySettings{
 		Rules: []OpenAIFastPolicyRule{},

@@ -38,7 +38,6 @@ type ChannelMonitorRequestTemplateCreateParams struct {
 }
 
 // ChannelMonitorRequestTemplateUpdateParams =
-//
 type ChannelMonitorRequestTemplateUpdateParams struct {
 	Name             *string
 	APIMode          *string

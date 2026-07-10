@@ -344,8 +344,6 @@ func (s *AuthService) SendVerifyCodeAsync(ctx context.Context, email string, loc
 }
 
 // VerifyTurnstileForRegister
-//
-//
 func (s *AuthService) VerifyTurnstileForRegister(ctx context.Context, token, remoteIP, verifyCode string) error {
 	if s.IsEmailVerifyEnabled(ctx) && strings.TrimSpace(verifyCode) != "" {
 		logger.LegacyPrintf("service.auth", "%s", "[Auth] Email verify flow detected, skip duplicate Turnstile check on register")
@@ -439,8 +437,6 @@ func (s *AuthService) Login(ctx context.Context, email, password string) (string
 }
 
 // LoginOrRegisterOAuth
-//
-//
 func (s *AuthService) LoginOrRegisterOAuth(ctx context.Context, email, username string) (string, *User, error) {
 	email = strings.TrimSpace(email)
 	if email == "" || len(email) > 255 {
@@ -1109,7 +1105,6 @@ func isReservedEmail(email string) bool {
 }
 
 // GenerateToken
-//
 func (s *AuthService) GenerateToken(user *User) (string, error) {
 	now := time.Now()
 	var expiresAt time.Time
@@ -1196,7 +1191,6 @@ func (s *AuthService) RefreshToken(ctx context.Context, oldTokenString string) (
 }
 
 // IsPasswordResetEnabled
-//
 func (s *AuthService) IsPasswordResetEnabled(ctx context.Context) bool {
 	if s.settingService == nil {
 		return false
@@ -1440,7 +1434,6 @@ func (s *AuthService) generateRefreshToken(ctx context.Context, user *User, fami
 }
 
 // RefreshTokenPair
-//
 func (s *AuthService) RefreshTokenPair(ctx context.Context, refreshToken string) (*TokenPairWithUser, error) {
 	//
 	if s.refreshTokenCache == nil {

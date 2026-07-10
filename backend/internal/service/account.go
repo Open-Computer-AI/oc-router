@@ -159,7 +159,6 @@ func (a *Account) IsOAuth() bool {
 // IsPrivacySet
 // OpenAI: privacy_mode == "training_off"
 // Antigravity: privacy_mode == "privacy_set"
-//
 func (a *Account) IsPrivacySet() bool {
 	switch a.Platform {
 	case PlatformOpenAI:
@@ -256,7 +255,6 @@ func (a *Account) GetCredentialAsTime(key string) *time.Time {
 }
 
 // GetCredentialAsInt64
-//
 func (a *Account) GetCredentialAsInt64(key string) int64 {
 	if a == nil || a.Credentials == nil {
 		return 0
@@ -619,7 +617,6 @@ func resolveRequestedModelInMapping(mapping map[string]string, requestedModel st
 }
 
 // IsModelSupported
-//
 func (a *Account) IsModelSupported(requestedModel string) bool {
 	mapping := a.GetModelMapping()
 	if len(mapping) == 0 {
@@ -633,7 +630,6 @@ func (a *Account) IsModelSupported(requestedModel string) bool {
 }
 
 // GetMappedModel
-//
 func (a *Account) GetMappedModel(requestedModel string) string {
 	mappedModel, _ := a.ResolveMappedModel(requestedModel)
 	return mappedModel
@@ -785,7 +781,6 @@ func (a *Account) GetClaudeUserID() string {
 }
 
 // matchAntigravityWildcard *）
-//
 func matchAntigravityWildcard(pattern, str string) bool {
 	if strings.HasSuffix(pattern, "*") {
 		prefix := pattern[:len(pattern)-1]
@@ -795,7 +790,6 @@ func matchAntigravityWildcard(pattern, str string) bool {
 }
 
 // matchWildcard *）
-//
 func matchWildcard(pattern, str string) bool {
 	return matchAntigravityWildcard(pattern, str)
 }
@@ -860,7 +854,6 @@ const (
 )
 
 // GetPoolModeRetryCount
-//
 func (a *Account) GetPoolModeRetryCount() int {
 	if a == nil || !a.IsPoolMode() || a.Credentials == nil {
 		return defaultPoolModeRetryCount
@@ -900,7 +893,6 @@ func parsePoolModeRetryCount(value any) int {
 }
 
 // defaultPoolModeRetryableStatusCodes
-//
 var defaultPoolModeRetryableStatusCodes = []int{401, 403, 429}
 
 // isPoolModeRetryableStatus
@@ -917,7 +909,7 @@ func isPoolModeRetryableStatus(statusCode int) bool {
 //
 //   - nil：→ [401, 403, 429]
 //   - →
-//   -
+//     -
 func (a *Account) GetPoolModeRetryStatusCodes() []int {
 	if a == nil || a.Credentials == nil {
 		return nil
@@ -970,7 +962,6 @@ func (a *Account) GetPoolModeRetryStatusCodes() []int {
 }
 
 // IsPoolModeRetryableStatus
-//
 func (a *Account) IsPoolModeRetryableStatus(statusCode int) bool {
 	codes := a.GetPoolModeRetryStatusCodes()
 	if codes == nil {
@@ -1246,7 +1237,6 @@ func (a *Account) IsOpenAITokenExpired() bool {
 }
 
 // IsMixedSchedulingEnabled
-//
 func (a *Account) IsMixedSchedulingEnabled() bool {
 	if a.Platform != PlatformAntigravity {
 		return false
@@ -1279,10 +1269,6 @@ func (a *Account) IsOveragesEnabled() bool {
 }
 
 // IsOpenAIPassthroughEnabled ""。
-//
-//
-//
-//
 func (a *Account) IsOpenAIPassthroughEnabled() bool {
 	if a == nil || !a.IsOpenAI() || a.Extra == nil {
 		return false
@@ -1303,7 +1289,6 @@ func (a *Account) IsOpenAIPassthroughEnabled() bool {
 //
 // - accounts.extra.responses_websockets_v2_enabled
 // - accounts.extra.openai_ws_enabled（
-//
 func (a *Account) IsOpenAIResponsesWebSocketV2Enabled() bool {
 	if a == nil || !a.IsOpenAI() || a.Extra == nil {
 		return false
@@ -1437,7 +1422,6 @@ func (a *Account) ResolveOpenAIResponsesWebSocketV2Mode(defaultMode string) stri
 }
 
 // IsOpenAIWSForceHTTPEnabled ""
-//
 func (a *Account) IsOpenAIWSForceHTTPEnabled() bool {
 	if a == nil || !a.IsOpenAI() || a.Extra == nil {
 		return false
@@ -1447,7 +1431,6 @@ func (a *Account) IsOpenAIWSForceHTTPEnabled() bool {
 }
 
 // IsOpenAIWSAllowStoreRecoveryEnabled
-//
 func (a *Account) IsOpenAIWSAllowStoreRecoveryEnabled() bool {
 	if a == nil || !a.IsOpenAI() || a.Extra == nil {
 		return false
@@ -1462,8 +1445,6 @@ func (a *Account) IsOpenAIOAuthPassthroughEnabled() bool {
 }
 
 // IsAnthropicAPIKeyPassthroughEnabled ""。
-//
-//
 func (a *Account) IsAnthropicAPIKeyPassthroughEnabled() bool {
 	if a == nil || a.Platform != PlatformAnthropic || a.Type != AccountTypeAPIKey || a.Extra == nil {
 		return false
@@ -1508,8 +1489,6 @@ func (a *Account) GetWebSearchEmulationMode() string {
 }
 
 // IsCodexCLIOnlyEnabled ""。
-//
-//
 func (a *Account) IsCodexCLIOnlyEnabled() bool {
 	if a == nil || !a.IsOpenAIOAuth() || a.Extra == nil {
 		return false
@@ -1587,7 +1566,6 @@ func (a *Account) IsTLSFingerprintEnabled() bool {
 }
 
 // GetTLSFingerprintProfileID
-//
 func (a *Account) GetTLSFingerprintProfileID() int64 {
 	if a.Extra == nil {
 		return 0
@@ -1632,8 +1610,6 @@ func (a *Account) GetUserMsgQueueMode() string {
 }
 
 // IsSessionIDMaskingEnabled
-//
-//
 func (a *Account) IsSessionIDMaskingEnabled() bool {
 	if !a.IsAnthropicOAuthOrSetupToken() {
 		return false
@@ -1650,7 +1626,6 @@ func (a *Account) IsSessionIDMaskingEnabled() bool {
 }
 
 // IsCustomBaseURLEnabled
-//
 func (a *Account) IsCustomBaseURLEnabled() bool {
 	if !a.IsAnthropicOAuthOrSetupToken() {
 		return false
@@ -1672,8 +1647,6 @@ func (a *Account) GetCustomBaseURL() string {
 }
 
 // IsCacheTTLOverrideEnabled
-//
-//
 func (a *Account) IsCacheTTLOverrideEnabled() bool {
 	if !a.IsAnthropicOAuthOrSetupToken() {
 		return false
@@ -2233,7 +2206,6 @@ func (a *Account) GetSessionIdleTimeoutMinutes() int {
 }
 
 // GetBaseRPM
-//
 func (a *Account) GetBaseRPM() int {
 	if a.Extra == nil {
 		return 0
@@ -2307,7 +2279,6 @@ func (a *Account) GetRPMStickyBuffer() int {
 }
 
 // CheckRPMSchedulability
-//
 func (a *Account) CheckRPMSchedulability(currentRPM int) WindowCostSchedulability {
 	baseRPM := a.GetBaseRPM()
 	if baseRPM <= 0 {
@@ -2403,7 +2374,6 @@ func parseExtraTime(value any) time.Time {
 
 // parseExtraInt
 // ParseExtraInt
-//
 func ParseExtraInt(value any) int {
 	return parseExtraInt(value)
 }

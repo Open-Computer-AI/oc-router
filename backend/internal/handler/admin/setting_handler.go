@@ -333,7 +333,6 @@ func openaiFastPolicySettingsToDTO(s *service.OpenAIFastPolicySettings) *dto.Ope
 
 // openaiFastPolicySettingsFromDTO converts dto -> service for OpenAI fast policy.
 //
-//
 // service.OpenAIFastTierAny ("all")，"all"
 // ""
 // service.SetOpenAIFastPolicySettings
@@ -3417,7 +3416,6 @@ func (h *SettingHandler) TestWebSearchEmulation(c *gin.Context) {
 // ensureDingTalkSyncAttributes (attr key, attr name)
 //
 // （type/options/required +
-//
 func (h *SettingHandler) ensureDingTalkSyncAttributes(ctx context.Context, settings *service.SystemSettings) {
 	if h.userAttributeService == nil || settings == nil {
 		return

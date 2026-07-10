@@ -60,7 +60,6 @@ func TestMonthlyMaybeReset_Expired(t *testing.T) {
 }
 
 // TestMonthlyMaybeReset_CrossMonthBoundary
-//
 func TestMonthlyMaybeReset_CrossMonthBoundary(t *testing.T) {
 	windowStart := time.Date(2026, 4, 20, 0, 0, 0, 0, time.UTC)
 	// 5
@@ -88,8 +87,6 @@ func TestMonthlyMaybeReset_Active(t *testing.T) {
 }
 
 // TestUpdateLimitsRowQuery_HasDeletedAtGuard
-//
-//
 func TestUpdateLimitsRowQuery_HasDeletedAtGuard(t *testing.T) {
 	src, err := os.ReadFile("user_platform_quota_repo.go")
 	if err != nil {

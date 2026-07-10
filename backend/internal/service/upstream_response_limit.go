@@ -13,7 +13,6 @@ import (
 var ErrUpstreamResponseBodyTooLarge = errors.New("upstream response body too large")
 
 // defaultUpstreamResponseReadMaxBytes
-//
 const defaultUpstreamResponseReadMaxBytes = config.DefaultUpstreamResponseReadMaxBytes
 
 func resolveUpstreamResponseReadLimit(cfg *config.Config) int64 {
@@ -45,7 +44,6 @@ func readUpstreamResponseBodyLimited(reader io.Reader, maxBytes int64) ([]byte, 
 type TooLargeWriter func(c *gin.Context)
 
 // ReadUpstreamResponseBody
-//
 func ReadUpstreamResponseBody(reader io.Reader, cfg *config.Config, c *gin.Context, onTooLarge TooLargeWriter) ([]byte, error) {
 	maxBytes := resolveUpstreamResponseReadLimit(cfg)
 	body, err := readUpstreamResponseBodyLimited(reader, maxBytes)

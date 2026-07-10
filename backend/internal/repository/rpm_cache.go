@@ -13,7 +13,6 @@ import (
 
 // RPM
 //
-//
 // - Key: rpm:{accountID}:{minuteTimestamp}
 // - Value:
 // - TTL: 120 +

@@ -15,8 +15,9 @@ import (
 // PaymentOrder holds the schema definition for the PaymentOrder entity.
 //
 // PaymentOrder
-//   -
-//   -
+//
+//	-
+//	-
 type PaymentOrder struct {
 	ent.Schema
 }

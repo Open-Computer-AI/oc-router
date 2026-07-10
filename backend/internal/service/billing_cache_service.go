@@ -15,8 +15,6 @@ import (
 	"golang.org/x/sync/singleflight"
 )
 
-//
-//
 // errBillingCacheUnavailable ==nil
 // "Redis "+ DB
 var errBillingCacheUnavailable = fmt.Errorf("billing cache unavailable")
@@ -57,8 +55,6 @@ const (
 	cacheWriteUpdateRateLimitUsage
 )
 
-//
-//
 // 1.
 // 2.
 // 3. goroutine
@@ -101,13 +97,13 @@ type BillingCacheService struct {
 	circuitBreaker        *billingCircuitBreaker
 	userPlatformQuotaRepo UserPlatformQuotaRepository
 
-	cacheWriteChan     chan cacheWriteTask
-	cacheWriteWg       sync.WaitGroup
-	cacheWriteStopOnce sync.Once
-	cacheWriteMu       sync.RWMutex
-	stopped            atomic.Bool
-	balanceLoadSF      singleflight.Group
-	quotaLoadSF        singleflight.Group
+	cacheWriteChan              chan cacheWriteTask
+	cacheWriteWg                sync.WaitGroup
+	cacheWriteStopOnce          sync.Once
+	cacheWriteMu                sync.RWMutex
+	stopped                     atomic.Bool
+	balanceLoadSF               singleflight.Group
+	quotaLoadSF                 singleflight.Group
 	cacheWriteDropFullCount     uint64
 	cacheWriteDropFullLastLog   int64
 	cacheWriteDropClosedCount   uint64
@@ -655,8 +651,6 @@ func (s *BillingCacheService) QueueUpdateAPIKeyRateLimitUsage(apiKeyID int64, co
 
 // IncrementUserPlatformQuotaUsage × platform usage
 //
-//
-//
 // < 1ms（
 //
 // Redis
@@ -1004,7 +998,6 @@ func circuitStateString(state billingCircuitBreakerState) string {
 // = {Daily/Weekly/Monthly}QuotaExhausted =
 // checkUserPlatformQuotaEligibility
 //
-//
 //  1. ==1，
 //  2. cache MISS ==0）→
 //  3. Redis != nil）→ fail-open，
@@ -1244,13 +1237,11 @@ func withWindowResetsMetadata(err error, resetAt time.Time) error {
 }
 
 // nextDailyReset
-//
 func nextDailyReset(now time.Time) time.Time {
 	return timezone.StartOfDay(now).AddDate(0, 0, 1)
 }
 
 // nextWeeklyReset
-//
 func nextWeeklyReset(now time.Time) time.Time {
 	return timezone.StartOfWeek(now).AddDate(0, 0, 7)
 }
@@ -1258,7 +1249,6 @@ func nextWeeklyReset(now time.Time) time.Time {
 // nextMonthlyResetFrom + 30d）。
 // start >= 30d，
 // +30d：+30d；
-//
 func nextMonthlyResetFrom(start *time.Time, now time.Time) time.Time {
 	if start == nil || now.Sub(*start) >= 30*24*time.Hour {
 		return now.Add(30 * 24 * time.Hour)

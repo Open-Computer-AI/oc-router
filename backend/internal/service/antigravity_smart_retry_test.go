@@ -14,7 +14,6 @@ import (
 )
 
 // stubSmartRetryCache
-//
 type stubSmartRetryCache struct {
 	GatewayCache // 嵌入接口，未实现的方法 panic（确保只调用预期方法）
 	deleteCalls  []deleteSessionCall
@@ -955,7 +954,6 @@ func TestHandleSmartRetry_ShortDelay_NonStickySession_FailedRetry_NoDeleteSessio
 }
 
 // TestHandleSmartRetry_ShortDelay_StickySession_FailedRetry_NilCache_NoPanic
-//
 func TestHandleSmartRetry_ShortDelay_StickySession_FailedRetry_NilCache_NoPanic(t *testing.T) {
 	failRespBody := `{
 		"error": {
@@ -1095,7 +1093,6 @@ func TestHandleSmartRetry_ShortDelay_StickySession_SuccessRetry_NoDeleteSession(
 }
 
 // TestHandleSmartRetry_LongDelay_StickySession_ClearsSession
-//
 func TestHandleSmartRetry_LongDelay_StickySession_ClearsSession(t *testing.T) {
 	repo := &stubAntigravityAccountRepo{}
 	cache := &stubSmartRetryCache{}
@@ -1306,7 +1303,6 @@ func TestHandleSmartRetry_ShortDelay_503_StickySession_FailedRetry_ClearsSession
 
 // TestAntigravityRetryLoop_SmartRetryFailed_StickySession_SwitchErrorPropagates
 // → handleSmartRetry → switchError
-//
 func TestAntigravityRetryLoop_SmartRetryFailed_StickySession_SwitchErrorPropagates(t *testing.T) {
 	//
 	initialRespBody := []byte(`{

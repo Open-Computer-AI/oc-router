@@ -64,7 +64,6 @@ func TestGatewayService_isModelSupportedByAccount_AntigravityNoMapping(t *testin
 }
 
 // TestGatewayService_isModelSupportedByAccountWithContext_ThinkingMode
-//
 func TestGatewayService_isModelSupportedByAccountWithContext_ThinkingMode(t *testing.T) {
 	svc := &GatewayService{}
 
@@ -173,7 +172,6 @@ func TestGatewayService_isModelSupportedByAccountWithContext_ThinkingMode(t *tes
 }
 
 // TestGatewayService_isModelSupportedByAccount_CustomMappingNotInDefault
-//
 func TestGatewayService_isModelSupportedByAccount_CustomMappingNotInDefault(t *testing.T) {
 	svc := &GatewayService{}
 

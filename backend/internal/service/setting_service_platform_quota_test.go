@@ -276,8 +276,6 @@ func TestUpdateSettingsWithAuthSourceDefaults_PlatformQuotaRoundTrip(t *testing.
 }
 
 // TestUpdateSettingsWithAuthSourceDefaults_NilPlatformQuotaPreservesExisting #2
-//
-//
 func TestUpdateSettingsWithAuthSourceDefaults_NilPlatformQuotaPreservesExisting(t *testing.T) {
 	svc := newSettingServiceForPlatformQuotaTest(map[string]string{
 		SettingKeyAuthSourcePlatformQuotas("email"): `{"anthropic":{"daily":5,"weekly":null,"monthly":null}}`,
@@ -296,7 +294,6 @@ func TestUpdateSettingsWithAuthSourceDefaults_NilPlatformQuotaPreservesExisting(
 }
 
 // TestGetAuthSourcePlatformQuotas_JSON
-//
 func TestGetAuthSourcePlatformQuotas_JSON(t *testing.T) {
 	svc := newSettingServiceForPlatformQuotaTest(map[string]string{
 		SettingKeyAuthSourcePlatformQuotas("email"): `{"openai":{"daily":null,"weekly":null,"monthly":20}}`,

@@ -19,7 +19,6 @@ import (
 var claudeCodeValidator = service.NewClaudeCodeValidator()
 
 // SetClaudeCodeClientContext
-//
 func SetClaudeCodeClientContext(c *gin.Context, body []byte, parsedReq *service.ParsedRequest) {
 	if c == nil || c.Request == nil {
 		return
@@ -78,8 +77,6 @@ func claudeCodeBodyMapFromParsedRequest(parsedReq *service.ParsedRequest) map[st
 	return bodyMap
 }
 
-//
-//
 // 1.
 //
 // 1.
@@ -143,7 +140,6 @@ func NewConcurrencyHelper(concurrencyService *service.ConcurrencyService, pingFo
 }
 
 // wrapReleaseOnDone ensures release runs at most once and still triggers on context cancellation.
-//
 func wrapReleaseOnDone(ctx context.Context, releaseFunc func()) func() {
 	if releaseFunc == nil {
 		return nil

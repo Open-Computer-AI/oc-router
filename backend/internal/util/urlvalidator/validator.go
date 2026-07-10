@@ -23,8 +23,6 @@ type ValidationOptions struct {
 // - scheme
 // - *.example.com
 // - allow_private_hosts
-//
-//
 func ValidateHTTPURL(raw string, allowInsecureHTTP bool, opts ValidationOptions) (string, error) {
 	trimmed := strings.TrimSpace(raw)
 	if trimmed == "" {
@@ -106,7 +104,6 @@ func ValidateHTTPSURL(raw string, opts ValidationOptions) (string, error) {
 }
 
 // ValidateResolvedIP
-//
 func ValidateResolvedIP(host string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

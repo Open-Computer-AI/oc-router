@@ -653,7 +653,6 @@ func (s *GroupRepoSuite) TestGetAccountCount_Empty() {
 
 // TestListWithFilters_ActiveAccountCount_LessThanTotal
 // =false
-//
 func (s *GroupRepoSuite) TestListWithFilters_ActiveAccountCount_LessThanTotal() {
 	g := &service.Group{
 		Name:             "g-mixed-status",
@@ -716,7 +715,6 @@ func (s *GroupRepoSuite) TestListWithFilters_ActiveAccountCount_LessThanTotal() 
 
 // TestListWithFilters_RateLimitedAccountCount
 // rate_limit / overload / temp_unschedulable
-//
 func (s *GroupRepoSuite) TestListWithFilters_RateLimitedAccountCount() {
 	g := &service.Group{
 		Name:             "g-rate-limited",

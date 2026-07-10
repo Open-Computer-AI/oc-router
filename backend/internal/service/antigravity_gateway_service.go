@@ -71,7 +71,6 @@ const (
 )
 
 // antigravityPassthroughErrorMessages
-//
 var antigravityPassthroughErrorMessages = []string{
 	"prompt is too long",
 }
@@ -145,7 +144,6 @@ type antigravityRetryLoopResult struct {
 }
 
 // resolveAntigravityForwardBaseURL
-//
 func resolveAntigravityForwardBaseURL() string {
 	baseURLs := antigravity.ForwardBaseURLs()
 	if len(baseURLs) == 0 {
@@ -176,7 +174,6 @@ type smartRetryResult struct {
 }
 
 // handleSmartRetry
-//
 func (s *AntigravityGatewayService) handleSmartRetry(p antigravityRetryLoopParams, resp *http.Response, respBody []byte, baseURL string, urlIdx int, availableURLs []string) *smartRetryResult {
 	// "Resource has been exhausted"
 	if resp.StatusCode == http.StatusTooManyRequests && isURLLevelRateLimit(respBody) && urlIdx < len(availableURLs)-1 {
@@ -401,12 +398,12 @@ func (s *AntigravityGatewayService) handleSmartRetry(p antigravityRetryLoopParam
 // + ≥ 7s）+
 // +
 //
-//	→ Handler → Service → = +
-//	→ → → ≈ ×
+//		→ Handler → Service → = +
+//		→ → → ≈ ×
 //
-//   -
-//   -
-//   -
+//	  -
+//	  -
+//	  -
 func (s *AntigravityGatewayService) handleSingleAccountRetryInPlace(
 	p antigravityRetryLoopParams,
 	resp *http.Response,
@@ -797,7 +794,6 @@ func isAntigravityConnectionError(err error) bool {
 }
 
 // shouldAntigravityFallbackToNextURL
-//
 func shouldAntigravityFallbackToNextURL(err error, statusCode int) bool {
 	if isAntigravityConnectionError(err) {
 		return true
@@ -993,7 +989,6 @@ func (s *AntigravityGatewayService) getMappedModel(account *Account, requestedMo
 }
 
 // applyThinkingModelSuffix
-//
 func applyThinkingModelSuffix(mappedModel string, thinkingEnabled bool) string {
 	if !thinkingEnabled {
 		return mappedModel
@@ -1005,7 +1000,6 @@ func applyThinkingModelSuffix(mappedModel string, thinkingEnabled bool) string {
 }
 
 // IsModelSupported
-//
 func (s *AntigravityGatewayService) IsModelSupported(requestedModel string) bool {
 	return strings.HasPrefix(requestedModel, "claude-") ||
 		strings.HasPrefix(requestedModel, "gemini-")
@@ -1018,8 +1012,6 @@ type TestConnectionResult struct {
 }
 
 // TestConnection
-//
-//
 func (s *AntigravityGatewayService) TestConnection(ctx context.Context, account *Account, modelID string) (*TestConnectionResult, error) {
 
 	//
@@ -1102,7 +1094,6 @@ func (s *AntigravityGatewayService) TestConnection(ctx context.Context, account 
 }
 
 // testConnectionHandleError
-//
 func testConnectionHandleError(
 	_ context.Context, prefix string, account *Account,
 	statusCode int, _ http.Header, body []byte,
@@ -1309,7 +1300,6 @@ func (s *AntigravityGatewayService) unwrapV1InternalResponse(body []byte) ([]byt
 }
 
 // Forward → Gemini
-//
 //
 //	→ antigravityRetryLoop → (remaining>0? → ) →
 //	  ├─ →
@@ -2036,7 +2026,6 @@ func stripSignatureSensitiveBlocksFromClaudeRequest(req *antigravity.ClaudeReque
 
 // ForwardGemini
 //
-//
 //	→ antigravityRetryLoop → (remaining>0? → ) →
 //	  ├─ →
 //	  └─ 429/503 → handleSmartRetry
@@ -2460,7 +2449,6 @@ func (s *AntigravityGatewayService) shouldFailoverUpstreamError(statusCode int) 
 }
 
 // isGoogleProjectConfigError
-//
 func isGoogleProjectConfigError(lowerMsg string) bool {
 	// Google
 	return strings.Contains(lowerMsg, "invalid project resource name")
@@ -2495,7 +2483,6 @@ func tempUnscheduleEmptyResponse(ctx context.Context, repo AccountRepository, ac
 }
 
 // sleepAntigravityBackoffWithContext
-//
 func sleepAntigravityBackoffWithContext(ctx context.Context, attempt int) bool {
 	delay := antigravityRetryBaseDelay * time.Duration(1<<uint(attempt-1))
 	if delay > antigravityRetryMaxDelay {
@@ -2527,8 +2514,6 @@ func isSingleAccountRetry(ctx context.Context) bool {
 }
 
 // setModelRateLimitByModelName
-//
-//
 func setModelRateLimitByModelName(ctx context.Context, repo AccountRepository, accountID int64, modelName, prefix string, statusCode int, resetAt time.Time, afterSmartRetry bool) bool {
 	if repo == nil || modelName == "" {
 		return false
@@ -2594,7 +2579,6 @@ type antigravitySmartRetryInfo struct {
 }
 
 // parseAntigravitySmartRetryInfo
-//
 //
 // 1. 429 RESOURCE_EXHAUSTED + RATE_LIMIT_EXCEEDED：
 //   - error.status == "RESOURCE_EXHAUSTED"
@@ -3447,8 +3431,6 @@ func getOrCreateGeminiParts(response map[string]any) (result map[string]any, exi
 }
 
 // mergeCollectedPartsToResponse
-//
-//
 func mergeCollectedPartsToResponse(response map[string]any, collectedParts []map[string]any) map[string]any {
 	if len(collectedParts) == 0 {
 		return response
@@ -4051,7 +4033,6 @@ func (s *AntigravityGatewayService) extractImageInputSize(body []byte) string {
 }
 
 // isImageGenerationModel
-//
 func isImageGenerationModel(model string) bool {
 	modelLower := strings.ToLower(model)
 	//
@@ -4438,7 +4419,6 @@ func (s *AntigravityGatewayService) streamUpstreamResponse(c *gin.Context, resp 
 //   - message_start：
 //     cache_read_input_tokens
 //   - message_delta：
-//
 //
 // usage_logs =0。
 func (s *AntigravityGatewayService) extractSSEUsage(line string, usage *ClaudeUsage) {

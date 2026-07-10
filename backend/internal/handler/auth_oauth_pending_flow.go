@@ -276,7 +276,6 @@ func pendingSessionWantsInvitation(payload map[string]any) bool {
 }
 
 // pendingSessionRequiresEmailCompletion ""
-//
 func pendingSessionRequiresEmailCompletion(payload map[string]any) bool {
 	if v, ok := payload["requires_email_completion"].(bool); ok && v {
 		return true

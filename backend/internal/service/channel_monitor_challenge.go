@@ -31,9 +31,7 @@ type monitorChallenge struct {
 // generateChallenge
 //   - [monitorChallengeMin, monitorChallengeMax]
 //   - 50% %
-//   -
-//
-//
+//     -
 func generateChallenge() monitorChallenge {
 	a := randIntInRange(monitorChallengeMin, monitorChallengeMax)
 	b := randIntInRange(monitorChallengeMin, monitorChallengeMax)

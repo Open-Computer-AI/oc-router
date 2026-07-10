@@ -978,7 +978,6 @@ func isAffiliateUniqueViolation(err error) bool {
 }
 
 // UpdateUserAffCode
-//
 func (r *affiliateRepository) UpdateUserAffCode(ctx context.Context, userID int64, newCode string) error {
 	if userID <= 0 {
 		return service.ErrUserNotFound
@@ -1127,7 +1126,6 @@ func nullableInt64Arg(v *int64) any {
 //
 // """"：
 // "%%"，
-//
 func (r *affiliateRepository) ListUsersWithCustomSettings(ctx context.Context, filter service.AffiliateAdminFilter) ([]service.AffiliateAdminEntry, int64, error) {
 	page := filter.Page
 	if page < 1 {

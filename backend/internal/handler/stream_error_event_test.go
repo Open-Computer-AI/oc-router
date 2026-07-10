@@ -77,7 +77,6 @@ func TestOpenAIHandleStreamingAwareError_ResponsesStreamingEmitsResponseFailed(t
 	assert.Equal(t, "Concurrency limit exceeded for user, please retry later", errObj["message"])
 }
 
-//
 func TestOpenAIHandleStreamingAwareError_ResponsesStreamingIncludesModel(t *testing.T) {
 	c, w := newGinContextForEndpoint(t, EndpointResponses)
 	setOpsRequestContext(c, "gpt-5.5", true)
@@ -89,7 +88,6 @@ func TestOpenAIHandleStreamingAwareError_ResponsesStreamingIncludesModel(t *test
 	assert.Equal(t, "gpt-5.5", resp["model"])
 }
 
-//
 func TestOpenAIHandleStreamingAwareError_ResponsesStreamingOmitsEmptyModel(t *testing.T) {
 	c, w := newGinContextForEndpoint(t, EndpointResponses)
 	h := &OpenAIGatewayHandler{}
@@ -100,7 +98,6 @@ func TestOpenAIHandleStreamingAwareError_ResponsesStreamingOmitsEmptyModel(t *te
 	assert.False(t, hasModel, "model field must be omitted when unknown")
 }
 
-//
 func TestOpenAIHandleStreamingAwareError_ResponsesStreamingReusesRequestID(t *testing.T) {
 	c, w := newGinContextForEndpoint(t, EndpointResponses)
 	c.Request = c.Request.WithContext(
@@ -114,9 +111,6 @@ func TestOpenAIHandleStreamingAwareError_ResponsesStreamingReusesRequestID(t *te
 	assert.Equal(t, "resp_fd277bc5ff7e45d18aa9f54e1df318f1", resp["id"])
 }
 
-//
-//
-//
 func TestOpenAIHandleStreamingAwareError_ResponsesStreamingJSONEscaping(t *testing.T) {
 	cases := []struct {
 		name    string
@@ -175,7 +169,6 @@ func TestGatewayHandleStreamingAwareError_MessagesStreamingKeepsLegacy(t *testin
 	assert.True(t, strings.HasPrefix(body, `data: {"type":"error"`), "got: %q", body)
 }
 
-//
 // /backend-api/codex/responses（codex direct）。
 //
 // ~11:05 UTC user 16
@@ -213,7 +206,6 @@ func TestInboundIsResponses_FallsBackToURLPath(t *testing.T) {
 	assert.True(t, inboundIsResponses(c), "URL.Path fallback must work when FullPath is empty")
 }
 
-//
 func TestOpenAIHandleStreamingAwareError_BareResponsesRouteEmitsResponseFailed(t *testing.T) {
 	c, w := newGinContextForEndpoint(t, "/responses")
 	h := &OpenAIGatewayHandler{}

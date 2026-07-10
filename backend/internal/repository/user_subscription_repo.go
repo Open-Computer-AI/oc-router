@@ -337,7 +337,6 @@ func (r *userSubscriptionRepository) ResetMonthlyUsage(ctx context.Context, id i
 }
 
 // IncrementUsage
-//
 func (r *userSubscriptionRepository) IncrementUsage(ctx context.Context, id int64, costUSD float64) error {
 	const updateSQL = `
 		UPDATE user_subscriptions us

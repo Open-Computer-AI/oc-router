@@ -9,8 +9,6 @@ import (
 // SSRF
 //   - validateEndpoint
 //   - safeDialContext
-//
-//
 var monitorBlockedHostnames = map[string]struct{}{
 	"localhost":                  {},
 	"localhost.localdomain":      {},
@@ -22,7 +20,6 @@ var monitorBlockedHostnames = map[string]struct{}{
 }
 
 // CIDR
-//
 var monitorBlockedCIDRs = mustParseCIDRs([]string{
 	"127.0.0.0/8",    // IPv4 loopback
 	"10.0.0.0/8",     // RFC1918
@@ -83,7 +80,6 @@ func isPrivateIP(ip net.IP) bool {
 
 // isPrivateOrLoopbackHost
 //
-//
 // hostname
 func isPrivateOrLoopbackHost(ctx context.Context, hostname string) (bool, error) {
 	if isBlockedHostname(hostname) {
@@ -109,7 +105,6 @@ func isPrivateOrLoopbackHost(ctx context.Context, hostname string) (bool, error)
 }
 
 // safeDialContext
-//
 func safeDialContext(ctx context.Context, network, address string) (net.Conn, error) {
 	host, port, err := net.SplitHostPort(address)
 	if err != nil {

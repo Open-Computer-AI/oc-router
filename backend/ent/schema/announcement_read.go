@@ -13,7 +13,6 @@ import (
 )
 
 // AnnouncementRead holds the schema definition for the AnnouncementRead entity.
-//
 type AnnouncementRead struct {
 	ent.Schema
 }

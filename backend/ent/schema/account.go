@@ -16,11 +16,8 @@ import (
 
 // Account
 //
-//
-//
-//
-//   -
-//   -
+//	-
+//	-
 type Account struct {
 	ent.Schema
 }

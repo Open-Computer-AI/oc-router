@@ -11,13 +11,9 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-//
-//
 // - Key: session_limit:account:{accountID}
 // - Member: sessionUUID（
 // - Score: Unix
-//
-//
 const (
 	// {accountID}
 	sessionLimitKeyPrefix = "session_limit:account:"

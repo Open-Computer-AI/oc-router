@@ -52,7 +52,6 @@ func NewAPIRequestWithURL(ctx context.Context, baseURL, action, accessToken stri
 }
 
 // NewAPIRequest
-//
 func NewAPIRequest(ctx context.Context, action, accessToken string, body []byte) (*http.Request, error) {
 	return NewAPIRequestWithURL(ctx, BaseURL, action, accessToken, body)
 }
@@ -206,7 +205,6 @@ type OnboardUserResponse struct {
 }
 
 // GetTier
-//
 func (r *LoadCodeAssistResponse) GetTier() string {
 	if r.PaidTier != nil && r.PaidTier.ID != "" {
 		return r.PaidTier.ID
@@ -308,7 +306,6 @@ func IsConnectionError(err error) bool {
 }
 
 // shouldFallbackToNextURL
-//
 func shouldFallbackToNextURL(err error, statusCode int) bool {
 	if IsConnectionError(err) {
 		return true

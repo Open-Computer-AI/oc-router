@@ -16,7 +16,6 @@ import (
 
 // accountRepoStub
 //
-//
 //   - exists:
 //   - existsErr:
 //   - deleteErr:
@@ -43,7 +42,6 @@ func (s *accountRepoStub) GetByIDs(ctx context.Context, ids []int64) ([]*Account
 }
 
 // ExistsByID
-//
 func (s *accountRepoStub) ExistsByID(ctx context.Context, id int64) (bool, error) {
 	return s.exists, s.existsErr
 }
@@ -65,12 +63,10 @@ func (s *accountRepoStub) Update(ctx context.Context, account *Account) error {
 }
 
 // Delete
-//
 func (s *accountRepoStub) Delete(ctx context.Context, id int64) error {
 	s.deletedIDs = append(s.deletedIDs, id)
 	return s.deleteErr
 }
-
 
 func (s *accountRepoStub) List(ctx context.Context, params pagination.PaginationParams) ([]Account, *pagination.PaginationResult, error) {
 	panic("unexpected List call")
@@ -214,7 +210,7 @@ func (s *accountRepoStub) RevertProxyFallback(ctx context.Context, accountID int
 
 // TestAccountService_Delete_NotFound
 //   - ExistsByID
-//   -
+//     -
 //   - Delete
 func TestAccountService_Delete_NotFound(t *testing.T) {
 	repo := &accountRepoStub{exists: false}
@@ -260,7 +256,7 @@ func TestAccountService_Delete_DeleteError(t *testing.T) {
 // TestAccountService_Delete_Success
 //   - ExistsByID
 //   - Delete
-//   -
+//     -
 //   - deletedIDs
 func TestAccountService_Delete_Success(t *testing.T) {
 	repo := &accountRepoStub{exists: true}

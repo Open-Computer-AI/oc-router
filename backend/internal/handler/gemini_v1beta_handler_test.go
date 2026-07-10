@@ -11,7 +11,6 @@ import (
 )
 
 // TestGeminiV1BetaHandler_PlatformRoutingInvariant
-//
 func TestGeminiV1BetaHandler_PlatformRoutingInvariant(t *testing.T) {
 	tests := []struct {
 		name            string
@@ -51,7 +50,6 @@ func TestGeminiV1BetaHandler_PlatformRoutingInvariant(t *testing.T) {
 }
 
 // TestGeminiV1BetaHandler_ListModelsAntigravityFallback
-//
 func TestGeminiV1BetaHandler_ListModelsAntigravityFallback(t *testing.T) {
 	tests := []struct {
 		name             string

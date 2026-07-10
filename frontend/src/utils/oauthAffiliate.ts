@@ -37,6 +37,7 @@ export function storeAffiliateReferralCode(value?: unknown, now = Date.now()): v
     }
     window.localStorage.setItem(AFFILIATE_REFERRAL_CODE_KEY, JSON.stringify(payload))
   } catch {
+    // Ignore storage failures (private mode, quota exceeded, or storage disabled); persistence is best-effort.
   }
 }
 
@@ -70,6 +71,7 @@ export function clearAffiliateReferralCode(): void {
   try {
     window.localStorage.removeItem(AFFILIATE_REFERRAL_CODE_KEY)
   } catch {
+    // Ignore storage failures (private mode, quota exceeded, or storage disabled); persistence is best-effort.
   }
 }
 
@@ -94,6 +96,7 @@ export function storeOAuthAffiliateCode(value?: unknown): void {
       window.sessionStorage.removeItem(OAUTH_AFFILIATE_CODE_KEY)
     }
   } catch {
+    // Ignore storage failures (private mode, quota exceeded, or storage disabled); persistence is best-effort.
   }
 }
 
@@ -115,6 +118,7 @@ export function clearOAuthAffiliateCode(): void {
   try {
     window.sessionStorage.removeItem(OAUTH_AFFILIATE_CODE_KEY)
   } catch {
+    // Ignore storage failures (private mode, quota exceeded, or storage disabled); persistence is best-effort.
   }
 }
 

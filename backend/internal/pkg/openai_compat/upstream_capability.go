@@ -1,6 +1,5 @@
 // Package openai_compat
 //
-//
 // （DeepSeek、Kimi、GLM、Qwen
 // →Responses
 // /v1/responses，
@@ -55,7 +54,6 @@ const ExtraKeyResponsesMode = "openai_responses_mode"
 const ExtraKeyResponsesSupported = "openai_responses_supported"
 
 // NormalizeResponsesSupportMode
-//
 func NormalizeResponsesSupportMode(mode string) ResponsesSupportMode {
 	switch ResponsesSupportMode(mode) {
 	case ResponsesSupportModeForceResponses:
@@ -100,10 +98,8 @@ func ResolveResponsesSupport(extra map[string]any) AccountResponsesSupport {
 // ShouldUseResponsesAPI
 // "CC→Responses + "
 //
-//
-//  1.
-//  2. ——""
-//
+//	1.
+//	2. ——""
 //
 // （
 func ShouldUseResponsesAPI(extra map[string]any) bool {

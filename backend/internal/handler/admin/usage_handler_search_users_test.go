@@ -13,7 +13,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-//
 type searchUsersAdminStub struct {
 	service.AdminService
 	gotFilters service.UserListFilters

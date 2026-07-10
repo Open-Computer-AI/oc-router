@@ -13,7 +13,6 @@ var httpClientSink *http.Client
 
 // BenchmarkHTTPUpstreamProxyClient
 //
-//
 // - "" ""
 // - ""
 func BenchmarkHTTPUpstreamProxyClient(b *testing.B) {

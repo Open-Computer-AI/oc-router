@@ -20,10 +20,10 @@ func TestRedactCredentials_StripsSensitiveKeysAndReportsStatus(t *testing.T) {
 		"aws_secret_access_key": "aws-secret",
 		"service_account_json":  map[string]any{"private_key": "..."},
 		"private_key":           "raw-key",
-		"base_url":      "https://api.example.com",
-		"model_mapping": map[string]any{"foo": "bar"},
-		"project_id":    "proj-1",
-		"expires_at":    int64(123456),
+		"base_url":              "https://api.example.com",
+		"model_mapping":         map[string]any{"foo": "bar"},
+		"project_id":            "proj-1",
+		"expires_at":            int64(123456),
 	}
 
 	out, status := RedactCredentials(in)

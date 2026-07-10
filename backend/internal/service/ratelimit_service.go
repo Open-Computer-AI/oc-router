@@ -739,7 +739,6 @@ func buildForbiddenErrorMessage(prefix string, upstreamMsg string, responseBody 
 
 // handle403
 // Antigravity
-//
 func (s *RateLimitService) handle403(ctx context.Context, account *Account, upstreamMsg string, responseBody []byte) (shouldDisable bool) {
 	if account.Platform == PlatformAntigravity {
 		return s.handleAntigravity403(ctx, account, upstreamMsg, responseBody)
@@ -1012,7 +1011,6 @@ func clampRateLimit429CooldownSeconds(seconds int) int {
 }
 
 // calculateOpenAI429ResetTime
-//
 func calculateOpenAI429ResetTime(headers http.Header) *time.Time {
 	snapshot := ParseCodexRateLimitHeaders(headers)
 	if snapshot == nil {
@@ -1493,7 +1491,6 @@ func (s *RateLimitService) RecoverAccountState(ctx context.Context, accountID in
 }
 
 // RecoverAccountAfterSuccessfulTest
-//
 func (s *RateLimitService) RecoverAccountAfterSuccessfulTest(ctx context.Context, accountID int64) (*SuccessfulTestRecoveryResult, error) {
 	return s.RecoverAccountState(ctx, accountID, AccountRecoveryOptions{})
 }

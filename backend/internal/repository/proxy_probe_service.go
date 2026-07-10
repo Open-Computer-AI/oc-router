@@ -45,7 +45,6 @@ const (
 )
 
 // probeURLs
-//
 var probeURLs = []struct {
 	url    string
 	parser string // "ip-api" or "httpbin"

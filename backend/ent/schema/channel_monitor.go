@@ -12,7 +12,6 @@ import (
 )
 
 // ChannelMonitor holds the schema definition for the ChannelMonitor entity.
-//
 type ChannelMonitor struct {
 	ent.Schema
 }

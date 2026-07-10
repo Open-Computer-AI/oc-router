@@ -7,7 +7,6 @@ import (
 )
 
 // ChannelMonitor
-//
 const (
 	// monitorRequestTimeout
 	monitorRequestTimeout = 45 * time.Second

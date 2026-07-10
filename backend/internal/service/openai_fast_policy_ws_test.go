@@ -231,7 +231,6 @@ func (f *fakePassthroughFrameConn) Close() error {
 }
 
 // gpt55WhitelistFastPolicy
-//
 func gpt55WhitelistFastPolicy() *OpenAIFastPolicySettings {
 	return &OpenAIFastPolicySettings{
 		Rules: []OpenAIFastPolicyRule{{

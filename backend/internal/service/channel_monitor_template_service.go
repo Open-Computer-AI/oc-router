@@ -135,7 +135,6 @@ func (s *ChannelMonitorRequestTemplateService) CountAssociatedMonitors(ctx conte
 }
 
 // ListAssociatedMonitors
-//
 func (s *ChannelMonitorRequestTemplateService) ListAssociatedMonitors(ctx context.Context, id int64) ([]*AssociatedMonitorBrief, error) {
 	if _, err := s.repo.GetByID(ctx, id); err != nil {
 		return nil, err
@@ -241,7 +240,6 @@ func validateBodyModeParams(mode string, body map[string]any) error {
 var headerNameRegex = regexp.MustCompile(`^[A-Za-z0-9!#$%&'*+\-.^_` + "`" + `|~]+$`)
 
 // forbiddenHeaderNames hop-by-hop + HTTP
-//
 var forbiddenHeaderNames = map[string]bool{
 	"host":              true,
 	"content-length":    true,

@@ -16,7 +16,6 @@ import (
 )
 
 // HTTPUpstreamSuite HTTP
-//
 type HTTPUpstreamSuite struct {
 	suite.Suite
 	cfg *config.Config // test config
@@ -62,7 +61,6 @@ func (s *HTTPUpstreamSuite) TestNilConfigResponseHeaderTimeoutFallback() {
 }
 
 // TestCustomResponseHeaderTimeout
-//
 func (s *HTTPUpstreamSuite) TestCustomResponseHeaderTimeout() {
 	s.cfg.Gateway = config.GatewayConfig{ResponseHeaderTimeout: 7}
 	svc := s.newService()
@@ -225,7 +223,6 @@ func (s *HTTPUpstreamSuite) TestAcquireClient_OverLimitReturnsError() {
 }
 
 // TestDo_WithoutProxy_GoesDirect
-//
 func (s *HTTPUpstreamSuite) TestDo_WithoutProxy_GoesDirect() {
 	upstream := newLocalTestServer(s.T(), http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, _ = io.WriteString(w, "direct")
@@ -244,7 +241,6 @@ func (s *HTTPUpstreamSuite) TestDo_WithoutProxy_GoesDirect() {
 }
 
 // TestDo_WithHTTPProxy_UsesProxy
-//
 func (s *HTTPUpstreamSuite) TestDo_WithHTTPProxy_UsesProxy() {
 	seen := make(chan string, 1)
 	proxySrv := newLocalTestServer(s.T(), http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

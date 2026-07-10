@@ -160,7 +160,6 @@ func (s *SubscriptionService) AssignSubscription(ctx context.Context, input *Ass
 }
 
 // AssignOrExtendSubscription
-//
 func (s *SubscriptionService) AssignOrExtendSubscription(ctx context.Context, input *AssignSubscriptionInput) (*UserSubscription, bool, error) {
 	group, err := s.groupRepo.GetByID(ctx, input.GroupID)
 	if err != nil {
@@ -585,7 +584,6 @@ func (s *SubscriptionService) GetByID(ctx context.Context, id int64) (*UserSubsc
 
 // GetActiveSubscription
 // + singleflight
-//
 func (s *SubscriptionService) GetActiveSubscription(ctx context.Context, userID, groupID int64) (*UserSubscription, error) {
 	key := subCacheKey(userID, groupID)
 
@@ -794,7 +792,6 @@ func (s *SubscriptionService) CheckAndResetWindows(ctx context.Context, sub *Use
 }
 
 // CheckUsageLimits
-//
 func (s *SubscriptionService) CheckUsageLimits(ctx context.Context, sub *UserSubscription, group *Group, additionalCost float64) error {
 	if !sub.CheckDailyLimit(group, additionalCost) {
 		return ErrDailyLimitExceeded
@@ -809,8 +806,6 @@ func (s *SubscriptionService) CheckUsageLimits(ctx context.Context, sub *UserSub
 }
 
 // ValidateAndCheckLimits +
-//
-//
 func (s *SubscriptionService) ValidateAndCheckLimits(sub *UserSubscription, group *Group) (needsMaintenance bool, err error) {
 	if sub.Status == SubscriptionStatusExpired {
 		return false, ErrSubscriptionExpired

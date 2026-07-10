@@ -93,7 +93,6 @@ func nextWeeklyResetTime(now time.Time) time.Time {
 // NextMonthlyResetTimeFrom
 //   - start != nil → + 30d（
 //   - start == nil → + 30d（
-//
 func NextMonthlyResetTimeFrom(start *time.Time, now time.Time) time.Time {
 	if start == nil {
 		return now.Add(30 * 24 * time.Hour)

@@ -32,7 +32,6 @@ const (
 )
 
 // ForcePlatform
-//
 func ForcePlatform(platform string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		//
@@ -107,7 +106,6 @@ func GoogleErrorWriter(c *gin.Context, status int, message string) {
 }
 
 // RequireGroupAssignment
-//
 func RequireGroupAssignment(settingService *service.SettingService, writeError GatewayErrorWriter) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		apiKey, ok := GetAPIKeyFromContext(c)

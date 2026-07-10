@@ -7,7 +7,6 @@ import (
 )
 
 // AdminOnly
-//
 func AdminOnly() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		role, ok := GetUserRoleFromContext(c)

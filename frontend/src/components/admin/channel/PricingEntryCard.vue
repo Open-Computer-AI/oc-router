@@ -329,6 +329,7 @@ async function onModelsUpdate(newModels: string[]) {
       })
     }
   } catch {
+    // Best-effort default-pricing prefetch; on failure the user enters pricing manually.
   }
 }
 </script>

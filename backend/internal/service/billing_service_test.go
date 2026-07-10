@@ -227,7 +227,6 @@ func TestCalculateCost_OpenAIGPT54LongContextAppliesMultiplierToCacheRead(t *tes
 	require.InDelta(t, expectedTotal, cost.ActualCost, 1e-10)
 }
 
-//
 func TestCalculateCost_OpenAIGPT54NoLongContextKeepsCacheReadAtBasePrice(t *testing.T) {
 	svc := newTestBillingService()
 
@@ -270,7 +269,6 @@ func TestCalculateCost_OpenAIGPT54LongContextAppliesMultiplierToCacheCreation(t 
 		"cache_creation_cost should be scaled by LongContextInputMultiplier when long-context pricing applies")
 }
 
-//
 func TestCalculateCost_OpenAIGPT54NoLongContextKeepsCacheCreationAtBasePrice(t *testing.T) {
 	svc := newTestBillingService()
 
@@ -290,8 +288,6 @@ func TestCalculateCost_OpenAIGPT54NoLongContextKeepsCacheCreationAtBasePrice(t *
 		"cache_creation_cost should remain at base price when below long-context threshold")
 }
 
-//
-//
 // +
 func TestCalculateCost_LongContextAppliesMultiplierToCacheCreation5mAnd1h(t *testing.T) {
 	svc := &BillingService{

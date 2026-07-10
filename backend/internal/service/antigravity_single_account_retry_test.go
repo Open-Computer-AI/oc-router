@@ -256,7 +256,6 @@ func TestHandleSmartRetry_429_LongDelay_SingleAccountRetry_StillSwitches(t *test
 
 // TestHandleSmartRetry_503_ShortDelay_SingleAccountRetry_NoRateLimit
 // 503 + retryDelay < 7s + SingleAccountRetry →
-//
 func TestHandleSmartRetry_503_ShortDelay_SingleAccountRetry_NoRateLimit(t *testing.T) {
 	//
 	failRespBody := `{
@@ -337,7 +336,6 @@ func TestHandleSmartRetry_503_ShortDelay_SingleAccountRetry_NoRateLimit(t *testi
 
 // TestHandleSmartRetry_503_ShortDelay_NoSingleAccountRetry_SetsRateLimit
 // + retryDelay < 7s + →
-//
 func TestHandleSmartRetry_503_ShortDelay_NoSingleAccountRetry_SetsRateLimit(t *testing.T) {
 	failRespBody := `{
 		"error": {
@@ -670,7 +668,6 @@ func TestHandleSingleAccountRetryInPlace_NetworkError_ContinuesRetry(t *testing.
 // ---------------------------------------------------------------------------
 
 // TestAntigravityRetryLoop_PreCheck_SingleAccountRetry_SkipsRateLimit
-//
 func TestAntigravityRetryLoop_PreCheck_SingleAccountRetry_SkipsRateLimit(t *testing.T) {
 	upstream := &recordingOKUpstream{}
 	account := &Account{

@@ -50,7 +50,6 @@ var requiredCSPDirectiveValues = []struct {
 }
 
 // GenerateNonce generates a cryptographically secure random nonce.
-//
 func GenerateNonce() (string, error) {
 	b := make([]byte, 16)
 	if _, err := rand.Read(b); err != nil {

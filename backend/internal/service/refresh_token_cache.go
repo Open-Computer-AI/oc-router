@@ -21,7 +21,6 @@ type RefreshTokenData struct {
 
 // RefreshTokenCache
 //
-//
 // Key
 //   - refresh_token:{token_hash}     -> RefreshTokenData (JSON)
 //   - user_refresh_tokens:{user_id}  -> Set<token_hash>

@@ -7,7 +7,6 @@ import (
 )
 
 // TokenRefresher
-//
 type TokenRefresher interface {
 	// CanRefresh
 	CanRefresh(account *Account) bool
@@ -46,7 +45,6 @@ func (r *ClaudeTokenRefresher) CanRefresh(account *Account) bool {
 }
 
 // NeedsRefresh
-//
 func (r *ClaudeTokenRefresher) NeedsRefresh(account *Account, refreshWindow time.Duration) bool {
 	expiresAt := account.GetCredentialAsTime("expires_at")
 	if expiresAt == nil {
@@ -56,7 +54,6 @@ func (r *ClaudeTokenRefresher) NeedsRefresh(account *Account, refreshWindow time
 }
 
 // Refresh
-//
 func (r *ClaudeTokenRefresher) Refresh(ctx context.Context, account *Account) (map[string]any, error) {
 	tokenInfo, err := r.oauthService.RefreshAccountToken(ctx, account)
 	if err != nil {
@@ -108,7 +105,6 @@ func (r *OpenAITokenRefresher) NeedsRefresh(account *Account, refreshWindow time
 }
 
 // Refresh
-//
 func (r *OpenAITokenRefresher) Refresh(ctx context.Context, account *Account) (map[string]any, error) {
 	tokenInfo, err := r.openaiOAuthService.RefreshAccountToken(ctx, account)
 	if err != nil {

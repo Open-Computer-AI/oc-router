@@ -23,8 +23,6 @@ var CodexOfficialClientUserAgentPrefixes = []string{
 }
 
 // CodexOfficialClientOriginatorPrefixes matches Codex
-//
-//
 var CodexOfficialClientOriginatorPrefixes = []string{
 	"codex_",
 	"codex ",
@@ -32,7 +30,6 @@ var CodexOfficialClientOriginatorPrefixes = []string{
 
 // IsBrowserUserAgent
 // "Mozilla/"
-//
 func IsBrowserUserAgent(userAgent string) bool {
 	ua := strings.TrimSpace(userAgent)
 	if ua == "" {
@@ -51,7 +48,6 @@ func IsCodexCLIRequest(userAgent string) bool {
 }
 
 // IsCodexOfficialClientRequest checks if the User-Agent indicates a Codex
-//
 func IsCodexOfficialClientRequest(userAgent string) bool {
 	ua := normalizeCodexClientHeader(userAgent)
 	if ua == "" {

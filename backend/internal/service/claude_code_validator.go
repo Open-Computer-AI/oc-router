@@ -11,7 +11,6 @@ import (
 )
 
 // ClaudeCodeValidator
-//
 type ClaudeCodeValidator struct{}
 
 var (
@@ -25,7 +24,6 @@ var (
 )
 
 // Claude Code
-//
 var claudeCodeSystemPrompts = []string{
 	// claudeOtherSystemPrompt1 - Primary
 	"You are Claude Code, Anthropic's official CLI for Claude.",
@@ -62,7 +60,6 @@ func NewClaudeCodeValidator() *ClaudeCodeValidator {
 }
 
 // Validate
-//
 //
 //	Step 1: User-Agent () -
 //	Step 2:
@@ -147,7 +144,6 @@ func isMessagesCountTokensPath(path string) bool {
 }
 
 // hasClaudeCodeSystemPrompt
-//
 func (v *ClaudeCodeValidator) hasClaudeCodeSystemPrompt(body map[string]any) bool {
 	if body == nil {
 		return false
@@ -276,7 +272,6 @@ func (v *ClaudeCodeValidator) ValidateUserAgent(ua string) bool {
 }
 
 // IncludesClaudeCodeSystemPrompt
-//
 func (v *ClaudeCodeValidator) IncludesClaudeCodeSystemPrompt(body map[string]any) bool {
 	return v.hasClaudeCodeSystemPrompt(body)
 }

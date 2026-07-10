@@ -52,10 +52,6 @@ func NewBedrockSignerFromAccount(account *Account) (*BedrockSigner, error) {
 }
 
 // SignRequest
-//
-//
-//
-//
 func (s *BedrockSigner) SignRequest(ctx context.Context, req *http.Request, body []byte) error {
 	payloadHash := sha256Hash(body)
 	return s.signer.SignHTTP(ctx, s.credentials, req, payloadHash, "bedrock", s.region, time.Now())

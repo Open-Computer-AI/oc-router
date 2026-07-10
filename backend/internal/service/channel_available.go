@@ -10,8 +10,6 @@ import (
 // AvailableGroupRef
 //
 // 「」
-//
-//
 type AvailableGroupRef struct {
 	ID               int64
 	Name             string
@@ -36,11 +34,6 @@ type AvailableChannel struct {
 // ListAvailable
 //
 // (*Channel).SupportedModels() ∪ pricing
-//
-//
-//
-//
-//
 func (s *ChannelService) ListAvailable(ctx context.Context) ([]AvailableChannel, error) {
 	channels, err := s.repo.ListAll(ctx)
 	if err != nil {
@@ -102,8 +95,6 @@ func (s *ChannelService) ListAvailable(ctx context.Context) ([]AvailableChannel,
 //
 //  1. Pricing == nil（
 //  2. Pricing
-//
-//
 func (s *ChannelService) fillGlobalPricingFallback(models []SupportedModel) {
 	if s.pricingService == nil {
 		return
@@ -121,7 +112,6 @@ func (s *ChannelService) fillGlobalPricingFallback(models []SupportedModel) {
 }
 
 // pricingNeedsFallback
-//
 func pricingNeedsFallback(p *ChannelModelPricing) bool {
 	if p == nil {
 		return true
@@ -143,9 +133,9 @@ func pricingNeedsFallback(p *ChannelModelPricing) bool {
 
 // synthesizePricingFromLiteLLM
 //
-//  1.
-//  2. LiteLLM mode="image_generation" → image
-//  3.
+//	1.
+//	2. LiteLLM mode="image_generation" → image
+//	3.
 //
 // LiteLLM
 func synthesizePricingFromLiteLLM(lp *LiteLLMModelPricing, existing *ChannelModelPricing) *ChannelModelPricing {

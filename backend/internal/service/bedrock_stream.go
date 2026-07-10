@@ -192,7 +192,6 @@ func extractBedrockChunkData(payload []byte) []byte {
 
 // transformBedrockInvocationMetrics
 //
-//
 // Bedrock Invoke
 //
 //	{"type":"message_delta","delta":{...},"amazon-bedrock-invocationMetrics":{"inputTokenCount":150,"outputTokenCount":42}}

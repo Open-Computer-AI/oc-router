@@ -96,7 +96,6 @@ func ensureLoginUserActive(user *service.User) error {
 }
 
 // respondWithTokenPair
-//
 func (h *AuthHandler) respondWithTokenPair(c *gin.Context, user *service.User) {
 	if err := ensureLoginUserActive(user); err != nil {
 		response.ErrorFrom(c, err)

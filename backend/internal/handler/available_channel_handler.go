@@ -12,14 +12,13 @@ import (
 
 // AvailableChannelHandler 「」
 //
-//
-//  1.
-//  2.
-//  3.
-//     "
-//     antigravity，"
-//  4.
-//     /
+//	1.
+//	2.
+//	3.
+//	   "
+//	   antigravity，"
+//	4.
+//	   /
 type AvailableChannelHandler struct {
 	channelService *service.ChannelService
 	apiKeyService  *service.APIKeyService
@@ -48,8 +47,6 @@ func (h *AvailableChannelHandler) featureEnabled(c *gin.Context) bool {
 }
 
 // userAvailableGroup
-//
-//
 //
 // /groups/rates，
 type userAvailableGroup struct {
@@ -93,8 +90,6 @@ type userSupportedModel struct {
 }
 
 // userChannelPlatformSection +
-//
-//
 type userChannelPlatformSection struct {
 	Platform        string               `json:"platform"`
 	Groups          []userAvailableGroup `json:"groups"`
@@ -102,9 +97,6 @@ type userChannelPlatformSection struct {
 }
 
 // userAvailableChannel
-//
-//
-//
 type userAvailableChannel struct {
 	Name        string                       `json:"name"`
 	Description string                       `json:"description"`
@@ -167,8 +159,6 @@ func (h *AvailableChannelHandler) List(c *gin.Context) {
 }
 
 // buildPlatformSections
-//
-//
 func buildPlatformSections(
 	ch service.AvailableChannel,
 	visibleGroups []userAvailableGroup,

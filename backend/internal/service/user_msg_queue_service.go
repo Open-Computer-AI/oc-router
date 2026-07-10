@@ -148,7 +148,6 @@ func (s *UserMessageQueueService) Release(ctx context.Context, accountID int64, 
 }
 
 // EnforceDelay
-//
 func (s *UserMessageQueueService) EnforceDelay(ctx context.Context, accountID int64, baseRPM int) error {
 	if s.cache == nil {
 		return nil

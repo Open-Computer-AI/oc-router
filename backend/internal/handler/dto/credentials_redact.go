@@ -5,9 +5,6 @@ import "github.com/Wei-Shaw/sub2api/internal/service"
 
 // RedactCredentials
 // <key>
-//
-//
-//
 func RedactCredentials(in map[string]any) (out map[string]any, status map[string]bool) {
 	if in == nil {
 		return nil, nil

@@ -11,8 +11,6 @@ import (
 
 // InitRedis
 //
-//
-//
 // 1. PoolSize:
 // 2. MinIdleConns:
 // 3. DialTimeout/ReadTimeout/WriteTimeout:

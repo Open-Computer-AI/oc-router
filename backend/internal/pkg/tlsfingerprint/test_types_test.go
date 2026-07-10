@@ -1,7 +1,6 @@
 package tlsfingerprint
 
 // FingerprintResponse represents the response from tls.peet.ws/api/all.
-//
 type FingerprintResponse struct {
 	IP    string  `json:"ip"`
 	TLS   TLSInfo `json:"tls"`

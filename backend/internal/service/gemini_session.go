@@ -49,7 +49,6 @@ func BuildGeminiDigestChain(req *antigravity.GeminiRequest) string {
 
 // GenerateGeminiPrefixHash
 // + apiKeyID + ip + userAgent + platform + model
-//
 func GenerateGeminiPrefixHash(userID, apiKeyID int64, ip, userAgent, platform, model string) string {
 	normalizedUserAgent := NormalizeSessionUserAgent(userAgent)
 	combined := strconv.FormatInt(userID, 10) + ":" +
@@ -97,7 +96,6 @@ const geminiDigestSessionKeyPrefix = "gemini:digest:"
 
 // GenerateGeminiDigestSessionKey
 // + uuid
-//
 func GenerateGeminiDigestSessionKey(prefixHash, uuid string) string {
 	prefix := prefixHash
 	if len(prefixHash) >= 8 {

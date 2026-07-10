@@ -80,7 +80,6 @@ func RedactJSON(raw []byte, extraKeys ...string) string {
 //
 // -
 // - =value / key:"value"
-//
 func RedactText(input string, extraKeys ...string) string {
 	input = strings.TrimSpace(input)
 	if input == "" {

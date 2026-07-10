@@ -503,7 +503,6 @@ func (s *APIKeyRepoSuite) TestIncrementQuotaUsedAndGetState() {
 }
 
 // TestIncrementQuotaUsed_Concurrent
-//
 func TestIncrementQuotaUsed_Concurrent(t *testing.T) {
 	client := testEntClient(t)
 	repo := NewAPIKeyRepository(client, integrationDB).(*apiKeyRepository)

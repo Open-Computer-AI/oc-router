@@ -981,12 +981,8 @@ type ApplyOAuthCredentialsRequest struct {
 // (Update)
 //   - *
 //   - Extra (JSONB key )，****
-//     * / privacy_mode
+//   - / privacy_mode
 //   - + InvalidateToken，
-//
-//
-//
-//
 func (h *AccountHandler) ApplyOAuthCredentials(c *gin.Context) {
 	accountID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
@@ -2389,7 +2385,6 @@ func (h *AccountHandler) GetAntigravityDefaultModelMapping(c *gin.Context) {
 }
 
 // sanitizeExtraBaseRPM
-//
 func sanitizeExtraBaseRPM(extra map[string]any) {
 	if extra == nil {
 		return

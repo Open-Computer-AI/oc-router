@@ -8,7 +8,6 @@ import (
 )
 
 // TLSFingerprintProfile TLS
-//
 type TLSFingerprintProfile struct {
 	ID                  int64     `json:"id"`
 	Name                string    `json:"name"`
@@ -36,7 +35,6 @@ func (p *TLSFingerprintProfile) Validate() error {
 }
 
 // ToTLSProfile
-//
 func (p *TLSFingerprintProfile) ToTLSProfile() *tlsfingerprint.Profile {
 	return &tlsfingerprint.Profile{
 		Name:                p.Name,

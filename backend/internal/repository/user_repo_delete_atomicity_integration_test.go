@@ -18,11 +18,10 @@ import (
 // userRepo.Delete
 //
 // ""
-//   -
-//     → Case 1 #3021
-//   -
 //
-//
+//	-
+//	  → Case 1 #3021
+//	-
 //
 // （
 func TestUserRepository_DeleteUser_AtomicWithAPIKeys(t *testing.T) {

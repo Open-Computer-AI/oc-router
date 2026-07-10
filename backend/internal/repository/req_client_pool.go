@@ -21,11 +21,9 @@ type reqClientOptions struct {
 
 // sharedReqClients
 //
-//
 // 1. claude_oauth_service.go:
 // 2. openai_oauth_service.go:
 // 3. gemini_oauth_client.go:
-//
 //
 // 1. ++
 // 2.

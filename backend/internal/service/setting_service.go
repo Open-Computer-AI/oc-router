@@ -25,8 +25,6 @@ import (
 )
 
 // CoerceDingTalkCorpPolicyForWrite
-//
-//
 func CoerceDingTalkCorpPolicyForWrite(policy string) string {
 	return coerceDeprecatedDingTalkCorpPolicy(policy)
 }
@@ -965,7 +963,6 @@ func (s *SettingService) IsUserErrorViewAllowed(ctx context.Context) bool {
 }
 
 // GetAntigravityUserAgentVersion
-//
 func (s *SettingService) GetAntigravityUserAgentVersion(ctx context.Context) string {
 	fallback := antigravity.GetDefaultUserAgentVersion()
 	if s == nil || s.settingRepo == nil {
@@ -1062,8 +1059,6 @@ func (s *SettingService) GetOpenAICodexUserAgent(ctx context.Context) string {
 }
 
 // IsOpenAIAllowClaudeCodeCodexPluginEnabled
-//
-//
 func (s *SettingService) IsOpenAIAllowClaudeCodeCodexPluginEnabled(ctx context.Context) bool {
 	if cached, ok := s.openAIAllowCodexPluginCache.Load().(*cachedOpenAIAllowCodexPlugin); ok && cached != nil {
 		if time.Now().UnixNano() < cached.expiresAt {
@@ -1941,7 +1936,6 @@ func (s *SettingService) buildSystemSettingsUpdates(ctx context.Context, setting
 
 // validateDefaultPlatformQuotaMap
 // >= 0。
-//
 func validateDefaultPlatformQuotaMap(m map[string]*DefaultPlatformQuotaSetting) error {
 	for platform, pq := range m {
 		if !IsAllowedQuotaPlatform(platform) {
@@ -2485,7 +2479,6 @@ func (s *SettingService) IsTotpEnabled(ctx context.Context) bool {
 }
 
 // IsTotpEncryptionKeyConfigured
-//
 func (s *SettingService) IsTotpEncryptionKeyConfigured() bool {
 	return s.cfg.Totp.EncryptionKeyConfigured
 }
@@ -3653,7 +3646,6 @@ func (s *SettingService) GenerateAdminAPIKey(ctx context.Context) (string, error
 }
 
 // GetAdminAPIKeyStatus
-//
 func (s *SettingService) GetAdminAPIKeyStatus(ctx context.Context) (maskedKey string, exists bool, err error) {
 	key, err := s.settingRepo.GetValue(ctx, SettingKeyAdminAPIKey)
 	if err != nil {
@@ -3677,7 +3669,6 @@ func (s *SettingService) GetAdminAPIKeyStatus(ctx context.Context) (maskedKey st
 }
 
 // GetAdminAPIKey
-//
 func (s *SettingService) GetAdminAPIKey(ctx context.Context) (string, error) {
 	key, err := s.settingRepo.GetValue(ctx, SettingKeyAdminAPIKey)
 	if err != nil {

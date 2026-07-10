@@ -13,7 +13,6 @@ import (
 )
 
 // ProvideConcurrencyCache
-//
 func ProvideConcurrencyCache(rdb *redis.Client, cfg *config.Config) service.ConcurrencyCache {
 	waitTTLSeconds := int(cfg.Gateway.Scheduling.StickySessionWaitTimeout.Seconds())
 	if cfg.Gateway.Scheduling.FallbackWaitTimeout > cfg.Gateway.Scheduling.StickySessionWaitTimeout {
@@ -26,19 +25,16 @@ func ProvideConcurrencyCache(rdb *redis.Client, cfg *config.Config) service.Conc
 }
 
 // ProvideGitHubReleaseClient
-//
 func ProvideGitHubReleaseClient(cfg *config.Config) service.GitHubReleaseClient {
 	return NewGitHubReleaseClient(cfg.Update.ProxyURL, cfg.Security.ProxyFallback.AllowDirectOnError)
 }
 
 // ProvidePricingRemoteClient
-//
 func ProvidePricingRemoteClient(cfg *config.Config) service.PricingRemoteClient {
 	return NewPricingRemoteClient(cfg.Update.ProxyURL, cfg.Security.ProxyFallback.AllowDirectOnError)
 }
 
 // ProvideSessionLimitCache
-//
 func ProvideSessionLimitCache(rdb *redis.Client, cfg *config.Config) service.SessionLimitCache {
 	defaultIdleTimeoutMinutes := 5 // 默认 5 minutes空闲timeout
 	if cfg != nil && cfg.Gateway.SessionIdleTimeoutMinutes > 0 {
@@ -152,9 +148,7 @@ var ProviderSet = wire.NewSet(
 
 // ProvideEnt
 //
-//
-// Wire
-//
+// # Wire
 //
 // *ent.Client
 func ProvideEnt(cfg *config.Config) (*ent.Client, error) {
@@ -164,11 +158,8 @@ func ProvideEnt(cfg *config.Config) (*ent.Client, error) {
 
 // ProvideSQLDB *sql.DB
 //
-//
-//
-//
 //   - Ent
-//   -
+//     -
 //
 // *ent.Client
 // *sql.DB
@@ -188,8 +179,8 @@ func ProvideSQLDB(client *ent.Client) (*sql.DB, error) {
 // ProvideRedis
 //
 // Redis
-//   -
 //
+//	-
 //
 // *redis.Client
 func ProvideRedis(cfg *config.Config) *redis.Client {

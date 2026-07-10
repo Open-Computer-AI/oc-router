@@ -1,10 +1,7 @@
 // Package repository
 //
-//
-//
-//
-//   -
-//   -
+//	-
+//	-
 package repository
 
 import (
@@ -32,7 +29,6 @@ import (
 )
 
 // accountRepository
-//
 //
 //   - client: Ent
 //   - sql:
@@ -65,7 +61,6 @@ func NewAccountRepository(client *dbent.Client, sqlDB *sql.DB, schedulerCache se
 }
 
 // newAccountRepositoryWithSQL
-//
 func newAccountRepositoryWithSQL(client *dbent.Client, sqlq sqlExecutor, schedulerCache service.SchedulerCache) *accountRepository {
 	return &accountRepository{client: client, sql: sqlq, schedulerCache: schedulerCache}
 }
@@ -241,7 +236,7 @@ func (r *accountRepository) GetByIDs(ctx context.Context, ids []int64) ([]*servi
 // ExistsByID
 //
 //   - ()
-//   -
+//     -
 func (r *accountRepository) ExistsByID(ctx context.Context, id int64) (bool, error) {
 	exists, err := r.client.Account.Query().Where(dbaccount.IDEQ(id)).Exist(ctx)
 	if err != nil {
@@ -1965,8 +1960,6 @@ const nextWeeklyResetAtExpr = `(
 )`
 
 // IncrementQuotaUsed
-//
-//
 func (r *accountRepository) IncrementQuotaUsed(ctx context.Context, id int64, amount float64) error {
 	rows, err := r.sql.QueryContext(ctx,
 		`UPDATE accounts SET extra = (
@@ -2037,7 +2030,6 @@ func (r *accountRepository) IncrementQuotaUsed(ctx context.Context, id int64, am
 }
 
 // ResetQuotaUsed
-//
 func (r *accountRepository) ResetQuotaUsed(ctx context.Context, id int64) error {
 	_, err := r.sql.ExecContext(ctx,
 		`UPDATE accounts SET extra = (
@@ -2056,8 +2048,6 @@ func (r *accountRepository) ResetQuotaUsed(ctx context.Context, id int64) error 
 }
 
 // RevertProxyFallback
-//
-//
 func (r *accountRepository) RevertProxyFallback(ctx context.Context, accountID int64) error {
 	res, err := r.sql.ExecContext(ctx, `
 		UPDATE accounts SET proxy_id=proxy_fallback_origin_id, proxy_fallback_origin_id=NULL, updated_at=NOW()

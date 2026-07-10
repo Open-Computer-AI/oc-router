@@ -39,7 +39,6 @@ return 0
 // - Multi-instance: best-effort Redis leader lock so only one node runs cleanup.
 // - Safety: deletes in batches to avoid long transactions.
 //
-//
 // + leader lock + heartbeat，
 type OpsCleanupService struct {
 	opsRepo           OpsRepository
@@ -176,7 +175,6 @@ func (s *OpsCleanupService) applyScheduleLocked(ctx context.Context) error {
 // Reload
 //
 // retention
-//
 func (s *OpsCleanupService) Reload(ctx context.Context) error {
 	if s == nil {
 		return nil
@@ -191,12 +189,9 @@ func (s *OpsCleanupService) Reload(ctx context.Context) error {
 
 // computeEffectiveLocked ""
 //
-//
 //   - Enabled：settings
 //   - Schedule：settings
 //   - *RetentionDays：settings >=0 =TRUNCATE），<0
-//
-//
 func (s *OpsCleanupService) computeEffectiveLocked(ctx context.Context) {
 	base := config.OpsCleanupConfig{}
 	if s.cfg != nil {

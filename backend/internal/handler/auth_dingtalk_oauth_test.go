@@ -72,7 +72,6 @@ func TestCheckDingTalkCorpAllowed_CrossOrgPolicy(t *testing.T) {
 
 // TestCheckDingTalkCorpAllowed_InternalOnly =internal_only
 //
-//
 // （
 func TestCheckDingTalkCorpAllowed_InternalOnly(t *testing.T) {
 	cfgWithCorpID := config.DingTalkConnectConfig{
@@ -293,7 +292,6 @@ func TestResolveDingTalkDeptPath_SingleLevel(t *testing.T) {
 // TestSyncDingTalkIdentity_UsesCfgAttrKeys
 // =nil
 // syncField
-//
 func TestSyncDingTalkIdentity_UsesCfgAttrKeys_NoopWithNilService(t *testing.T) {
 	handler := &AuthHandler{
 		userAttributeService: nil, // nil → 触发 warn 跳过，但不 panic
@@ -322,8 +320,6 @@ func TestSyncDingTalkIdentity_UsesCfgAttrKeys_NoopWithNilService(t *testing.T) {
 }
 
 // TestSyncDingTalkIdentity_DefaultAttrKeys_NoopWithNilService
-//
-//
 func TestSyncDingTalkIdentity_DefaultAttrKeys_NoopWithNilService(t *testing.T) {
 	handler := &AuthHandler{
 		userAttributeService: nil,

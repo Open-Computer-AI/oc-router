@@ -48,7 +48,6 @@ func newRunnerForTest(svc monitorRunnerSvc) *ChannelMonitorRunner {
 	return newChannelMonitorRunner(svc, nil)
 }
 
-//
 func waitFor(t *testing.T, timeout time.Duration, msg string, cond func() bool) {
 	t.Helper()
 	deadline := time.Now().Add(timeout)
@@ -241,8 +240,6 @@ func TestStop_WaitsForInFlightCheck(t *testing.T) {
 }
 
 // TestInFlight_PoolFullReleasesSlot
-//
-//
 func TestInFlight_AcquireReleaseSymmetric(t *testing.T) {
 	svc := &stubMonitorSvc{}
 	r := newRunnerForTest(svc)

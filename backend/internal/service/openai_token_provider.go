@@ -272,10 +272,7 @@ func (p *OpenAITokenProvider) GetAccessToken(ctx context.Context, account *Accou
 
 // disableAccountMissingRefreshToken
 //
-//
 // （NeedsRefresh
-//
-//
 func (p *OpenAITokenProvider) disableAccountMissingRefreshToken(account *Account, reason string) {
 	if p == nil || p.accountRepo == nil || account == nil {
 		return

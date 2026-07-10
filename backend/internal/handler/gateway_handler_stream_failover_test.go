@@ -18,10 +18,9 @@ const partialMessageStartSSE = "event: message_start\ndata: {\"type\":\"message_
 
 // TestStreamWrittenGuard_MessagesPath_AbortFailoverOnSSEContentWritten
 //
-//
 //  1. c.Writer.Size()
 //  2. handleFailoverExhausted =true
-//  3.
+//     3.
 func TestStreamWrittenGuard_MessagesPath_AbortFailoverOnSSEContentWritten(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	w := httptest.NewRecorder()
@@ -68,7 +67,6 @@ func TestStreamWrittenGuard_MessagesPath_AbortFailoverOnSSEContentWritten(t *tes
 }
 
 // TestStreamWrittenGuard_GeminiPath_AbortFailoverOnSSEContentWritten
-//
 func TestStreamWrittenGuard_GeminiPath_AbortFailoverOnSSEContentWritten(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	w := httptest.NewRecorder()

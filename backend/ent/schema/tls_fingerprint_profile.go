@@ -14,8 +14,6 @@ import (
 // TLSFingerprintProfile
 //
 // TLS
-//
-//
 type TLSFingerprintProfile struct {
 	ent.Schema
 }

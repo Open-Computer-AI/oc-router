@@ -28,7 +28,6 @@ type GroupRPMOverrideInput struct {
 }
 
 // UserGroupRateRepository
-//
 type UserGroupRateRepository interface {
 	// GetByUserID
 	GetByUserID(ctx context.Context, userID int64) (map[int64]float64, error)

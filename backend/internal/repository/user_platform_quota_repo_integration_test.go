@@ -263,8 +263,9 @@ func TestUserPlatformQuotaRepository_ResetExpiredWindow_NotFoundReturnsSentinel(
 }
 
 // TestBatchSnapshotUsage_InsertOverwriteMultiKey
-//  1.
-//  2.
+//
+//	1.
+//	2.
 func TestBatchSnapshotUsage_InsertOverwriteMultiKey(t *testing.T) {
 	ctx := context.Background()
 	// BatchSnapshotUsage

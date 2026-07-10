@@ -13,7 +13,6 @@ import (
 )
 
 // PromoCodeUsage holds the schema definition for the PromoCodeUsage entity.
-//
 type PromoCodeUsage struct {
 	ent.Schema
 }

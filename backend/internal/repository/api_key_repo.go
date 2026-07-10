@@ -87,8 +87,8 @@ func (r *apiKeyRepository) GetByID(ctx context.Context, id int64) (*service.APIK
 // GetKeyAndOwnerID
 //
 //   - ()
-//   -
-//   -
+//     -
+//     -
 func (r *apiKeyRepository) GetKeyAndOwnerID(ctx context.Context, id int64) (string, int64, error) {
 	m, err := r.activeQuery().
 		Where(apikey.IDEQ(id)).

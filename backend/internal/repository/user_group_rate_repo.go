@@ -170,9 +170,10 @@ func (r *userGroupRateRepository) GetRPMOverrideByUserAndGroup(ctx context.Conte
 }
 
 // SyncUserGroupRates
-//   -
-//   -
-//   -
+//
+//	-
+//	-
+//	-
 func (r *userGroupRateRepository) SyncUserGroupRates(ctx context.Context, userID int64, rates map[int64]*float64) error {
 	if len(rates) == 0 {
 		if _, err := r.sql.ExecContext(ctx, `
@@ -240,8 +241,9 @@ func (r *userGroupRateRepository) SyncUserGroupRates(ctx context.Context, userID
 }
 
 // SyncGroupRateMultipliers
-//   -
-//   -
+//
+//	-
+//	-
 func (r *userGroupRateRepository) SyncGroupRateMultipliers(ctx context.Context, groupID int64, entries []service.GroupRateMultiplierInput) error {
 	keepUserIDs := make([]int64, 0, len(entries))
 	for _, e := range entries {
@@ -297,8 +299,9 @@ func (r *userGroupRateRepository) SyncGroupRateMultipliers(ctx context.Context, 
 }
 
 // SyncGroupRPMOverrides
-//   -
-//   -
+//
+//	-
+//	-
 func (r *userGroupRateRepository) SyncGroupRPMOverrides(ctx context.Context, groupID int64, entries []service.GroupRPMOverrideInput) error {
 	keepUserIDs := make([]int64, 0, len(entries))
 	var clearUserIDs []int64

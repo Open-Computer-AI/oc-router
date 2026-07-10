@@ -199,7 +199,6 @@ func testTx(t *testing.T) *sql.Tx {
 }
 
 // testEntClient
-//
 func testEntClient(t *testing.T) *dbent.Client {
 	t.Helper()
 	return integrationEntClient
@@ -219,8 +218,6 @@ func testEntTx(t *testing.T) *dbent.Tx {
 
 // testEntSQLTx
 // *sql.Tx ()
-//
-//
 //
 // Deprecated: Use testEntClient or testEntTx instead.
 func testEntSQLTx(t *testing.T) (*dbent.Client, *sql.Tx) {

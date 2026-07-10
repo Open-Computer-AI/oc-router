@@ -748,7 +748,6 @@ func TestAuthService_LoginOrRegisterOAuthWithTokenPair_ExistingUserDoesNotGrantA
 }
 
 // newAuthServiceWithDingTalkCfg
-//
 func newAuthServiceWithDingTalkCfg(settings map[string]string, dtCfg config.DingTalkConnectConfig) *AuthService {
 	cfg := &config.Config{
 		JWT:      config.JWTConfig{Secret: "test-secret", ExpireHour: 1},

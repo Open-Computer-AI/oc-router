@@ -15,7 +15,7 @@ import (
 // ErrorPassthroughRule
 //
 //   - +
-//   -
+//     -
 type ErrorPassthroughRule struct {
 	ent.Schema
 }

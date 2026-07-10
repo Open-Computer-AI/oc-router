@@ -1099,7 +1099,6 @@ func parseOpsErrorResponse(body []byte) parsedOpsError {
 
 // getOpsAPIKey
 //
-//
 // （
 func getOpsAPIKey(c *gin.Context) *service.APIKey {
 	if apiKey, ok := middleware2.GetAPIKeyFromContext(c); ok && apiKey != nil {

@@ -48,7 +48,6 @@ func TestPlatformFromAPIKey_DerivesFromGroup(t *testing.T) {
 }
 
 // TestQuotaPlatform
-//
 func TestQuotaPlatform(t *testing.T) {
 	apiKey := &APIKey{Group: &Group{Platform: PlatformAnthropic}}
 

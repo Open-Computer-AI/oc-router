@@ -38,7 +38,6 @@ func NewUserMsgQueueHelper(
 }
 
 // AcquireWithWait
-//
 func (h *UserMsgQueueHelper) AcquireWithWait(
 	c *gin.Context,
 	accountID int64,

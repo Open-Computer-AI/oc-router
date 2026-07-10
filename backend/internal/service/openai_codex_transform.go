@@ -976,7 +976,6 @@ func extractPromptLikeInstructionsFromInput(reqBody map[string]any) string {
 //
 // →GPT-5-Codex，
 // gpt-5.2→GPT-5.2，gpt-5.1/gpt-5→GPT-5.1），
-//
 func defaultCodexSynthInstructions(model string) string {
 	if instructions := strings.TrimSpace(openai.CodexBaseInstructionsForModel(model)); instructions != "" {
 		return instructions
@@ -987,7 +986,6 @@ func defaultCodexSynthInstructions(model string) string {
 // ensureCodexReasoningInclude ["reasoning.encrypted_content"]。
 //
 // =false
-//
 func ensureCodexReasoningInclude(reqBody map[string]any) bool {
 	reasoning, ok := reqBody["reasoning"].(map[string]any)
 	if !ok || len(reasoning) == 0 {
@@ -1013,8 +1011,6 @@ func ensureCodexReasoningInclude(reqBody map[string]any) bool {
 }
 
 // applyCodexClientMetadata ["x-codex-installation-id"]，
-//
-//
 //
 // （——
 func applyCodexClientMetadata(reqBody map[string]any, account *Account) bool {
@@ -1064,7 +1060,6 @@ func applyInstructions(reqBody map[string]any, isCodexCLI bool) bool {
 }
 
 // isInstructionsEmpty
-//
 func isInstructionsEmpty(reqBody map[string]any) bool {
 	val, exists := reqBody["instructions"]
 	if !exists {

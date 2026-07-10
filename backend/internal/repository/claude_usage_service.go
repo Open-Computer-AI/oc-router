@@ -15,7 +15,6 @@ import (
 
 const defaultClaudeUsageURL = "https://api.anthropic.com/api/oauth/usage"
 
-//
 const defaultUsageUserAgent = "claude-code/2.1.7"
 
 type claudeUsageService struct {

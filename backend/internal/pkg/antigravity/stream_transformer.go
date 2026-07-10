@@ -148,7 +148,6 @@ func (p *StreamingProcessor) ProcessLine(line string) []byte {
 
 // Finish
 // == false），
-//
 func (p *StreamingProcessor) Finish() ([]byte, *ClaudeUsage) {
 	usage := &ClaudeUsage{
 		InputTokens:          p.inputTokens,

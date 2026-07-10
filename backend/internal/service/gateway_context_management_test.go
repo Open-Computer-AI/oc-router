@@ -113,7 +113,6 @@ func TestSanitizeAnthropicBodyForBetaTokens_EmptyBody(t *testing.T) {
 
 // ★ "+ haiku"
 // +
-//
 func TestSanitizeAnthropicBodyForBetaTokens_HaikuRealCCClientPreservesField(t *testing.T) {
 	body := []byte(`{"model":"claude-haiku-4-5","context_management":{"edits":[{"type":"clear_thinking_20251015","keep":"all"}]},"messages":[]}`)
 	// +
@@ -219,9 +218,7 @@ func TestComputeFinalCountTokensAnthropicBeta_OAuthMimic_AlwaysIncludesContextMa
 		"count_tokens 路径必须含 token-counting beta")
 }
 
-//
 // （
-//
 func TestComputeFinalCountTokensAnthropicBeta_OAuthMimic_PreservesClientBeta(t *testing.T) {
 	s := newTestGatewayServiceForBeta(false)
 	hdr := http.Header{}
@@ -500,11 +497,6 @@ func TestBuildUpstreamRequest_OAuthTransparentHaikuWithRealCCBeta_PreservesField
 }
 
 // CCH
-//
-//
-//
-//
-//
 func TestSanitizeMustBeBeforeCCHSigning_HashConsistency(t *testing.T) {
 	// + cch=00000
 	body := []byte(`{"model":"claude-haiku-4-5","context_management":{"edits":[{"type":"clear_thinking_20251015"}]},"system":[{"type":"text","text":"x-anthropic-billing-header: cc_version=2.1.92; cch=00000;"}],"messages":[]}`)

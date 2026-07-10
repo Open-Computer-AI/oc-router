@@ -55,7 +55,6 @@ type channelMonitorUserListItem struct {
 }
 
 // channelMonitorUserTimelinePoint
-//
 type channelMonitorUserTimelinePoint struct {
 	Status        string `json:"status"`
 	LatencyMs     *int   `json:"latency_ms"`

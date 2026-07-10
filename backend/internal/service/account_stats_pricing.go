@@ -8,10 +8,10 @@ import (
 // resolveAccountStatsCost
 // × account_rate_multiplier）。
 //
-//  1.
-//  2. ApplyPricingToAccountStats
-//  3.
-//  4. nil → × account_rate_multiplier）
+//	1.
+//	2. ApplyPricingToAccountStats
+//	3.
+//	4. nil → × account_rate_multiplier）
 //
 // upstreamModel
 // totalCost
@@ -95,7 +95,6 @@ func tryCustomRules(
 
 // matchAccountStatsRule
 // ∈ rule.AccountIDs ∈ rule.GroupIDs。
-//
 func matchAccountStatsRule(rule *AccountStatsPricingRule, accountID, groupID int64) bool {
 	if len(rule.AccountIDs) == 0 && len(rule.GroupIDs) == 0 {
 		return false

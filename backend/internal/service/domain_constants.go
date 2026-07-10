@@ -45,7 +45,6 @@ const (
 
 // AllowedQuotaPlatforms × platform quota
 // ent/schema/user_platform_quota.go
-//
 var AllowedQuotaPlatforms = []string{
 	PlatformAnthropic,
 	PlatformOpenAI,

@@ -353,8 +353,6 @@ func DecodeIDToken(idToken string) (*IDTokenClaims, error) {
 
 // ParseIDToken parses the ID Token JWT and extracts claims.
 //
-//
-//
 //	https://auth.openai.com/.well-known/jwks.json
 func ParseIDToken(idToken string) (*IDTokenClaims, error) {
 	claims, err := DecodeIDToken(idToken)

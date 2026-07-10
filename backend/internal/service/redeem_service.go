@@ -347,7 +347,6 @@ func (s *RedeemService) incrementRedeemErrorCount(ctx context.Context, userID in
 }
 
 // acquireRedeemLock
-//
 func (s *RedeemService) acquireRedeemLock(ctx context.Context, code string) bool {
 	if s.cache == nil {
 		return true // 无 Redis 时降级为不加锁

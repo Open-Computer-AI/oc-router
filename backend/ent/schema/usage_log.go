@@ -14,8 +14,6 @@ import (
 )
 
 // UsageLog
-//
-//
 type UsageLog struct {
 	ent.Schema
 }

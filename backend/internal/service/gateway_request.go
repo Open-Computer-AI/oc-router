@@ -43,8 +43,6 @@ var (
 )
 
 // SessionContext
-//
-//
 type SessionContext struct {
 	ClientIP  string
 	UserAgent string
@@ -211,7 +209,6 @@ func refreshGatewayRequestRanges(parsed *ParsedRequest, protocol string) error {
 
 // ParsedRequest
 //
-//
 // 1. gateway_handler.go
 // 2. gateway_service.go
 // 3. GenerateSessionHash
@@ -287,7 +284,6 @@ func normalizeSessionUserAgentFallback(raw string) string {
 
 // ParseGatewayRequest
 // protocol
-//
 func ParseGatewayRequest(body *RequestBodyRef, protocol string) (*ParsedRequest, error) {
 	parsed := &ParsedRequest{Body: body}
 	if err := parseGatewayRequestCurrentBody(parsed, protocol); err != nil {
@@ -375,8 +371,6 @@ func (p *ParsedRequest) ReplaceBody(data []byte) error {
 }
 
 // sliceRawFromBody
-//
-//
 func sliceRawFromBody(body []byte, r gjson.Result) []byte {
 	if r.Index > 0 {
 		end := r.Index + len(r.Raw)
@@ -807,20 +801,15 @@ const anthropicBetaContextManagementToken = "context-management-2025-06-27"
 //
 //   - context_management +
 //     （
-//   -
+//     -
 //     `context-management-2025-06-27`
-//   -
+//     -
 //     "context_management: Extra inputs are not permitted"
-//
 //
 // context_management → strip。
 // ""
 //
-//
-//
-//
 // (sanitized, changed)：changed
-//
 func sanitizeAnthropicBodyForBetaTokens(body []byte, anthropicBetaHeader string) ([]byte, bool) {
 	if len(body) == 0 {
 		return body, false
@@ -845,7 +834,6 @@ func sanitizeAnthropicBodyForBetaTokens(body []byte, anthropicBetaHeader string)
 }
 
 // anthropicBetaTokensContains
-//
 func anthropicBetaTokensContains(header, token string) bool {
 	if header == "" || token == "" {
 		return false

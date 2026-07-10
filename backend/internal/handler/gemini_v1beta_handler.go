@@ -715,12 +715,9 @@ func shouldFallbackGeminiModel(modelName string, res *service.UpstreamHTTPResult
 
 // extractGeminiCLISessionHash
 //
-//
-//  1.
-//  2.
-//  3.
-//
-//
+//	1.
+//	2.
+//	3.
 //
 // extractGeminiCLISessionHash extracts session identifier from Gemini CLI requests.
 // Combines x-gemini-api-privileged-user-id header with tmp directory hash from request body.

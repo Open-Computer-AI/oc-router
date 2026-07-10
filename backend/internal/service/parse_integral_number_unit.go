@@ -10,8 +10,7 @@ import (
 // parseIntegralNumber
 // “”
 //
-//   -
-//
+//	-
 func parseIntegralNumber(raw any) (int, bool) {
 	switch v := raw.(type) {
 	case float64:

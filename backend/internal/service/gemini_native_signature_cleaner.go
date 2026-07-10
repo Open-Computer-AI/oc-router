@@ -8,9 +8,6 @@ import (
 
 // CleanGeminiNativeThoughtSignatures
 //
-//
-//
-//
 // CleanGeminiNativeThoughtSignatures replaces thoughtSignature fields with dummy signature
 // in Gemini native API requests to avoid cross-account signature validation errors.
 //

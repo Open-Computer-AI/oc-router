@@ -29,7 +29,6 @@ type UserErrorRequestList struct {
 }
 
 // MapUserErrorCategory + error_type
-//
 func MapUserErrorCategory(phase, errType string) string {
 	switch phase {
 	case "auth":

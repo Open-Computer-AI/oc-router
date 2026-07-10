@@ -313,7 +313,6 @@ func (s *AccountService) Update(ctx context.Context, id int64, req UpdateAccount
 }
 
 // Delete
-//
 func (s *AccountService) Delete(ctx context.Context, id int64) error {
 	exists, err := s.accountRepo.ExistsByID(ctx, id)
 	if err != nil {

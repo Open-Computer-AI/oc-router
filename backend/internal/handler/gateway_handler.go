@@ -1579,8 +1579,6 @@ func (h *GatewayHandler) handleStreamingAwareError(c *gin.Context, status int, e
 
 // ensureForwardErrorResponse
 // Writer
-//
-//
 func (h *GatewayHandler) ensureForwardErrorResponse(c *gin.Context, streamStarted bool) bool {
 	if c == nil || c.Writer == nil {
 		return false
@@ -1621,7 +1619,6 @@ func gatewayForwardErrorAlreadyCommunicated(c *gin.Context, writerSizeBeforeForw
 }
 
 // checkClaudeCodeVersion
-//
 func (h *GatewayHandler) checkClaudeCodeVersion(c *gin.Context) bool {
 	ctx := c.Request.Context()
 	if !service.IsClaudeCodeClient(ctx) {
@@ -1919,7 +1916,6 @@ func sendMockInterceptStream(c *gin.Context, model string, interceptType Interce
 }
 
 // generateRealisticMsgID
-//
 func generateRealisticMsgID() string {
 	const charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 	const idLen = 24

@@ -337,7 +337,6 @@ func testGeminiGenerate(t *testing.T, geminiKey string, model string, stream boo
 }
 
 // TestClaudeMessagesWithComplexTools
-//
 func TestClaudeMessagesWithComplexTools(t *testing.T) {
 	claudeKey := requireClaudeAPIKey(t)
 	models := []string{
@@ -554,8 +553,6 @@ func testClaudeMessageWithTools(t *testing.T, claudeKey string, model string) {
 }
 
 // TestClaudeMessagesWithThinkingAndTools
-//
-//
 func TestClaudeMessagesWithThinkingAndTools(t *testing.T) {
 	claudeKey := requireClaudeAPIKey(t)
 	models := []string{
@@ -713,7 +710,6 @@ func TestClaudeMessagesWithGeminiModel(t *testing.T) {
 }
 
 // TestClaudeMessagesWithNoSignature
-//
 func TestClaudeMessagesWithNoSignature(t *testing.T) {
 	claudeKey := requireClaudeAPIKey(t)
 	models := []string{

@@ -91,10 +91,10 @@ type channelMonitorResponse struct {
 	PrimaryLatencyMs    *int                                 `json:"primary_latency_ms"`
 	Availability7d      float64                              `json:"availability_7d"`
 	ExtraModelsStatus   []dto.ChannelMonitorExtraModelStatus `json:"extra_models_status"`
-	TemplateID       *int64            `json:"template_id"`
-	ExtraHeaders     map[string]string `json:"extra_headers"`
-	BodyOverrideMode string            `json:"body_override_mode"`
-	BodyOverride     map[string]any    `json:"body_override"`
+	TemplateID          *int64                               `json:"template_id"`
+	ExtraHeaders        map[string]string                    `json:"extra_headers"`
+	BodyOverrideMode    string                               `json:"body_override_mode"`
+	BodyOverride        map[string]any                       `json:"body_override"`
 }
 
 type channelMonitorCheckResultResponse struct {
@@ -189,7 +189,6 @@ func historyEntryToResponse(e *service.ChannelMonitorHistoryEntry) channelMonito
 }
 
 // ParseChannelMonitorID
-//
 func ParseChannelMonitorID(c *gin.Context) (int64, bool) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil || id <= 0 {
@@ -416,7 +415,6 @@ func (h *ChannelMonitorHandler) History(c *gin.Context) {
 }
 
 // parseHistoryLimit
-//
 func parseHistoryLimit(raw string) int {
 	if strings.TrimSpace(raw) == "" {
 		return service.MonitorHistoryDefaultLimit

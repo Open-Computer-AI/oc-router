@@ -5,7 +5,6 @@
 //   - SOCKS5H:
 //
 // ()
-//
 package proxyutil
 
 import (
@@ -22,10 +21,13 @@ import (
 // ConfigureTransportProxy
 //
 //   - http/https:
+//
 //   - socks5:
+//
 //   - socks5h:
 //
 //   - transport:
+//
 //   - proxyURL:
 //
 //   - error:

@@ -15,7 +15,6 @@ import (
 // ChannelMonitorDailyRollup (monitor_id, model, bucket_date)
 // +
 // = sum_latency_ms / count_latency；availability = ok_count / total_checks）。
-//
 type ChannelMonitorDailyRollup struct {
 	ent.Schema
 }

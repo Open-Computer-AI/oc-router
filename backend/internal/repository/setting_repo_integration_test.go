@@ -107,7 +107,6 @@ func (s *SettingRepoSuite) TestSetMultiple_Upsert() {
 }
 
 // TestSet_EmptyValue
-//
 func (s *SettingRepoSuite) TestSet_EmptyValue() {
 	//
 	s.Require().NoError(s.repo.Set(s.ctx, "empty_key", ""), "Set with empty value should succeed")

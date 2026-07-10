@@ -14,8 +14,9 @@ import (
 // PaymentProviderInstance holds the schema definition for the PaymentProviderInstance entity.
 //
 // PaymentProviderInstance
-//   -
-//   - config
+//
+//	-
+//	- config
 type PaymentProviderInstance struct {
 	ent.Schema
 }

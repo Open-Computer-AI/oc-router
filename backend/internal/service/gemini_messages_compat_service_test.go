@@ -513,7 +513,6 @@ func TestEnsureGeminiFunctionCallThoughtSignatures_InsertsWhenMissing(t *testing
 }
 
 // TestUnwrapGeminiResponse
-//
 func TestUnwrapGeminiResponse(t *testing.T) {
 	// >50KB
 	largePadding := strings.Repeat("x", 50*1024)

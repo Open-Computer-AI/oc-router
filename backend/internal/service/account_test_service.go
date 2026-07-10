@@ -928,7 +928,6 @@ func (s *AccountTestService) routeAntigravityTest(c *gin.Context, account *Accou
 }
 
 // testAntigravityAccountConnection tests an Antigravity account's connection
-//
 func (s *AccountTestService) testAntigravityAccountConnection(c *gin.Context, account *Account, modelID string) error {
 	ctx := c.Request.Context()
 

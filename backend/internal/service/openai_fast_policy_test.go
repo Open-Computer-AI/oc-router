@@ -180,7 +180,6 @@ func TestApplyOpenAIFastPolicyToBody_ExplicitFilterRemovesField(t *testing.T) {
 }
 
 // TestApplyOpenAIFastPolicyToBody_OfficialTiersBypassDefaultRule
-//
 func TestApplyOpenAIFastPolicyToBody_OfficialTiersBypassDefaultRule(t *testing.T) {
 	svc := newOpenAIGatewayServiceWithSettings(t, DefaultOpenAIFastPolicySettings())
 	account := &Account{Platform: PlatformOpenAI, Type: AccountTypeAPIKey}
@@ -226,7 +225,6 @@ func TestApplyOpenAIFastPolicyToBody_AllRuleStripsOfficialTiers(t *testing.T) {
 // TestApplyOpenAIFastPolicyToBody_UnknownTierStripped
 // （normalize → normalizeResponsesBodyServiceTier
 // applyOpenAIFastPolicyToBody
-//
 func TestApplyOpenAIFastPolicyToBody_UnknownTierStripped(t *testing.T) {
 	svc := newOpenAIGatewayServiceWithSettings(t, DefaultOpenAIFastPolicySettings())
 	account := &Account{Platform: PlatformOpenAI, Type: AccountTypeAPIKey}

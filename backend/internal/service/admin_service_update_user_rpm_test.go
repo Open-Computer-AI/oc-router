@@ -10,7 +10,6 @@ import (
 )
 
 // rpmUserRepoStub
-//
 type rpmUserRepoStub struct {
 	*userRepoStub
 	lastUpdated *User

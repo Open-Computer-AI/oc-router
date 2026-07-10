@@ -17,7 +17,6 @@ import (
 
 // apiKeyRepoStub
 //
-//
 //   - apiKey/getByIDErr:
 //   - deleteErr:
 //   - deletedIDs:
@@ -76,7 +75,6 @@ func (s *apiKeyRepoStub) Update(ctx context.Context, key *APIKey) error {
 }
 
 // Delete
-//
 func (s *apiKeyRepoStub) Delete(ctx context.Context, id int64) error {
 	s.deletedIDs = append(s.deletedIDs, id)
 	return s.deleteErr
@@ -87,7 +85,6 @@ func (s *apiKeyRepoStub) DeleteWithAudit(ctx context.Context, id int64) error {
 	s.deletedIDs = append(s.deletedIDs, id)
 	return s.deleteErr
 }
-
 
 func (s *apiKeyRepoStub) ListByUserID(ctx context.Context, userID int64, params pagination.PaginationParams, filters APIKeyListFilters) ([]APIKey, *pagination.PaginationResult, error) {
 	if !s.allowListByUserID {
@@ -190,7 +187,6 @@ func (s *apiKeyCacheStub) IncrementCreateAttemptCount(ctx context.Context, userI
 }
 
 // DeleteCreateAttemptCount
-//
 func (s *apiKeyCacheStub) DeleteCreateAttemptCount(ctx context.Context, userID int64) error {
 	s.invalidated = append(s.invalidated, userID)
 	return nil
@@ -229,8 +225,8 @@ func (s *apiKeyCacheStub) SubscribeAuthCacheInvalidation(ctx context.Context, ha
 
 // TestApiKeyService_Delete_OwnerMismatch
 //   - GetKeyAndOwnerID
-//   -
-//   -
+//     -
+//     -
 //   - Delete
 func TestApiKeyService_Delete_OwnerMismatch(t *testing.T) {
 	repo := &apiKeyRepoStub{
@@ -248,10 +244,10 @@ func TestApiKeyService_Delete_OwnerMismatch(t *testing.T) {
 
 // TestApiKeyService_Delete_Success
 //   - GetKeyAndOwnerID
-//   -
+//     -
 //   - Delete
-//   -
-//   -
+//     -
+//     -
 func TestApiKeyService_Delete_Success(t *testing.T) {
 	repo := &apiKeyRepoStub{
 		apiKey: &APIKey{ID: 42, UserID: 7, Key: "k"},
@@ -271,7 +267,7 @@ func TestApiKeyService_Delete_Success(t *testing.T) {
 
 // TestApiKeyService_Delete_NotFound
 //   - GetKeyAndOwnerID
-//   -
+//     -
 //   - Delete
 func TestApiKeyService_Delete_NotFound(t *testing.T) {
 	repo := &apiKeyRepoStub{getByIDErr: ErrAPIKeyNotFound}

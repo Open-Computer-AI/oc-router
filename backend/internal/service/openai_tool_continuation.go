@@ -51,8 +51,6 @@ func isCodexToolCallOutputItemType(typ string) bool {
 }
 
 // NeedsToolContinuation
-//
-//
 func NeedsToolContinuation(reqBody map[string]any) bool {
 	if reqBody == nil {
 		return false
@@ -217,7 +215,6 @@ func ValidateFunctionCallOutputContextBytes(body []byte) FunctionCallOutputValid
 
 // ValidateFunctionCallOutputContext
 // 3)
-//
 func ValidateFunctionCallOutputContext(reqBody map[string]any) FunctionCallOutputValidation {
 	result := FunctionCallOutputValidation{}
 	if reqBody == nil {
@@ -294,7 +291,6 @@ func ValidateFunctionCallOutputContext(reqBody map[string]any) FunctionCallOutpu
 }
 
 // HasFunctionCallOutput
-//
 func HasFunctionCallOutput(reqBody map[string]any) bool {
 	return AnalyzeToolContinuationSignals(reqBody).HasFunctionCallOutput
 }
@@ -305,7 +301,6 @@ func HasToolCallContext(reqBody map[string]any) bool {
 }
 
 // FunctionCallOutputCallIDs
-//
 func FunctionCallOutputCallIDs(reqBody map[string]any) []string {
 	return AnalyzeToolContinuationSignals(reqBody).FunctionCallOutputCallIDs
 }

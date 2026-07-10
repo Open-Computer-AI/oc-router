@@ -1209,7 +1209,6 @@ func oidcClearCookie(c *gin.Context, name string, secure bool) {
 }
 
 // tryOIDCVerifiedEmailFastPath
-//
 func (h *AuthHandler) tryOIDCVerifiedEmailFastPath(
 	c *gin.Context,
 	frontendCallback string,

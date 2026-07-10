@@ -14,10 +14,8 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-//
 const testSlotTTLMinutes = 15
 
-//
 var testSlotTTL = time.Duration(testSlotTTLMinutes) * time.Minute
 
 type ConcurrencyCacheSuite struct {

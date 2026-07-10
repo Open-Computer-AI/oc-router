@@ -491,7 +491,6 @@ return 1
 func userPlatformQuotaDirtySetKey() string { return "billing:" + "upq:dirty" }
 
 // userPlatformQuotaDirtyTTLSeconds
-//
 const userPlatformQuotaDirtyTTLSeconds = 86400
 
 // userPlatformQuotaDirtyMember "userID:platform"。
@@ -556,7 +555,6 @@ func (c *billingCache) PopDirtyUserPlatformQuotaKeys(ctx context.Context, n int)
 
 // ReaddDirtyUserPlatformQuotaKeys
 // + Expire，
-//
 func (c *billingCache) ReaddDirtyUserPlatformQuotaKeys(ctx context.Context, keys []service.UserPlatformQuotaKey) error {
 	if len(keys) == 0 {
 		return nil

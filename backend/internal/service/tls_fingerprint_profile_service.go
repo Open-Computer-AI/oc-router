@@ -133,7 +133,6 @@ func (s *TLSFingerprintProfileService) Delete(ctx context.Context, id int64) err
 // ---
 
 // GetProfileByID
-//
 func (s *TLSFingerprintProfileService) GetProfileByID(id int64) *tlsfingerprint.Profile {
 	s.localMu.RLock()
 	p, ok := s.localCache[id]

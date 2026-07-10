@@ -61,7 +61,6 @@ func NewFailoverState(maxSwitches int, hasBoundSession bool) *FailoverState {
 }
 
 // HandleFailoverError
-//
 func (s *FailoverState) HandleFailoverError(
 	ctx context.Context,
 	gatewayService TempUnscheduler,
@@ -121,10 +120,6 @@ func (s *FailoverState) HandleFailoverError(
 
 // HandleSelectionExhausted
 // (MODEL_CAPACITY_EXHAUSTED)
-//
-//
-//
-//
 func (s *FailoverState) HandleSelectionExhausted(ctx context.Context) FailoverAction {
 	if s.LastFailoverErr != nil &&
 		s.LastFailoverErr.StatusCode == http.StatusServiceUnavailable &&
@@ -149,7 +144,6 @@ func (s *FailoverState) HandleSelectionExhausted(ctx context.Context) FailoverAc
 }
 
 // needForceCacheBilling
-//
 func needForceCacheBilling(hasBoundSession bool, failoverErr *service.UpstreamFailoverError) bool {
 	return hasBoundSession || (failoverErr != nil && failoverErr.ForceCacheBilling)
 }

@@ -29,7 +29,6 @@ type responsesFailedBody struct {
 }
 
 // responsesFailedEvent
-//
 type responsesFailedEvent struct {
 	Type     string              `json:"type"`
 	Response responsesFailedBody `json:"response"`
@@ -38,20 +37,10 @@ type responsesFailedEvent struct {
 // writeResponsesFailedSSE emits a `response.failed` SSE event in the OpenAI
 // Responses API protocol after the stream has already started.
 //
-//
 // HTTP 200
 // `event: error`
 // Codex CLI `response.completed/failed/incomplete/cancelled`
 // "stream closed before response.completed"。
-//
-//
-//
-//
-//
-//
-//
-//
-//
 func writeResponsesFailedSSE(c *gin.Context, errType, message string) bool {
 	flusher, ok := c.Writer.(http.Flusher)
 	if !ok {
@@ -93,7 +82,6 @@ func writeResponsesFailedSSE(c *gin.Context, errType, message string) bool {
 // ("/responses", ...) ("/responses", ...)
 // () "/v1/"
 //
-//
 //   - /v1/responses
 //   - /v1/responses/compact
 //   - /responses
@@ -115,8 +103,6 @@ func inboundIsResponses(c *gin.Context) bool {
 }
 
 // synthesizeResponseID
-//
-//
 func synthesizeResponseID(c *gin.Context) string {
 	if c != nil && c.Request != nil {
 		if rid, ok := c.Request.Context().Value(ctxkey.RequestID).(string); ok {

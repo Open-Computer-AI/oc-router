@@ -41,8 +41,6 @@ func TestResponsesEventToChatChunks_CustomToolCallInputDelta(t *testing.T) {
 	assert.Equal(t, "*** Begin Patch", tc.Function.Arguments)
 }
 
-//
-//
 func TestResponsesEventToChatChunks_ReasoningTextDelta(t *testing.T) {
 	state := NewResponsesEventToChatState()
 	state.Model = "gpt-5-codex"

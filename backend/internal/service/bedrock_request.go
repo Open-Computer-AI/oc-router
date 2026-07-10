@@ -22,7 +22,6 @@ const featureKeyBedrockCCCompat = "bedrock_cc_compat"
 var bedrockCrossRegionPrefixes = []string{"us.", "eu.", "apac.", "jp.", "au.", "us-gov.", "global."}
 
 // BedrockCrossRegionPrefix
-//
 func BedrockCrossRegionPrefix(region string) string {
 	switch {
 	case strings.HasPrefix(region, "us-gov"):
@@ -178,14 +177,15 @@ func BuildBedrockURL(region, modelID string, stream bool) string {
 }
 
 // PrepareBedrockRequestBody
-//  1.
-//  2.
-//  3.
-//  4. {defer_loading: true}）
-//  5.
-//  6.
-//  7.
-//  8.
+//
+//	1.
+//	2.
+//	3.
+//	4. {defer_loading: true}）
+//	5.
+//	6.
+//	7.
+//	8.
 func PrepareBedrockRequestBody(body []byte, modelID string, betaHeader string) ([]byte, error) {
 	betaTokens := ResolveBedrockBetaTokens(betaHeader, body, modelID)
 	return PrepareBedrockRequestBodyWithTokens(body, modelID, betaTokens, false)
@@ -471,7 +471,6 @@ func parseAnthropicBetaHeader(header string) []string {
 
 // bedrockSupportedBetaTokens
 // + litellm anthropic_beta_headers_config.json
-//
 var bedrockSupportedBetaTokens = map[string]bool{
 	"computer-use-2025-01-24":                true,
 	"computer-use-2025-11-24":                true,
@@ -495,9 +494,6 @@ var bedrockBetaTokenTransforms = map[string]string{
 // autoInjectBedrockBetaTokens
 // ()
 // AmazonAnthropicClaudeMessagesConfig._get_tool_search_beta_header_for_bedrock()
-//
-//
-//
 func autoInjectBedrockBetaTokens(tokens []string, body []byte, modelID string) []string {
 	seen := make(map[string]bool, len(tokens))
 	for _, t := range tokens {
@@ -750,11 +746,12 @@ func sanitizeIDField(body []byte, id, path string) []byte {
 const defaultCCMaxTokens = 81920
 
 // sanitizeBedrockCCFields
-//   -
-//   -
-//   - +
-//   -
-//   -
+//
+//	-
+//	-
+//	- +
+//	-
+//	-
 func sanitizeBedrockCCFields(body []byte) []byte {
 	if gjson.GetBytes(body, "service_tier").Exists() {
 		body, _ = sjson.DeleteBytes(body, "service_tier")

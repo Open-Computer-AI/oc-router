@@ -101,9 +101,7 @@ const rawUsageLogModelColumn = "model"
 
 // usageLogSuccessFilterUL ""（tokens=0、cost=0、
 //
-//
 // schema > 0
-//
 //
 // > 0 """image_output_tokens "
 //
@@ -1878,7 +1876,6 @@ func (r *usageLogRepository) GetAPIKeyStatsAggregated(ctx context.Context, apiKe
 //
 // 2.
 //
-//
 // 1.
 func (r *usageLogRepository) GetAccountStatsAggregated(ctx context.Context, accountID int64, startTime, endTime time.Time) (*usagestats.UsageStats, error) {
 	query := `
@@ -1958,7 +1955,6 @@ func (r *usageLogRepository) GetModelStatsAggregated(ctx context.Context, modelN
 }
 
 // GetDailyStatsAggregated
-//
 func (r *usageLogRepository) GetDailyStatsAggregated(ctx context.Context, userID int64, startTime, endTime time.Time) (result []map[string]any, err error) {
 	tzName := resolveUsageStatsTimezone()
 	query := `
@@ -2034,7 +2030,6 @@ func (r *usageLogRepository) GetDailyStatsAggregated(ctx context.Context, userID
 }
 
 // resolveUsageStatsTimezone
-//
 func resolveUsageStatsTimezone() string {
 	tzName := timezone.Name()
 	if tzName != "" && tzName != "Local" {
@@ -2185,7 +2180,6 @@ func (r *usageLogRepository) GetAccountWindowStatsBatch(ctx context.Context, acc
 }
 
 // GetGeminiUsageTotalsBatch
-//
 func (r *usageLogRepository) GetGeminiUsageTotalsBatch(ctx context.Context, accountIDs []int64, startTime, endTime time.Time) (map[int64]service.GeminiUsageTotals, error) {
 	result := make(map[int64]service.GeminiUsageTotals, len(accountIDs))
 	if len(accountIDs) == 0 {

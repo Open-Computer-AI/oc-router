@@ -18,8 +18,6 @@ type quotaDirtyCache interface {
 }
 
 // quotaSnapshotWriter
-//
-//
 type quotaSnapshotWriter interface {
 	BatchSnapshotUsage(ctx context.Context, snapshots []UserPlatformQuotaSnapshot, now time.Time) error
 }
@@ -48,7 +46,6 @@ const maxFlushBatchSize = 6000
 const defaultFlushBatchSize = 1000
 
 // UserPlatformQuotaUsageFlusher
-//
 type UserPlatformQuotaUsageFlusher struct {
 	cache       quotaDirtyCache
 	quotaRepo   quotaSnapshotWriter
@@ -117,7 +114,6 @@ func (s *UserPlatformQuotaUsageFlusher) readdOrCountLost(ctx context.Context, ke
 
 // flushOneBatch → BatchGet → → BatchSnapshotUsage。
 // (shouldContinue bool)：false
-//
 func (s *UserPlatformQuotaUsageFlusher) flushOneBatch(parentCtx context.Context) bool {
 	ctx, cancel := context.WithTimeout(parentCtx, s.flushTimeout)
 	defer cancel()

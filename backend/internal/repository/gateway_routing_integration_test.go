@@ -185,7 +185,6 @@ func (s *GatewayRoutingSuite) TestSchedulableFilter_ExcludesInactive() {
 }
 
 // TestPlatformRoutingDecision
-//
 func (s *GatewayRoutingSuite) TestPlatformRoutingDecision() {
 	geminiAcc := mustCreateAccount(s.T(), s.client, &service.Account{
 		Name:        "gemini-route-test",

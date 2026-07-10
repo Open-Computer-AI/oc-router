@@ -46,9 +46,6 @@ var cursorResponsesUnsupportedFields = []string{
 // →Responses + /v1/responses
 // ——
 //
-//
-//
-//
 //   - APIKey + →
 //
 //   - → →Responses

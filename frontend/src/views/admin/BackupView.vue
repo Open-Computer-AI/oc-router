@@ -354,6 +354,7 @@ function startPolling(backupId: string) {
         await loadBackups()
       }
     } catch {
+      // Ignore transient poll errors; the next interval tick retries.
     }
   }, 2000)
 }
@@ -389,6 +390,7 @@ function startRestorePolling(backupId: string) {
         await loadBackups()
       }
     } catch {
+      // Ignore transient poll errors; the next interval tick retries.
     }
   }, 2000)
 }

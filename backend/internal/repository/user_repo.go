@@ -943,7 +943,6 @@ func (r *userRepository) loadAllowedGroups(ctx context.Context, userIDs []int64)
 }
 
 // syncUserAllowedGroupsWithClient
-//
 func (r *userRepository) syncUserAllowedGroupsWithClient(ctx context.Context, client *dbent.Client, userID int64, groupIDs []int64) error {
 	if client == nil {
 		return nil

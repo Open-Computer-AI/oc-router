@@ -182,7 +182,6 @@ func NewBillingService(cfg *config.Config, pricingService *PricingService) *Bill
 }
 
 // initFallbackPricing
-//
 func (s *BillingService) initFallbackPricing() {
 	// Claude 4.5 Opus
 	s.fallbackPrices["claude-opus-4.5"] = &ModelPricing{
@@ -405,7 +404,6 @@ func (s *BillingService) GetModelPricing(model string) (*ModelPricing, error) {
 }
 
 // GetModelPricingWithChannel
-//
 func (s *BillingService) GetModelPricingWithChannel(model string, channelPricing *ChannelModelPricing) (*ModelPricing, error) {
 	pricing, err := s.GetModelPricing(model)
 	if err != nil {
@@ -457,7 +455,6 @@ type CostInput struct {
 }
 
 // CalculateCostUnified
-//
 func (s *BillingService) CalculateCostUnified(input CostInput) (*CostBreakdown, error) {
 	if input.Resolver == nil {
 		//

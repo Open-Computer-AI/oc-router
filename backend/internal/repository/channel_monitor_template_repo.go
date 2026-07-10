@@ -12,7 +12,6 @@ import (
 )
 
 // channelMonitorRequestTemplateRepository
-//
 type channelMonitorRequestTemplateRepository struct {
 	client *dbent.Client
 	db     *sql.DB
@@ -110,7 +109,6 @@ func (r *channelMonitorRequestTemplateRepository) List(ctx context.Context, para
 
 // ApplyToMonitors
 // WHERE = id AND id IN (monitorIDs)，
-//
 func (r *channelMonitorRequestTemplateRepository) ApplyToMonitors(ctx context.Context, id int64, monitorIDs []int64) (int64, error) {
 	if len(monitorIDs) == 0 {
 		return 0, nil

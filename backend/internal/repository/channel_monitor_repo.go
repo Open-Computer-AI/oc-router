@@ -17,7 +17,7 @@ import (
 // channelMonitorRepository
 //
 //   - CRUD
-//   -
+//     -
 type channelMonitorRepository struct {
 	client *dbent.Client
 	db     *sql.DB
@@ -297,7 +297,6 @@ func assignNullInt(dst **int, n sql.NullInt64) {
 // "" = status IN (operational, degraded)。
 //
 // <= 30
-//
 func (r *channelMonitorRepository) ComputeAvailability(ctx context.Context, monitorID int64, windowDays int) ([]*service.ChannelMonitorAvailability, error) {
 	if windowDays <= 0 {
 		windowDays = 7
@@ -332,7 +331,6 @@ func (r *channelMonitorRepository) ComputeAvailability(ctx context.Context, moni
 }
 
 // scanAvailabilityRow (model, total, ok, avg_latency)
-//
 func scanAvailabilityRow(rows interface{ Scan(...any) error }, windowDays int) (*service.ChannelMonitorAvailability, error) {
 	row := &service.ChannelMonitorAvailability{WindowDays: windowDays}
 	var avgLatency sql.NullFloat64
@@ -398,7 +396,6 @@ func (r *channelMonitorRepository) ListLatestForMonitorIDs(ctx context.Context, 
 // () OVER (PARTITION BY monitor_id)
 //
 // [monitorID] -> []*ChannelMonitorHistoryEntry（
-//
 func (r *channelMonitorRepository) ListRecentHistoryForMonitors(
 	ctx context.Context,
 	ids []int64,
@@ -457,7 +454,6 @@ func (r *channelMonitorRepository) ListRecentHistoryForMonitors(
 }
 
 // buildMonitorModelPairs (monitor_id, model)
-//
 func buildMonitorModelPairs(ids []int64, primaryModels map[int64]string) ([]int64, []string) {
 	if len(ids) == 0 || len(primaryModels) == 0 {
 		return nil, nil
@@ -476,7 +472,6 @@ func buildMonitorModelPairs(ids []int64, primaryModels map[int64]string) ([]int6
 }
 
 // timelineLimit*
-//
 const (
 	timelineLimitMin = 1
 	timelineLimitMax = 200
@@ -605,7 +600,6 @@ func (r *channelMonitorRepository) DeleteRollupsBefore(ctx context.Context, befo
 }
 
 // channelMonitorPruneBatchSize
-//
 const channelMonitorPruneBatchSize = 5000
 
 // channelMonitorPruneHistorySQL
@@ -621,7 +615,6 @@ WHERE id IN (SELECT id FROM batch)
 `
 
 // channelMonitorPruneRollupSQL
-//
 const channelMonitorPruneRollupSQL = `
 WITH batch AS (
     SELECT id FROM channel_monitor_daily_rollups

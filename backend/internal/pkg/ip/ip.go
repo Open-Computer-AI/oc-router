@@ -44,8 +44,6 @@ func GetClientIP(c *gin.Context) string {
 }
 
 // GetTrustedClientIP
-//
-//
 func GetTrustedClientIP(c *gin.Context) string {
 	if c == nil {
 		return ""
@@ -92,7 +90,6 @@ func init() {
 }
 
 // CompileIPRules
-//
 func CompileIPRules(patterns []string) *CompiledIPRules {
 	compiled := &CompiledIPRules{
 		CIDRs:        make([]*net.IPNet, 0, len(patterns)),

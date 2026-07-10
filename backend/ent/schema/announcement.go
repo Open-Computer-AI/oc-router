@@ -15,7 +15,6 @@ import (
 )
 
 // Announcement holds the schema definition for the Announcement entity.
-//
 type Announcement struct {
 	ent.Schema
 }

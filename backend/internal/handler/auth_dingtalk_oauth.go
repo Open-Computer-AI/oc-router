@@ -68,7 +68,6 @@ const (
 // ─── Config helper ─────────────────────────────────────────────────────────
 
 // getDingTalkOAuthConfig
-//
 func (h *AuthHandler) getDingTalkOAuthConfig(ctx context.Context) (config.DingTalkConnectConfig, error) {
 	if h != nil && h.settingSvc != nil {
 		return h.settingSvc.GetDingTalkConnectOAuthConfig(ctx)
@@ -212,7 +211,6 @@ func (h *AuthHandler) findDingTalkCompatEmailUser(ctx context.Context, email str
 
 // createDingTalkOAuthChoicePendingSession
 // signupBlocked=true ""
-//
 func (h *AuthHandler) createDingTalkOAuthChoicePendingSession(
 	c *gin.Context,
 	identity service.PendingAuthIdentityKey,
@@ -593,8 +591,6 @@ func checkDingTalkCorpAllowed(cfg config.DingTalkConnectConfig, corpID string) b
 // (proceed bool, fatal bool)：
 //   - proceed=true：
 //   - fatal=true：
-//
-//
 func decideDingTalkStep34Strategy(policy string, stepErr error) (shouldFallback bool, isFatal bool) {
 	if stepErr == nil {
 		return false, false // success，不需要降级
@@ -626,8 +622,6 @@ func mapDingTalkErrorCode(err error) string {
 }
 
 // dingTalkClient
-//
-//
 func (h *AuthHandler) dingTalkClient(cfg config.DingTalkConnectConfig) *DingTalkClient {
 	h.dingTalkClientMu.Lock()
 	defer h.dingTalkClientMu.Unlock()
@@ -823,8 +817,6 @@ func (h *AuthHandler) BindDingTalkOAuthLogin(c *gin.Context) {
 // ─── DingTalk ─────────────────────────────────────────────────────
 
 // runDingTalkSyncAsync
-//
-//
 func runDingTalkSyncAsync(parent context.Context, fn func(ctx context.Context)) {
 	base := context.WithoutCancel(parent)
 	go func() {
@@ -840,7 +832,6 @@ func runDingTalkSyncAsync(parent context.Context, fn func(ctx context.Context)) 
 }
 
 // syncDingTalkIdentity
-//
 func (h *AuthHandler) syncDingTalkIdentity(ctx context.Context, cfg config.DingTalkConnectConfig, client *DingTalkClient, userID int64, staff *DingTalkStaffInfo, syncUsername bool) {
 	slog.Info("dingtalk sync: entry",
 		"user_id", userID,
@@ -950,7 +941,6 @@ func (h *AuthHandler) maybeSyncDingTalkAfterRegistration(ctx context.Context, se
 }
 
 // maybeSyncDingTalkAfterLogin
-//
 func (h *AuthHandler) maybeSyncDingTalkAfterLogin(ctx context.Context, session *dbent.PendingAuthSession, userID int64) {
 	h.dispatchDingTalkPendingSync(ctx, session, userID, false)
 }
@@ -1009,7 +999,6 @@ func dingTalkStaffFromClaims(claims map[string]any) *DingTalkStaffInfo {
 
 // setUserAttributeByKey
 // definition
-//
 func (h *AuthHandler) setUserAttributeByKey(ctx context.Context, userID int64, key, value string) error {
 	def, err := h.userAttributeService.GetDefinitionByKey(ctx, key)
 	if err != nil {

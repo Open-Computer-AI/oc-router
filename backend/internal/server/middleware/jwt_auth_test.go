@@ -51,7 +51,6 @@ func (r *recordingActivityToucher) TouchLastActiveForUser(_ context.Context, use
 }
 
 // newJWTTestEnv
-//
 func newJWTTestEnv(users map[int64]*service.User) (*gin.Engine, *service.AuthService) {
 	gin.SetMode(gin.TestMode)
 

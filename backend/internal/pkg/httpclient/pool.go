@@ -1,6 +1,5 @@
 // Package httpclient
 //
-//
 // 1. proxy_probe_service.go:
 // 2. pricing_service.go:
 // 3. turnstile_service.go:
@@ -56,7 +55,6 @@ var sharedClients sync.Map
 var validateResolvedIP = urlvalidator.ValidateResolvedIP
 
 // GetClient
-//
 func GetClient(opts Options) (*http.Client, error) {
 	key := buildClientKey(opts)
 	if cached, ok := sharedClients.Load(key); ok {

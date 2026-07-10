@@ -229,7 +229,7 @@ type CreateGroupInput struct {
 	MessagesDispatchModelConfig OpenAIMessagesDispatchModelConfig
 	ModelsListConfig            GroupModelsListConfig
 	// RPMLimit =
-	RPMLimit int
+	RPMLimit                 int
 	CopyAccountsFromGroupIDs []int64
 }
 
@@ -269,7 +269,7 @@ type UpdateGroupInput struct {
 	MessagesDispatchModelConfig *OpenAIMessagesDispatchModelConfig
 	ModelsListConfig            *GroupModelsListConfig
 	// RPMLimit =
-	RPMLimit *int
+	RPMLimit                 *int
 	CopyAccountsFromGroupIDs []int64
 }
 
@@ -3785,7 +3785,6 @@ func (s *adminServiceImpl) ResetAccountQuota(ctx context.Context, id int64) erro
 }
 
 // EnsureOpenAIPrivacy
-//
 func (s *adminServiceImpl) EnsureOpenAIPrivacy(ctx context.Context, account *Account) string {
 	if account.Platform != PlatformOpenAI || account.Type != AccountTypeOAuth {
 		return ""

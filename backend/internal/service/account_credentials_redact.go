@@ -27,11 +27,10 @@ func IsSensitiveCredentialKey(key string) bool {
 
 // MergePreservingSensitiveCreds "incoming "
 //
-//
 // ""
 //
-//   -
-//   -
+//	-
+//	-
 func MergePreservingSensitiveCreds(existing, incoming map[string]any) map[string]any {
 	out := make(map[string]any, len(incoming)+len(SensitiveCredentialKeys))
 	for k, v := range incoming {

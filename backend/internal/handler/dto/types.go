@@ -36,7 +36,6 @@ type User struct {
 }
 
 // AdminUser
-//
 type AdminUser struct {
 	User
 
@@ -104,8 +103,8 @@ type Group struct {
 	ImagePrice4K         *float64 `json:"image_price_4k"`
 
 	// Claude Code
-	ClaudeCodeOnly  bool   `json:"claude_code_only"`
-	FallbackGroupID *int64 `json:"fallback_group_id"`
+	ClaudeCodeOnly                  bool   `json:"claude_code_only"`
+	FallbackGroupID                 *int64 `json:"fallback_group_id"`
 	FallbackGroupIDOnInvalidRequest *int64 `json:"fallback_group_id_on_invalid_request"`
 
 	// OpenAI Messages
@@ -123,7 +122,6 @@ type Group struct {
 }
 
 // AdminGroup
-//
 type AdminGroup struct {
 	Group
 
@@ -302,7 +300,6 @@ type ProxyWithAccountCount struct {
 }
 
 // AdminProxy
-//
 type AdminProxy struct {
 	Proxy
 	Password string `json:"password,omitempty"`
@@ -358,7 +355,6 @@ type RedeemCode struct {
 }
 
 // AdminRedeemCode
-//
 type AdminRedeemCode struct {
 	RedeemCode
 
@@ -586,7 +582,6 @@ type UserSubscription struct {
 }
 
 // AdminUserSubscription
-//
 type AdminUserSubscription struct {
 	UserSubscription
 

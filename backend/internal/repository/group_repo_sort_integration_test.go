@@ -9,7 +9,6 @@ import (
 
 // TestListWithAccountCountSort_AttachesActiveCount
 // ActiveAccountCount
-//
 func (s *GroupRepoSuite) TestListWithAccountCountSort_AttachesActiveCount() {
 	// Group A: 2 total, 1 active (1 disabled account)
 	gA := &service.Group{Name: "sort-count-a", Platform: service.PlatformAnthropic, RateMultiplier: 1, Status: service.StatusActive, SubscriptionType: service.SubscriptionTypeStandard}

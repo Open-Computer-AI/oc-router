@@ -631,7 +631,6 @@ func ProvidePaymentOrderExpiryService(paymentSvc *PaymentService, lockCache Lead
 }
 
 // ProvideChannelMonitorService + RunCheck +
-//
 func ProvideChannelMonitorService(
 	repo ChannelMonitorRepository,
 	encryptor SecretEncryptor,
@@ -640,7 +639,6 @@ func ProvideChannelMonitorService(
 }
 
 // ProvideChannelMonitorRunner
-//
 //
 // settingService
 func ProvideChannelMonitorRunner(svc *ChannelMonitorService, settingService *SettingService) *ChannelMonitorRunner {

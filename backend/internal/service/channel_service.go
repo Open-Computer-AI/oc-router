@@ -146,7 +146,6 @@ type ChannelService struct {
 
 // NewChannelService
 // pricingService
-//
 func NewChannelService(repo ChannelRepository, groupRepo GroupRepository, authCacheInvalidator APIKeyAuthCacheInvalidator, pricingService *PricingService) *ChannelService {
 	s := &ChannelService{
 		repo:                 repo,
@@ -224,7 +223,6 @@ func expandPricingToCache(cache *channelCache, ch *Channel, gid int64, platform 
 }
 
 // expandMappingToCache +
-//
 func expandMappingToCache(cache *channelCache, ch *Channel, gid int64, platform string) {
 	for _, mappingPlatform := range matchingPlatforms(platform) {
 		platformMapping, ok := ch.ModelMapping[mappingPlatform]
@@ -257,7 +255,6 @@ func (s *ChannelService) storeErrorCache() {
 }
 
 // buildCache
-//
 func (s *ChannelService) buildCache(ctx context.Context) (*channelCache, error) {
 	dbCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), channelCacheDBTimeout)
 	defer cancel()
@@ -326,7 +323,6 @@ func populateChannelCache(channels []Channel, groupPlatforms map[int64]string) *
 // invalidateCache
 
 // isPlatformPricingMatch
-//
 func isPlatformPricingMatch(groupPlatform, pricingPlatform string) bool {
 	return groupPlatform == pricingPlatform
 }
@@ -386,7 +382,6 @@ func lookupPricingAcrossPlatforms(cache *channelCache, groupID int64, groupPlatf
 }
 
 // lookupMappingAcrossPlatforms
-//
 func lookupMappingAcrossPlatforms(cache *channelCache, groupID int64, groupPlatform, modelLower string) string {
 	for _, p := range matchingPlatforms(groupPlatform) {
 		key := channelModelKey{groupID: groupID, platform: p, model: modelLower}
@@ -485,8 +480,6 @@ func (s *ChannelService) ResolveChannelMapping(ctx context.Context, groupID int6
 }
 
 // IsModelRestricted
-//
-//
 func (s *ChannelService) IsModelRestricted(ctx context.Context, groupID int64, model string) bool {
 	lk, err := s.lookupGroupChannel(ctx, groupID)
 	if err != nil {
@@ -537,10 +530,7 @@ func checkRestricted(lk *channelLookup, groupID int64, model string) bool {
 		return false
 	}
 	modelLower := strings.ToLower(model)
-	if lookupPricingAcrossPlatforms(lk.cache, groupID, lk.platform, modelLower) != nil {
-		return false
-	}
-	return true
+	return lookupPricingAcrossPlatforms(lk.cache, groupID, lk.platform, modelLower) == nil
 }
 
 // ReplaceModelInBody
@@ -583,7 +573,6 @@ func validateChannelConfig(pricing []ChannelModelPricing, mapping map[string]map
 }
 
 // validatePricingEntries + +
-//
 func validatePricingEntries(pricing []ChannelModelPricing) error {
 	if err := validateNoConflictingModels(pricing); err != nil {
 		return err
@@ -719,7 +708,6 @@ func (s *ChannelService) Create(ctx context.Context, input *CreateChannelInput) 
 }
 
 // GetByID
-//
 func (s *ChannelService) GetByID(ctx context.Context, id int64) (*Channel, error) {
 	ch, err := s.repo.GetByID(ctx, id)
 	if err != nil {

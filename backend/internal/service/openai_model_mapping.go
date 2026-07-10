@@ -4,7 +4,6 @@ import "strings"
 
 // resolveOpenAIForwardModel
 // defaultMappedModel
-//
 func resolveOpenAIForwardModel(account *Account, requestedModel, defaultMappedModel string) string {
 	if account == nil {
 		if defaultMappedModel != "" && claudeMessagesDispatchFamily(requestedModel) != "" {

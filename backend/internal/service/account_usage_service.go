@@ -84,7 +84,6 @@ type accountWindowStatsBatchReader interface {
 }
 
 // apiUsageCache
-//
 type apiUsageCache struct {
 	response  *ClaudeUsageResponse
 	err       error // 非 nil 表示缓存的error（负缓存）
@@ -417,7 +416,6 @@ func (s *AccountUsageService) GetUsage(ctx context.Context, accountID int64, for
 }
 
 // GetPassiveUsage
-//
 func (s *AccountUsageService) GetPassiveUsage(ctx context.Context, accountID int64) (*UsageInfo, error) {
 	account, err := s.accountRepo.GetByID(ctx, accountID)
 	if err != nil {
@@ -846,7 +844,6 @@ func recalcAntigravityRemainingSeconds(info *UsageInfo) {
 
 // antigravityCacheTTL
 // 403 forbidden
-//
 func antigravityCacheTTL(info *UsageInfo) time.Duration {
 	if info == nil {
 		return antigravityErrorTTL
@@ -890,13 +887,6 @@ func buildAntigravityDegradedUsage(err error) *UsageInfo {
 }
 
 // enrichUsageWithAccountError
-//
-//
-//
-//
-//
-//
-//
 func enrichUsageWithAccountError(info *UsageInfo, account *Account) {
 	if info == nil || account == nil || account.Status != StatusError {
 		return
@@ -918,7 +908,6 @@ func enrichUsageWithAccountError(info *UsageInfo, account *Account) {
 }
 
 // addWindowStats
-//
 func (s *AccountUsageService) addWindowStats(ctx context.Context, account *Account, usage *UsageInfo) {
 	//
 	//
@@ -1130,8 +1119,6 @@ func (s *AccountUsageService) GetAccountUsageStats(ctx context.Context, accountI
 }
 
 // fetchOAuthUsageRaw
-//
-//
 func (s *AccountUsageService) fetchOAuthUsageRaw(ctx context.Context, account *Account) (*ClaudeUsageResponse, error) {
 	accessToken := account.GetCredential("access_token")
 	if accessToken == "" {

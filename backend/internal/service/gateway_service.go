@@ -86,7 +86,6 @@ const (
 )
 
 // ForceCacheBillingContextKey
-//
 type forceCacheBillingKeyType struct{}
 
 // accountWithLoad
@@ -442,7 +441,6 @@ var allowedHeaders = map[string]bool{
 
 // GatewayCache
 //
-//
 // GatewayCache defines cache operations for gateway service.
 // Provides sticky session storage, retrieval, refresh and deletion capabilities.
 type GatewayCache interface {
@@ -582,7 +580,6 @@ func (e *UpstreamFailoverError) Error() string {
 }
 
 // TempUnscheduleRetryableError
-//
 func (s *GatewayService) TempUnscheduleRetryableError(ctx context.Context, accountID int64, failoverErr *UpstreamFailoverError) {
 	if failoverErr == nil || !failoverErr.RetryableOnSameAccount {
 		return
@@ -801,7 +798,6 @@ func (s *GatewayService) GetCachedSessionAccountID(ctx context.Context, groupID 
 }
 
 // FindGeminiSession
-//
 func (s *GatewayService) FindGeminiSession(_ context.Context, groupID int64, prefixHash, digestChain string) (uuid string, accountID int64, matchedChain string, found bool) {
 	if digestChain == "" || s.digestStore == nil {
 		return "", 0, "", false
@@ -1299,11 +1295,9 @@ func (s *GatewayService) buildOAuthMetadataUserID(parsed *ParsedRequest, account
 
 // applyClaudeCodeOAuthMimicryToBody "+ Claude OAuth "
 //
-//
 // +
 // normalizeClaudeOAuthRequestBody
 // (ForwardAsChatCompletions / ForwardAsResponses)
-//
 //
 // "
 //
@@ -1312,8 +1306,6 @@ func (s *GatewayService) buildOAuthMetadataUserID(parsed *ParsedRequest, account
 //   - body：
 //   - systemRaw：body
 //   - model：+ metadata
-//
-//
 func (s *GatewayService) applyClaudeCodeOAuthMimicryToBody(
 	ctx context.Context,
 	c *gin.Context,
@@ -1372,10 +1364,8 @@ func (s *GatewayService) applyClaudeCodeOAuthMimicryToBody(
 
 // buildOAuthMetadataUserIDFromBody
 //
-//
-//
 //   - session hash
-//   -
+//     -
 func (s *GatewayService) buildOAuthMetadataUserIDFromBody(
 	ctx context.Context,
 	account *Account,
@@ -1417,10 +1407,8 @@ func (s *GatewayService) buildOAuthMetadataUserIDFromBody(
 
 // buildStableSessionSeed ""
 //
-//
 // ""+ +
 // (seed)
-//
 //
 // accountID ——
 func buildStableSessionSeed(accountID int64, clientDiscriminator, firstUserText string) string {
@@ -1434,7 +1422,6 @@ func buildStableSessionSeed(accountID int64, clientDiscriminator, firstUserText 
 }
 
 // sessionContextDiscriminator
-//
 func sessionContextDiscriminator(sc *SessionContext) string {
 	if sc == nil {
 		return ""
@@ -2269,8 +2256,8 @@ func (s *GatewayService) resolveGatewayGroup(ctx context.Context, groupID *int64
 
 // checkClaudeCodeRestriction
 //
-//   -
-//   -
+//	-
+//	-
 func (s *GatewayService) checkClaudeCodeRestriction(ctx context.Context, groupID *int64) (*Group, *int64, error) {
 	if groupID == nil {
 		return nil, groupID, nil
@@ -2410,8 +2397,6 @@ func (s *GatewayService) listSchedulableAccounts(ctx context.Context, groupID *i
 }
 
 // IsSingleAntigravityAccountGroup
-//
-//
 func (s *GatewayService) IsSingleAntigravityAccountGroup(ctx context.Context, groupID *int64) bool {
 	accounts, _, err := s.listSchedulableAccounts(ctx, groupID, PlatformAntigravity, true)
 	if err != nil {
@@ -2595,7 +2580,6 @@ func (s *GatewayService) withWindowCostPrefetch(ctx context.Context, accounts []
 }
 
 // isAccountSchedulableForQuota
-//
 func (s *GatewayService) isAccountSchedulableForQuota(account *Account) bool {
 	if !account.IsAPIKeyOrBedrock() {
 		return true
@@ -2604,8 +2588,6 @@ func (s *GatewayService) isAccountSchedulableForQuota(account *Account) bool {
 }
 
 // isAccountSchedulableForWindowCost
-//
-//
 func (s *GatewayService) isAccountSchedulableForWindowCost(ctx context.Context, account *Account, isSticky bool) bool {
 	//
 	if !account.IsAnthropicOAuthOrSetupToken() {
@@ -2695,7 +2677,6 @@ func (s *GatewayService) withRPMPrefetch(ctx context.Context, accounts []Account
 }
 
 // isAccountSchedulableForRPM
-//
 func (s *GatewayService) isAccountSchedulableForRPM(ctx context.Context, account *Account, isSticky bool) bool {
 	if !account.IsAnthropicOAuthOrSetupToken() {
 		return true
@@ -2728,8 +2709,6 @@ func (s *GatewayService) isAccountSchedulableForRPM(ctx context.Context, account
 }
 
 // IncrementAccountRPM increments the RPM counter for the given account.
-//
-//
 func (s *GatewayService) IncrementAccountRPM(ctx context.Context, accountID int64) error {
 	if s.rpmCache == nil {
 		return nil
@@ -2741,7 +2720,6 @@ func (s *GatewayService) IncrementAccountRPM(ctx context.Context, accountID int6
 // checkAndRegisterSession
 //
 // sessionID:
-//
 func (s *GatewayService) checkAndRegisterSession(ctx context.Context, account *Account, sessionID string) bool {
 	//
 	if !account.IsAnthropicOAuthOrSetupToken() {
@@ -2841,7 +2819,6 @@ func filterByMinLoadRate(accounts []accountWithLoad) []accountWithLoad {
 }
 
 // selectByLRU
-//
 func selectByLRU(accounts []accountWithLoad, preferOAuth bool) *accountWithLoad {
 	if len(accounts) == 0 {
 		return nil
@@ -3749,7 +3726,6 @@ func summarizeSelectionFailureStats(stats selectionFailureStats) string {
 }
 
 // isModelSupportedByAccountWithContext
-//
 func (s *GatewayService) isModelSupportedByAccountWithContext(ctx context.Context, account *Account, requestedModel string) bool {
 	if account.Platform == PlatformAntigravity {
 		if strings.TrimSpace(requestedModel) == "" {
@@ -3917,10 +3893,6 @@ func sleepWithContext(ctx context.Context, d time.Duration) error {
 // isClaudeCodeClient
 //  1. User-Agent
 //  2. metadata.user_id
-//
-//
-//
-//
 func isClaudeCodeClient(userAgent string, metadataUserID string) bool {
 	if !claudeCliUserAgentRe.MatchString(userAgent) {
 		return false
@@ -3947,7 +3919,6 @@ func normalizeSystemParam(system any) any {
 }
 
 // systemIncludesClaudeCodePrompt
-//
 func systemIncludesClaudeCodePrompt(system any) bool {
 	system = normalizeSystemParam(system)
 	switch v := system.(type) {
@@ -3976,7 +3947,6 @@ func hasClaudeCodePrefix(text string) bool {
 }
 
 // injectClaudeCodePrompt
-//
 func injectClaudeCodePrompt(body []byte, system any) []byte {
 	system = normalizeSystemParam(system)
 	claudeCodeBlock, err := marshalAnthropicSystemTextBlock(claudeCodeSystemPrompt, true)
@@ -4082,8 +4052,6 @@ func injectClaudeCodePrompt(body []byte, system any) []byte {
 // rewriteSystemForNonClaudeCode
 // system
 // Anthropic
-//
-//
 func rewriteSystemForNonClaudeCode(body []byte, system any) []byte {
 	system = normalizeSystemParam(system)
 
@@ -4239,7 +4207,6 @@ func collectCacheControlPaths(body []byte) (invalidThinking []cacheControlPath, 
 }
 
 // enforceCacheControlLimit
-//
 func enforceCacheControlLimit(body []byte) []byte {
 	if len(body) == 0 {
 		return body
@@ -4324,7 +4291,6 @@ func enforceCacheControlLimit(body []byte) []byte {
 }
 
 // injectAnthropicCacheControlTTL1h
-//
 func injectAnthropicCacheControlTTL1h(body []byte) []byte {
 	return forceEphemeralCacheControlTTL(body, cacheTTLTarget1h)
 }
@@ -5021,7 +4987,6 @@ func (s *GatewayService) Forward(ctx context.Context, c *gin.Context, account *A
 		}
 		return s.handleErrorResponse(ctx, resp, c, account, reqModel)
 	}
-
 
 	if !bytes.Equal(lastWireBody, body) {
 		//
@@ -5770,8 +5735,6 @@ func writeAnthropicPassthroughResponseHeaders(dst http.Header, src http.Header, 
 }
 
 // ApplyBedrockCCCompat
-//
-//
 func (s *GatewayService) ApplyBedrockCCCompat(c *gin.Context, body []byte, model string, account *Account, groupID *int64) []byte {
 	if !s.isBedrockCCCompatEnabled(c.Request.Context(), account, groupID) {
 		return body
@@ -6407,7 +6370,6 @@ func (s *GatewayService) buildUpstreamRequestAnthropicVertex(
 }
 
 // getBetaHeader
-//
 func (s *GatewayService) getBetaHeader(modelID string, clientBetaHeader string) string {
 	//
 	if clientBetaHeader != "" {
@@ -6535,18 +6497,15 @@ func mergeAnthropicBetaDropping(required []string, incoming string, drop map[str
 
 // computeFinalAnthropicBeta
 //
-//
 // anthropic-beta
 //
 // CCH ——
-//
 //
 // (value, shouldSet)：
 //   - shouldSet=false “”，“
 //     API-key + + InjectBetaForAPIKey
 //     requestNeedsBetaFeatures=false”
 //   - shouldSet=true
-//
 //
 // clientHeaders “
 // ”
@@ -6593,13 +6552,10 @@ func (s *GatewayService) computeFinalAnthropicBeta(
 
 // computeFinalCountTokensAnthropicBeta
 //
-//
 //   - OAuth mimic：requiredBetas + BetaTokenCounting
 //     （
 //   - OAuth +
 //   - OAuth +
-//
-//
 func (s *GatewayService) computeFinalCountTokensAnthropicBeta(
 	tokenType string,
 	mimicClaudeCode bool,
@@ -6871,7 +6827,6 @@ func (s *GatewayService) resolveBedrockBetaTokensForRequest(
 }
 
 // checkBetaPolicyBlockForTokens
-//
 func (s *GatewayService) checkBetaPolicyBlockForTokens(ctx context.Context, tokens []string, account *Account, model string) *BetaBlockedError {
 	if s.settingService == nil || len(tokens) == 0 {
 		return nil
@@ -7008,7 +6963,6 @@ func matchSignaturePatterns(respBody []byte, patterns []string) bool {
 }
 
 // isThinkingBlockSignatureError
-//
 func (s *GatewayService) isThinkingBlockSignatureError(respBody []byte) bool {
 	msg := strings.ToLower(strings.TrimSpace(extractUpstreamErrorMessage(respBody)))
 	if msg == "" {
@@ -8164,7 +8118,6 @@ func (s *GatewayService) handleNonStreamingResponse(ctx context.Context, resp *h
 }
 
 // replaceModelInResponseBody
-//
 func (s *GatewayService) replaceModelInResponseBody(body []byte, fromModel, toModel string) []byte {
 	if m := gjson.GetBytes(body, "model"); m.Exists() && m.Str == fromModel {
 		newBody, err := sjson.SetBytes(body, "model", toModel)
@@ -8194,7 +8147,6 @@ func (s *GatewayService) getUserGroupRateMultiplier(ctx context.Context, userID,
 }
 
 // RecordUsageInput
-//
 type RecordUsageInput struct {
 	Result             *ForwardResult
 	APIKey             *APIKey
@@ -8244,7 +8196,6 @@ type postUsageBillingParams struct {
 
 // PlatformFromAPIKey
 // apiKey
-//
 func PlatformFromAPIKey(apiKey *APIKey) string {
 	if apiKey == nil || apiKey.Group == nil {
 		return ""
@@ -8254,11 +8205,9 @@ func PlatformFromAPIKey(apiKey *APIKey) string {
 
 // QuotaPlatform ×platform
 //
-// APIKey
+// # APIKey
 //
 // ()）。
-//
-//
 func QuotaPlatform(ctx context.Context, apiKey *APIKey) string {
 	if fp, ok := ctx.Value(ctxkey.ForcePlatform).(string); ok && fp != "" {
 		return fp
@@ -8905,7 +8854,6 @@ func (s *GatewayService) calculateRecordUsageCost(
 }
 
 // resolveChannelPricing
-//
 func (s *GatewayService) resolveChannelPricing(ctx context.Context, billingModel string, apiKey *APIKey) *ResolvedPricing {
 	if s.resolver == nil || apiKey.Group == nil {
 		return nil
@@ -9134,7 +9082,6 @@ func (s *GatewayService) IsModelRestricted(ctx context.Context, groupID int64, m
 }
 
 // ResolveChannelMappingAndRestrict
-//
 func (s *GatewayService) ResolveChannelMappingAndRestrict(ctx context.Context, groupID *int64, model string) (ChannelMappingResult, bool) {
 	if s.channelService == nil {
 		return ChannelMappingResult{MappedModel: model}, false
@@ -9211,7 +9158,6 @@ func (s *GatewayService) needsUpstreamChannelRestrictionCheck(ctx context.Contex
 
 // isStickyAccountUpstreamRestricted
 // + isUpstreamModelRestrictedByChannel
-//
 func (s *GatewayService) isStickyAccountUpstreamRestricted(ctx context.Context, groupID *int64, account *Account, requestedModel string) bool {
 	if groupID == nil {
 		return false
@@ -9928,7 +9874,6 @@ func (s *GatewayService) InvalidateAvailableModelsCache(groupID *int64, platform
 }
 
 // reconcileCachedTokens
-//
 func reconcileCachedTokens(usage map[string]any) bool {
 	if usage == nil {
 		return false
@@ -9979,7 +9924,6 @@ func (s *GatewayService) initDebugGatewayBodyFile(path string) {
 }
 
 // debugLogGatewaySnapshot + body）
-//
 //
 //	SUB2API_DEBUG_GATEWAY_BODY=1                          #
 //	SUB2API_DEBUG_GATEWAY_BODY=/tmp/gateway_debug.log     #

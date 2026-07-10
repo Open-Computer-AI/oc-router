@@ -335,7 +335,6 @@ func TestAntigravityGatewayService_Forward_ModelRateLimitTriggersFailover(t *tes
 }
 
 // TestAntigravityGatewayService_ForwardGemini_ModelRateLimitTriggersFailover
-//
 func TestAntigravityGatewayService_ForwardGemini_ModelRateLimitTriggersFailover(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	writer := httptest.NewRecorder()
@@ -390,7 +389,6 @@ func TestAntigravityGatewayService_ForwardGemini_ModelRateLimitTriggersFailover(
 }
 
 // TestAntigravityGatewayService_Forward_StickySessionForceCacheBilling
-//
 func TestAntigravityGatewayService_Forward_StickySessionForceCacheBilling(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	writer := httptest.NewRecorder()
@@ -579,7 +577,6 @@ func TestAntigravityGatewayService_ForwardGemini_ClearsStickySessionOnGeminiRate
 }
 
 // TestAntigravityGatewayService_Forward_BillsWithMappedModel
-//
 func TestAntigravityGatewayService_Forward_BillsWithMappedModel(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	writer := httptest.NewRecorder()
@@ -635,7 +632,6 @@ func TestAntigravityGatewayService_Forward_BillsWithMappedModel(t *testing.T) {
 }
 
 // TestAntigravityGatewayService_ForwardGemini_BillsWithMappedModel
-//
 func TestAntigravityGatewayService_ForwardGemini_BillsWithMappedModel(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	writer := httptest.NewRecorder()
@@ -860,7 +856,6 @@ func TestAntigravityGatewayService_ForwardGemini_SignatureRetryPropagatesFailove
 }
 
 // TestStreamUpstreamResponse_UsageAndFirstToken
-//
 func TestStreamUpstreamResponse_UsageAndFirstToken(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -942,7 +937,6 @@ func TestStreamUpstreamResponse_NormalComplete(t *testing.T) {
 }
 
 // TestHandleGeminiStreamingResponse_NormalComplete
-//
 func TestHandleGeminiStreamingResponse_NormalComplete(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1029,7 +1023,6 @@ func TestHandleClaudeStreamingResponse_NormalComplete(t *testing.T) {
 }
 
 // TestHandleGeminiStreamingResponse_ThoughtsTokenCount
-//
 func TestHandleGeminiStreamingResponse_ThoughtsTokenCount(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1100,7 +1093,6 @@ func TestHandleClaudeStreamingResponse_ThoughtsTokenCount(t *testing.T) {
 // ---
 
 // TestStreamUpstreamResponse_ClientDisconnectDrainsUsage
-//
 func TestStreamUpstreamResponse_ClientDisconnectDrainsUsage(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1135,7 +1127,6 @@ func TestStreamUpstreamResponse_ClientDisconnectDrainsUsage(t *testing.T) {
 }
 
 // TestStreamUpstreamResponse_ContextCanceled
-//
 func TestStreamUpstreamResponse_ContextCanceled(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1158,7 +1149,6 @@ func TestStreamUpstreamResponse_ContextCanceled(t *testing.T) {
 }
 
 // TestStreamUpstreamResponse_Timeout
-//
 func TestStreamUpstreamResponse_Timeout(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1181,7 +1171,6 @@ func TestStreamUpstreamResponse_Timeout(t *testing.T) {
 }
 
 // TestStreamUpstreamResponse_TimeoutAfterClientDisconnect
-//
 func TestStreamUpstreamResponse_TimeoutAfterClientDisconnect(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1211,7 +1200,6 @@ func TestStreamUpstreamResponse_TimeoutAfterClientDisconnect(t *testing.T) {
 }
 
 // TestHandleGeminiStreamingResponse_ClientDisconnect
-//
 func TestHandleGeminiStreamingResponse_ClientDisconnect(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1242,7 +1230,6 @@ func TestHandleGeminiStreamingResponse_ClientDisconnect(t *testing.T) {
 }
 
 // TestHandleGeminiStreamingResponse_ContextCanceled
-//
 func TestHandleGeminiStreamingResponse_ContextCanceled(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1266,7 +1253,6 @@ func TestHandleGeminiStreamingResponse_ContextCanceled(t *testing.T) {
 }
 
 // TestHandleClaudeStreamingResponse_ClientDisconnect
-//
 func TestHandleClaudeStreamingResponse_ClientDisconnect(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1297,7 +1283,6 @@ func TestHandleClaudeStreamingResponse_ClientDisconnect(t *testing.T) {
 }
 
 // TestHandleClaudeStreamingResponse_EmptyStream
-//
 func TestHandleClaudeStreamingResponse_EmptyStream(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{
@@ -1337,7 +1322,6 @@ func TestHandleClaudeStreamingResponse_EmptyStream(t *testing.T) {
 }
 
 // TestHandleClaudeStreamingResponse_ContextCanceled
-//
 func TestHandleClaudeStreamingResponse_ContextCanceled(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	svc := newAntigravityTestService(&config.Config{

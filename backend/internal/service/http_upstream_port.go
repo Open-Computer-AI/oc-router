@@ -7,7 +7,6 @@ import (
 )
 
 // HTTPUpstream
-//
 type HTTPUpstream interface {
 	// Do
 	Do(req *http.Request, proxyURL string, accountID int64, accountConcurrency int) (*http.Response, error)

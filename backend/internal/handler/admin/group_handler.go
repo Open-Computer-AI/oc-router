@@ -115,7 +115,7 @@ type CreateGroupRequest struct {
 	MessagesDispatchModelConfig service.OpenAIMessagesDispatchModelConfig `json:"messages_dispatch_model_config"`
 	ModelsListConfig            service.GroupModelsListConfig             `json:"models_list_config"`
 	// =
-	RPMLimit int `json:"rpm_limit"`
+	RPMLimit                 int     `json:"rpm_limit"`
 	CopyAccountsFromGroupIDs []int64 `json:"copy_accounts_from_group_ids"`
 }
 
@@ -155,7 +155,7 @@ type UpdateGroupRequest struct {
 	MessagesDispatchModelConfig *service.OpenAIMessagesDispatchModelConfig `json:"messages_dispatch_model_config"`
 	ModelsListConfig            *service.GroupModelsListConfig             `json:"models_list_config"`
 	// =
-	RPMLimit *int `json:"rpm_limit"`
+	RPMLimit                 *int    `json:"rpm_limit"`
 	CopyAccountsFromGroupIDs []int64 `json:"copy_accounts_from_group_ids"`
 }
 

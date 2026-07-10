@@ -96,7 +96,6 @@ func (g *Group) HasMonthlyLimit() bool {
 }
 
 // GetImagePrice
-//
 func (g *Group) GetImagePrice(imageSize string) *float64 {
 	switch imageSize {
 	case "1K":
@@ -128,7 +127,6 @@ func IsGroupContextValid(group *Group) bool {
 }
 
 // GetRoutingAccountIDs
-//
 func (g *Group) GetRoutingAccountIDs(requestedModel string) []int64 {
 	if !g.ModelRoutingEnabled || len(g.ModelRouting) == 0 || requestedModel == "" {
 		return nil

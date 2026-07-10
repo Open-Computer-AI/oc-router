@@ -14,7 +14,6 @@ type sqlQueryer interface {
 // (err, sql.ErrNoRows)
 //
 // *sql.Tx
-//
 func scanSingleRow(ctx context.Context, q sqlQueryer, query string, args []any, dest ...any) (err error) {
 	rows, err := q.QueryContext(ctx, query, args...)
 	if err != nil {

@@ -1,7 +1,6 @@
 //go:build unit
 
 // Package testutil
-//
 package testutil
 
 import (

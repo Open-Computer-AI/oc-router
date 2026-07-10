@@ -138,7 +138,6 @@ func (s *OpenAIOAuthServiceSuite) TestRefreshToken_FormFields() {
 }
 
 // TestRefreshToken_DefaultsToOpenAIClientID
-//
 func (s *OpenAIOAuthServiceSuite) TestRefreshToken_DefaultsToOpenAIClientID() {
 	var seenClientIDs []string
 	s.setupServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

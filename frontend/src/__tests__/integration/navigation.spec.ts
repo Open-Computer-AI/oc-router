@@ -291,6 +291,7 @@ describe('Navigation Integration Tests', () => {
       try {
         await errorRouter.push('/error-page')
       } catch {
+        // Navigation is expected to reject; the assertions below verify the error was handled.
       }
 
       await flushPromises()
@@ -338,6 +339,7 @@ describe('Navigation Integration Tests', () => {
       try {
         await errorRouter.push('/chunk-error')
       } catch {
+        // Navigation is expected to reject; the assertions below verify the error was handled.
       }
 
       await flushPromises()

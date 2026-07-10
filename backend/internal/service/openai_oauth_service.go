@@ -30,7 +30,6 @@ func NewOpenAIOAuthService(proxyRepo ProxyRepository, oauthClient OpenAIOAuthCli
 }
 
 // SetPrivacyClientFactory
-//
 func (s *OpenAIOAuthService) SetPrivacyClientFactory(factory PrivacyClientFactory) {
 	s.privacyClientFactory = factory
 }
@@ -253,8 +252,6 @@ func (s *OpenAIOAuthService) RefreshTokenWithClientID(ctx context.Context, refre
 }
 
 // enrichTokenInfo
-//
-//
 func (s *OpenAIOAuthService) enrichTokenInfo(ctx context.Context, tokenInfo *OpenAITokenInfo, proxyURL string) {
 	if tokenInfo.AccessToken == "" || s.privacyClientFactory == nil {
 		return

@@ -9,13 +9,11 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-//
-//
-//   - key {uid}:{gid}:{minute}、rpm:u:{uid}:{minute}
-//   - ()（Redis
-//   - (MULTI/EXEC) +EXPIRE，
-//   - TTL：120s，+
-//   -
+// - key {uid}:{gid}:{minute}、rpm:u:{uid}:{minute}
+// - ()（Redis
+// - (MULTI/EXEC) +EXPIRE，
+// - TTL：120s，+
+// -
 const (
 	userGroupRPMKeyPrefix = "rpm:ug:"
 	userRPMKeyPrefix      = "rpm:u:"

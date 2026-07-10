@@ -40,8 +40,8 @@ var (
 )
 
 const (
-	apiKeyMaxErrorsPerHour = 20
-	apiKeyLastUsedMinTouch = 30 * time.Second
+	apiKeyMaxErrorsPerHour    = 20
+	apiKeyLastUsedMinTouch    = 30 * time.Second
 	apiKeyLastUsedFailBackoff = 5 * time.Second
 )
 
@@ -311,7 +311,6 @@ func (s *APIKeyService) incrementAPIKeyErrorCount(ctx context.Context, userID in
 }
 
 // canUserBindGroup
-//
 func (s *APIKeyService) canUserBindGroup(ctx context.Context, user *User, group *Group) bool {
 	if group.IsSubscriptionType() {
 		_, err := s.userSubRepo.GetActiveByUserIDAndGroupID(ctx, user.ID, group.ID)

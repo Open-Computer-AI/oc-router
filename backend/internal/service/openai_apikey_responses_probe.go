@@ -49,12 +49,10 @@ func openaiResponsesProbePayload(modelID string) []byte {
 //
 // =openai && type=apikey
 //
-//
 //   - →
 //   - →
 //   - →
 //     （""
-//
 //
 // ——
 func (s *AccountTestService) ProbeOpenAIAPIKeyResponsesSupport(ctx context.Context, accountID int64) {
@@ -130,11 +128,6 @@ func (s *AccountTestService) ProbeOpenAIAPIKeyResponsesSupport(ctx context.Conte
 }
 
 // isResponsesEndpointSupportedByStatus
-//
-//
-//
-//
-//
 //
 // ""，""。
 //

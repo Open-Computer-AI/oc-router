@@ -38,7 +38,6 @@ const (
 	UMQModeThrottle = "throttle"
 )
 
-//
 const (
 	// ConnectionPoolIsolationProxy:
 	ConnectionPoolIsolationProxy = "proxy"
@@ -50,7 +49,6 @@ const (
 
 // DefaultUpstreamResponseReadMaxBytes
 // 128 MB %，
-//
 const DefaultUpstreamResponseReadMaxBytes int64 = 128 * 1024 * 1024
 
 type Config struct {
@@ -511,23 +509,23 @@ func normalizeWeChatConnectConfig(cfg *WeChatConnectConfig) {
 
 // TokenRefreshConfig OAuth token
 type TokenRefreshConfig struct {
-	Enabled bool `mapstructure:"enabled"`
-	CheckIntervalMinutes int `mapstructure:"check_interval_minutes"`
+	Enabled              bool `mapstructure:"enabled"`
+	CheckIntervalMinutes int  `mapstructure:"check_interval_minutes"`
 	//
 	RefreshBeforeExpiryHours float64 `mapstructure:"refresh_before_expiry_hours"`
-	MaxRetries int `mapstructure:"max_retries"`
-	RetryBackoffSeconds int `mapstructure:"retry_backoff_seconds"`
+	MaxRetries               int     `mapstructure:"max_retries"`
+	RetryBackoffSeconds      int     `mapstructure:"retry_backoff_seconds"`
 }
 
 type PricingConfig struct {
 	//
 	RemoteURL string `mapstructure:"remote_url"`
 	//
-	HashURL string `mapstructure:"hash_url"`
-	DataDir string `mapstructure:"data_dir"`
-	FallbackFile string `mapstructure:"fallback_file"`
-	UpdateIntervalHours int `mapstructure:"update_interval_hours"`
-	HashCheckIntervalMinutes int `mapstructure:"hash_check_interval_minutes"`
+	HashURL                  string `mapstructure:"hash_url"`
+	DataDir                  string `mapstructure:"data_dir"`
+	FallbackFile             string `mapstructure:"fallback_file"`
+	UpdateIntervalHours      int    `mapstructure:"update_interval_hours"`
+	HashCheckIntervalMinutes int    `mapstructure:"hash_check_interval_minutes"`
 }
 
 type ServerConfig struct {
@@ -669,9 +667,9 @@ type GatewayConfig struct {
 	ResponseHeaderTimeout int `mapstructure:"response_header_timeout"`
 	// OpenAIResponseHeaderTimeout: OpenAI/Codex
 	// OpenAI/Codex
-	OpenAIResponseHeaderTimeout int `mapstructure:"openai_response_header_timeout"`
-	MaxBodySize int64 `mapstructure:"max_body_size"`
-	UpstreamResponseReadMaxBytes int64 `mapstructure:"upstream_response_read_max_bytes"`
+	OpenAIResponseHeaderTimeout    int   `mapstructure:"openai_response_header_timeout"`
+	MaxBodySize                    int64 `mapstructure:"max_body_size"`
+	UpstreamResponseReadMaxBytes   int64 `mapstructure:"upstream_response_read_max_bytes"`
 	ProxyProbeResponseReadMaxBytes int64 `mapstructure:"proxy_probe_response_read_max_bytes"`
 	// Gemini
 	GeminiDebugResponseHeaders bool `mapstructure:"gemini_debug_response_headers"`
@@ -734,8 +732,8 @@ type GatewayConfig struct {
 	// MaxLineSize:
 	MaxLineSize int `mapstructure:"max_line_size"`
 
-	LogUpstreamErrorBody bool `mapstructure:"log_upstream_error_body"`
-	LogUpstreamErrorBodyMaxBytes int `mapstructure:"log_upstream_error_body_max_bytes"`
+	LogUpstreamErrorBody         bool `mapstructure:"log_upstream_error_body"`
+	LogUpstreamErrorBodyMaxBytes int  `mapstructure:"log_upstream_error_body_max_bytes"`
 
 	// API-key
 	InjectBetaForAPIKey bool `mapstructure:"inject_beta_for_apikey"`
@@ -770,7 +768,6 @@ type GatewayConfig struct {
 }
 
 // GatewayOpenAIHTTP2Config OpenAI HTTP
-//
 type GatewayOpenAIHTTP2Config struct {
 	// Enabled:
 	Enabled bool `mapstructure:"enabled"`
@@ -785,7 +782,6 @@ type GatewayOpenAIHTTP2Config struct {
 }
 
 // UserMessageQueueConfig
-//
 type UserMessageQueueConfig struct {
 	// Mode:
 	// "serialize" = + RPM
@@ -827,7 +823,6 @@ func (c *UserMessageQueueConfig) GetEffectiveMode() string {
 }
 
 // GatewayOpenAIWSConfig OpenAI Responses WebSocket
-//
 type GatewayOpenAIWSConfig struct {
 	// ModeRouterV2Enabled:
 	ModeRouterV2Enabled bool `mapstructure:"mode_router_v2_enabled"`
@@ -1022,13 +1017,13 @@ type GatewaySchedulingConfig struct {
 	LoadBatchEnabled    bool `mapstructure:"load_batch_enabled"`
 	LoadBatchCacheTTLMS int  `mapstructure:"load_batch_cache_ttl_ms"`
 	//
-	SnapshotMGetChunkSize int `mapstructure:"snapshot_mget_chunk_size"`
+	SnapshotMGetChunkSize  int `mapstructure:"snapshot_mget_chunk_size"`
 	SnapshotWriteChunkSize int `mapstructure:"snapshot_write_chunk_size"`
 
 	SlotCleanupInterval time.Duration `mapstructure:"slot_cleanup_interval"`
 
-	DbFallbackEnabled bool `mapstructure:"db_fallback_enabled"`
-	DbFallbackTimeoutSeconds int `mapstructure:"db_fallback_timeout_seconds"`
+	DbFallbackEnabled        bool `mapstructure:"db_fallback_enabled"`
+	DbFallbackTimeoutSeconds int  `mapstructure:"db_fallback_timeout_seconds"`
 	//
 	DbFallbackMaxQPS int `mapstructure:"db_fallback_max_qps"`
 
@@ -1307,8 +1302,6 @@ func Load() (*Config, error) {
 }
 
 // LoadForBootstrap
-//
-//
 func LoadForBootstrap() (*Config, error) {
 	return load(true)
 }

@@ -418,7 +418,6 @@ func TestGatewayService_AnthropicAPIKeyPassthrough_ModelMappingEdgeCases(t *test
 }
 
 // TestGatewayService_AnthropicAPIKeyPassthrough_ModelMappingPreservesOtherFields
-//
 func TestGatewayService_AnthropicAPIKeyPassthrough_ModelMappingPreservesOtherFields(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 

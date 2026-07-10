@@ -30,8 +30,6 @@ import (
 //   - ——
 //   - 400 "unknown parameter"（——
 //
-//
-//
 // pensieve/short-term/maxims/dont-reuse-shared-headers-whitelist-across-different-upstream-trust-domains
 var openaiCCRawAllowedHeaders = map[string]bool{
 	"accept-language": true,
@@ -43,18 +41,12 @@ var openaiCCRawAllowedHeaders = map[string]bool{
 //
 // =openai && account.type=apikey &&
 //
-//
-//
-//
-//   -
-//   -
-//   -
-//   -
-//   -
-//   -
-//
-//
-//
+//	-
+//	-
+//	-
+//	-
+//	-
+//	-
 func (s *OpenAIGatewayService) forwardAsRawChatCompletions(
 	ctx context.Context,
 	c *gin.Context,
@@ -227,7 +219,6 @@ func (s *OpenAIGatewayService) forwardAsRawChatCompletions(
 // [DONE]
 //
 // usage =true
-//
 func (s *OpenAIGatewayService) streamRawChatCompletions(
 	c *gin.Context,
 	resp *http.Response,
@@ -478,9 +469,7 @@ func (s *OpenAIGatewayService) bufferRawChatCompletions(
 //   - base
 //   - base
 //   - base
-//   -
-//
-//
+//     -
 func buildOpenAIChatCompletionsURL(base string) string {
 	return buildOpenAIEndpointURL(base, "/v1/chat/completions")
 }

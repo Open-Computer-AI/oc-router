@@ -4,7 +4,6 @@ import "context"
 
 // UserRPMCache
 //
-//
 //   - RPMCache    —— {accountID}:{min}）。
 //   - UserRPMCache —— () ""
 //     key {userID}:{groupID}:{min} {userID}:{min}。

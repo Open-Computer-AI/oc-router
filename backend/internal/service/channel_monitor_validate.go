@@ -9,7 +9,6 @@ import (
 // *
 
 // validateProvider
-//
 func validateProvider(p string) error {
 	if !isSupportedProvider(p) {
 		return ErrChannelMonitorInvalidProvider
@@ -43,13 +42,12 @@ func validateInterval(sec int) error {
 }
 
 // validateEndpoint
+//
 //   - scheme +
-//   -
+//     -
 //
 //   - hostname
-//   -
-//
-//
+//     -
 func validateEndpoint(ep string) error {
 	ep = strings.TrimSpace(ep)
 	if ep == "" {

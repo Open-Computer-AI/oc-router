@@ -2,7 +2,6 @@ package openai
 
 import "strings"
 
-//
 // 「」、
 const (
 	// AllowedClientClaudeCode
@@ -12,8 +11,6 @@ const (
 // AllowedClientEntry
 // Originator
 // UAContains
-//
-//
 type AllowedClientEntry struct {
 	Originator string
 	UAContains []string

@@ -10,10 +10,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-//
 // {id}:{requestID}），
-//
-//
 //
 // 1.
 // 2. (1)

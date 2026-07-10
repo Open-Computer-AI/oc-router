@@ -16,7 +16,6 @@ import (
 const tokenRefreshTempUnschedDuration = 10 * time.Minute
 
 // TokenRefreshService OAuth token
-//
 type TokenRefreshService struct {
 	accountRepo      AccountRepository
 	refreshers       []TokenRefresher
@@ -250,7 +249,6 @@ func (s *TokenRefreshService) processRefresh() {
 }
 
 // listActiveAccounts
-//
 func (s *TokenRefreshService) listActiveAccounts(ctx context.Context) ([]Account, error) {
 	return s.accountRepo.ListActive(ctx)
 }
@@ -423,7 +421,6 @@ func (s *TokenRefreshService) postRefreshActions(ctx context.Context, account *A
 var errRefreshSkipped = fmt.Errorf("refresh skipped")
 
 // isNonRetryableRefreshError
-//
 func isNonRetryableRefreshError(err error) bool {
 	if err == nil {
 		return false
@@ -447,7 +444,6 @@ func isNonRetryableRefreshError(err error) bool {
 }
 
 // ensureOpenAIPrivacy
-//
 func (s *TokenRefreshService) ensureOpenAIPrivacy(ctx context.Context, account *Account) {
 	if account.Platform != PlatformOpenAI || account.Type != AccountTypeOAuth {
 		return

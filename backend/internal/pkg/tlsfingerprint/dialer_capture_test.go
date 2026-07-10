@@ -16,7 +16,6 @@ import (
 )
 
 // CapturedFingerprint
-//
 type CapturedFingerprint struct {
 	JA3Raw              string   `json:"ja3_raw"`
 	JA3Hash             string   `json:"ja3_hash"`
@@ -36,7 +35,6 @@ type CapturedFingerprint struct {
 }
 
 // TestDialerAgainstCaptureServer
-//
 //
 // TLSFINGERPRINT_CAPTURE_URL=https://localhost:8443
 //

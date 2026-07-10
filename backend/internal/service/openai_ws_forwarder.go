@@ -684,7 +684,6 @@ func dropOpenAIWSPayloadKey(payload map[string]any, key string, removed *[]strin
 }
 
 // applyOpenAIWSRetryPayloadStrategy
-//
 func applyOpenAIWSRetryPayloadStrategy(payload map[string]any, attempt int) (strategy string, removedKeys []string) {
 	if len(payload) == 0 {
 		return "empty", nil
@@ -3931,7 +3930,6 @@ func (s *OpenAIGatewayService) isOpenAIWSGeneratePrewarmEnabled() bool {
 }
 
 // performOpenAIWSGeneratePrewarm =false
-//
 func (s *OpenAIGatewayService) performOpenAIWSGeneratePrewarm(
 	ctx context.Context,
 	lease *openAIWSConnLease,

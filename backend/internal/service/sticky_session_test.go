@@ -2,7 +2,6 @@
 
 // Package service
 //
-//
 // This file contains unit tests for the shouldClearStickySession function,
 // verifying correct sticky session clearing behavior under various account states.
 package service
@@ -118,8 +117,8 @@ func TestShouldClearStickySession(t *testing.T) {
 		{
 			name: "overloaded account",
 			account: &Account{
-				Status:       StatusActive,
-				Schedulable:  true,
+				Status:        StatusActive,
+				Schedulable:   true,
 				OverloadUntil: &future,
 			},
 			requestedModel: "",

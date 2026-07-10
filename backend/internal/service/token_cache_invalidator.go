@@ -66,7 +66,6 @@ func (c *CompositeTokenCacheInvalidator) InvalidateToken(ctx context.Context, ac
 
 // CheckTokenVersion
 //
-//
 //   - latestAccount:
 //   - isStale: true
 func CheckTokenVersion(ctx context.Context, account *Account, repo AccountRepository) (latestAccount *Account, isStale bool) {

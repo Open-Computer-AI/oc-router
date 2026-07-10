@@ -38,7 +38,6 @@ type OAuthRefreshAPI struct {
 }
 
 // NewOAuthRefreshAPI
-//
 func NewOAuthRefreshAPI(accountRepo AccountRepository, tokenCache GeminiTokenCache, lockTTL ...time.Duration) *OAuthRefreshAPI {
 	ttl := defaultRefreshLockTTL
 	if len(lockTTL) > 0 && lockTTL[0] > 0 {
@@ -64,9 +63,9 @@ func (api *OAuthRefreshAPI) getLocalLock(cacheKey string) *sync.Mutex {
 
 // RefreshIfNeeded
 //
-//  2.
-//  4. ()
-//  5. +
+//	2.
+//	4. ()
+//	5. +
 func (api *OAuthRefreshAPI) RefreshIfNeeded(
 	ctx context.Context,
 	account *Account,
@@ -162,7 +161,6 @@ func isInvalidGrantError(err error) bool {
 }
 
 // tryRecoverFromRefreshRace
-//
 func (api *OAuthRefreshAPI) tryRecoverFromRefreshRace(ctx context.Context, usedAccount *Account) (*Account, bool) {
 	if api.accountRepo == nil {
 		return nil, false
@@ -197,7 +195,6 @@ func MergeCredentials(oldCreds, newCreds map[string]any) map[string]any {
 }
 
 // BuildClaudeAccountCredentials
-//
 func BuildClaudeAccountCredentials(tokenInfo *TokenInfo) map[string]any {
 	creds := map[string]any{
 		"access_token": tokenInfo.AccessToken,

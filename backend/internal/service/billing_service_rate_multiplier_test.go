@@ -9,7 +9,6 @@ import (
 )
 
 // TestCalculateCost_RateMultiplier_NegativeClampedToZero
-//
 func TestCalculateCost_RateMultiplier_NegativeClampedToZero(t *testing.T) {
 	svc := newTestBillingService()
 	tokens := UsageTokens{InputTokens: 1000, OutputTokens: 500}

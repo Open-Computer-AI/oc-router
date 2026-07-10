@@ -17,7 +17,6 @@ import (
 )
 
 // monitorHTTPClient
-//
 var monitorHTTPClient = newSSRFSafeHTTPClient(monitorRequestTimeout)
 
 // monitorPingHTTPClient
@@ -106,7 +105,6 @@ func runCheckForModel(ctx context.Context, provider, endpoint, apiKey, model str
 }
 
 // finalizeOperationalOrDegraded
-//
 func finalizeOperationalOrDegraded(res *CheckResult, latency time.Duration, latencyMs int) *CheckResult {
 	if latency >= monitorDegradedThreshold {
 		res.Status = MonitorStatusDegraded
@@ -126,7 +124,6 @@ func bodyOverrideMode(opts *CheckOptions) string {
 }
 
 // pingEndpointOrigin (scheme://host)
-//
 func pingEndpointOrigin(ctx context.Context, endpoint string) *int {
 	origin, err := extractOrigin(endpoint)
 	if err != nil || origin == "" {
@@ -148,10 +145,9 @@ func pingEndpointOrigin(ctx context.Context, endpoint string) *int {
 }
 
 // providerAdapter
-//   -
-//   -
 //
-//
+//	-
+//	-
 type providerAdapter struct {
 	buildPath    func(model string) string
 	buildBody    func(model, prompt string) ([]byte, error)
@@ -245,7 +241,6 @@ func providerAdapterFor(provider, apiMode string) (providerAdapter, string, bool
 }
 
 // isSupportedProvider
-//
 func isSupportedProvider(p string) bool {
 	_, ok := providerAdapters[p]
 	return ok
@@ -285,7 +280,6 @@ func callProvider(ctx context.Context, provider, endpoint, apiKey, model, prompt
 
 // extractOpenAIResponsesText
 // Responses
-//
 func extractOpenAIResponsesText(respBytes []byte) string {
 	if text := gjson.GetBytes(respBytes, "output_text").String(); strings.TrimSpace(text) != "" {
 		return text
@@ -326,7 +320,6 @@ func extractOpenAIResponsesText(respBytes []byte) string {
 }
 
 // mergeHeaders
-//
 func mergeHeaders(base map[string]string, opts *CheckOptions) map[string]string {
 	if opts == nil || len(opts.ExtraHeaders) == 0 {
 		return base
@@ -396,8 +389,6 @@ func buildRequestBody(adapter providerAdapter, provider, apiMode, model, prompt 
 }
 
 // bodyMergeKeyDenyList
-//
-//
 //
 //nolint:gochecknoglobals //
 var bodyMergeKeyDenyList = map[string]map[string]bool{
@@ -487,7 +478,6 @@ func postRawJSON(ctx context.Context, fullURL string, payload []byte, headers ma
 }
 
 // joinURL
-//
 func joinURL(base, path string) string {
 	base = strings.TrimRight(base, "/")
 	if !strings.HasPrefix(path, "/") {
@@ -514,7 +504,6 @@ func extractOrigin(endpoint string) (string, error) {
 var monitorSensitiveQueryParamRegex = regexp.MustCompile(`(?i)([?&](?:key|api[_-]?key|access[_-]?token|token|authorization|x-api-key)=)[^&\s"']+`)
 
 // monitorAPIKeyPatterns
-//
 var monitorAPIKeyPatterns = []struct {
 	pattern *regexp.Regexp
 	replace string
@@ -532,8 +521,6 @@ var monitorAPIKeyPatterns = []struct {
 // sanitizeErrorMessage
 //  1. URL query ?key= / ?api_key= *url.Error
 //  2. * / AIza* / JWT
-//
-//
 func sanitizeErrorMessage(msg string) string {
 	if msg == "" {
 		return msg
@@ -559,8 +546,6 @@ func truncateMessage(msg string) string {
 }
 
 // truncateForErrorBody
-//
-//
 func truncateForErrorBody(body string) string {
 	body = strings.Join(strings.Fields(body), " ")
 	if len(body) <= monitorErrorBodySnippetMaxBytes {

@@ -13,7 +13,6 @@ import (
 // Setting holds the schema definition for the Setting entity.
 //
 // Setting
-//
 type Setting struct {
 	ent.Schema
 }

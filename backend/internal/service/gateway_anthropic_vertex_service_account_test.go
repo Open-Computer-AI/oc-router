@@ -70,7 +70,6 @@ func readRequestBodyForTest(t *testing.T, req *http.Request) []byte {
 // Vertex
 // body↔beta header
 // → Vertex builder
-//
 func TestGatewayService_BuildAnthropicVertexServiceAccount_StripsContextManagementWhenBetaMissing(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	rec := httptest.NewRecorder()

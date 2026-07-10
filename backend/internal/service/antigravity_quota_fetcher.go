@@ -90,7 +90,6 @@ func (f *AntigravityQuotaFetcher) FetchQuota(ctx context.Context, account *Accou
 }
 
 // fetchSubscriptionTier
-//
 func (f *AntigravityQuotaFetcher) fetchSubscriptionTier(ctx context.Context, client *antigravity.Client, accessToken string) (raw, normalized string, loadResp *antigravity.LoadCodeAssistResponse) {
 	loadResp, _, err := client.LoadCodeAssist(ctx, accessToken)
 	if err != nil {

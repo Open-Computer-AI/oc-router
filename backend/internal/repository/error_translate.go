@@ -13,10 +13,8 @@ import (
 
 // clientFromContext
 //
-//
 // -
 // -
-//
 //
 //	func (r *someRepo) SomeMethod(ctx context.Context) error {
 //	    client := clientFromContext(ctx, r.client)
@@ -31,17 +29,13 @@ func clientFromContext(ctx context.Context, defaultClient *dbent.Client) *dbent.
 
 // translatePersistenceError
 //
-//
-//
-//
-//
 //   - err:
+//
 //   - notFound:
+//
 //   - conflict:
 //
-//
-//
-//	err := translatePersistenceError(dbErr, service.ErrUserNotFound, service.ErrEmailExists)
+//     err := translatePersistenceError(dbErr, service.ErrUserNotFound, service.ErrEmailExists)
 func translatePersistenceError(err error, notFound, conflict *infraerrors.ApplicationError) error {
 	if err == nil {
 		return nil
@@ -63,8 +57,6 @@ func translatePersistenceError(err error, notFound, conflict *infraerrors.Applic
 // isUniqueConstraintViolation
 //
 //  1. PostgreSQL
-//
-//
 func isUniqueConstraintViolation(err error) bool {
 	if err == nil {
 		return false

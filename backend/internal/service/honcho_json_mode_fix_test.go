@@ -17,7 +17,7 @@ import (
 func TestAppendRawJSON_ToolUseSeedNotPrefixed(t *testing.T) {
 	// Simulate Anthropic streaming for a tool_use block: content_block_start
 	// seeds Input="{}"; input_json_delta fragments carry the real arguments.
-	var input json.RawMessage = json.RawMessage("{}") // seed from content_block_start
+	input := json.RawMessage("{}") // seed from content_block_start
 	for _, frag := range []string{`{"qu`, `ery":"h`, `i"}`} {
 		input = appendRawJSON(input, frag)
 	}

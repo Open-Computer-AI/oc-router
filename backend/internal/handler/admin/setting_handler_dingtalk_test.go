@@ -223,7 +223,6 @@ func TestSettingsPUT_DingTalk_SyncFlags_PolicyNone_CoercedToFalse(t *testing.T) 
 
 // TestSettingsPUT_DingTalk_StaleWhitelist_CoercedToNone
 // admin =whitelist
-//
 func TestSettingsPUT_DingTalk_StaleWhitelist_CoercedToNone(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	handler, repo := newDingTalkSettingsHandler()

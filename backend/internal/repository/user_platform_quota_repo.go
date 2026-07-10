@@ -14,7 +14,6 @@ import (
 )
 
 // UserPlatformQuotaRecord
-//
 type UserPlatformQuotaRecord struct {
 	UserID             int64
 	Platform           string
@@ -36,7 +35,6 @@ var ErrUserPlatformQuotaNotFound = fmt.Errorf("user platform quota record not fo
 var ErrUserPlatformQuotaFKViolation = errors.New("user platform quota snapshot FK violation")
 
 // UserPlatformQuotaSnapshot
-//
 type UserPlatformQuotaSnapshot struct {
 	UserID             int64
 	Platform           string
@@ -79,15 +77,16 @@ func NewUserPlatformQuotaRepository(client *dbent.Client) UserPlatformQuotaRepos
 
 // BulkInsertInitial
 //
-// FK
+// # FK
 //
 // *_limit_usd IS NULL THEN EXCLUDED.*_limit_usd ELSE existing ...
-//   -
 //
-//   - ****
-//     ——
-//   -
-//   -
+//	-
+//
+//	- ****
+//	  ——
+//	-
+//	-
 func (r *userPlatformQuotaRepository) BulkInsertInitial(ctx context.Context, records []UserPlatformQuotaRecord) error {
 	if len(records) == 0 {
 		return nil
@@ -173,8 +172,6 @@ func (r *userPlatformQuotaRepository) ListByUser(ctx context.Context, userID int
 //   - **limit **
 //     ——
 //     +
-//
-//
 func (r *userPlatformQuotaRepository) IncrementUsageWithReset(ctx context.Context, userID int64, platform string, cost float64, now time.Time) error {
 	return r.withTx(ctx, func(txCtx context.Context, txClient *dbent.Client) error {
 		existing, err := txClient.UserPlatformQuota.Query().
@@ -238,8 +235,6 @@ func (r *userPlatformQuotaRepository) IncrementUsageWithReset(ctx context.Contex
 //	""
 //
 //	""
-//
-//
 func (r *userPlatformQuotaRepository) ResetExpiredWindow(ctx context.Context, userID int64, platform string, window string, newStart time.Time) error {
 	client := clientFromContext(ctx, r.client)
 	upd := client.UserPlatformQuota.Update().
@@ -292,7 +287,6 @@ func (r *userPlatformQuotaRepository) withTx(ctx context.Context, fn func(txCtx 
 }
 
 // entQuotaToRecord
-//
 func entQuotaToRecord(e *dbent.UserPlatformQuota) *UserPlatformQuotaRecord {
 	return &UserPlatformQuotaRecord{
 		UserID:             e.UserID,
@@ -330,9 +324,10 @@ func monthlyMaybeReset(prevUsage float64, prevStart *time.Time, cost float64, no
 }
 
 // UpsertForUser
-//  1.
-//  2. = NULL
-//     UPDATE
+//
+//	1.
+//	2. = NULL
+//	   UPDATE
 //
 // *_limit_usd + deleted_at + updated_at，*_usage_usd / *_window_start。
 func (r *userPlatformQuotaRepository) UpsertForUser(ctx context.Context, userID int64, records []UserPlatformQuotaRecord) error {
@@ -391,7 +386,6 @@ func softDeleteMissingPlatforms(ctx context.Context, client *dbent.Client, userI
 
 // updateLimitsRow
 //
-//
 // affected=0
 func updateLimitsRow(ctx context.Context, client *dbent.Client, userID int64, rec UserPlatformQuotaRecord, now time.Time) (int64, error) {
 	const query = `UPDATE user_platform_quotas
@@ -408,7 +402,6 @@ func updateLimitsRow(ctx context.Context, client *dbent.Client, userID int64, re
 }
 
 // insertLimitsRow
-//
 //
 // affected=0
 func insertLimitsRow(ctx context.Context, client *dbent.Client, userID int64, rec UserPlatformQuotaRecord, now time.Time) error {

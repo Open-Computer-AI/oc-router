@@ -12,7 +12,6 @@ import (
 )
 
 // resetQuotaUserSubRepoStub
-//
 type resetQuotaUserSubRepoStub struct {
 	userSubRepoNoop
 

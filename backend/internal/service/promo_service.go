@@ -49,7 +49,6 @@ func NewPromoService(
 }
 
 // ValidatePromoCode
-//
 func (s *PromoService) ValidatePromoCode(ctx context.Context, code string) (*PromoCode, error) {
 	code = strings.TrimSpace(code)
 	if code == "" {

@@ -10,7 +10,6 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-//
 const benchSlotTTLMinutes = 15
 
 var benchSlotTTL = time.Duration(benchSlotTTLMinutes) * time.Minute

@@ -71,7 +71,6 @@ func NewChannelMonitorService(repo ChannelMonitorRepository, encryptor SecretEnc
 // ---------- CRUD ----------
 
 // List +
-//
 func (s *ChannelMonitorService) List(ctx context.Context, params ChannelMonitorListParams) ([]*ChannelMonitor, int64, error) {
 	if params.Page < 1 {
 		params.Page = 1
@@ -201,8 +200,7 @@ func (s *ChannelMonitorService) Update(ctx context.Context, id int64, p ChannelM
 
 // applyAPIKeyUpdate
 //   - =false
-//   -
-//
+//     -
 func (s *ChannelMonitorService) applyAPIKeyUpdate(existing *ChannelMonitor, raw *string) (plain string, updated bool, err error) {
 	if raw == nil || strings.TrimSpace(*raw) == "" {
 		return "", false, nil
@@ -249,7 +247,6 @@ func (s *ChannelMonitorService) ListHistory(ctx context.Context, id int64, model
 // ----------
 
 // RunCheck + extra
-//
 func (s *ChannelMonitorService) RunCheck(ctx context.Context, id int64) ([]*CheckResult, error) {
 	m, err := s.Get(ctx, id) // 已解密 APIKey
 	if err != nil {
@@ -264,7 +261,6 @@ func (s *ChannelMonitorService) RunCheck(ctx context.Context, id int64) ([]*Chec
 }
 
 // persistCheckResults
-//
 func (s *ChannelMonitorService) persistCheckResults(ctx context.Context, m *ChannelMonitor, results []*CheckResult) {
 	rows := make([]*ChannelMonitorHistoryRow, 0, len(results))
 	for _, r := range results {
@@ -343,7 +339,6 @@ func (s *ChannelMonitorService) ListEnabledMonitors(ctx context.Context) ([]*Cha
 }
 
 // cleanupOldHistory
-//
 func (s *ChannelMonitorService) cleanupOldHistory(ctx context.Context) error {
 	before := time.Now().UTC().AddDate(0, 0, -monitorHistoryRetentionDays)
 	deleted, err := s.repo.DeleteHistoryBefore(ctx, before)
@@ -359,10 +354,8 @@ func (s *ChannelMonitorService) cleanupOldHistory(ctx context.Context) error {
 
 // RunDailyMaintenance
 //
-//
 //   - watermark
 //   - UpsertDailyRollupsFor
-//
 //
 // （
 func (s *ChannelMonitorService) RunDailyMaintenance(ctx context.Context) error {
@@ -385,8 +378,6 @@ func (s *ChannelMonitorService) RunDailyMaintenance(ctx context.Context) error {
 }
 
 // runDailyAggregation +1
-//
-//
 func (s *ChannelMonitorService) runDailyAggregation(ctx context.Context, today time.Time) error {
 	watermark, err := s.repo.LoadAggregationWatermark(ctx)
 	if err != nil {

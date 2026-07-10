@@ -183,9 +183,9 @@ func newTestGatewayHandler(t *testing.T, group *service.Group, accounts []*servi
 	concurrencyHelper := NewConcurrencyHelper(concurrencySvc, SSEPingFormatClaude, 0)
 
 	h := &GatewayHandler{
-		gatewayService:      gwSvc,
-		billingCacheService: billingCacheSvc,
-		concurrencyHelper:   concurrencyHelper,
+		gatewayService:           gwSvc,
+		billingCacheService:      billingCacheSvc,
+		concurrencyHelper:        concurrencyHelper,
 		maxAccountSwitches:       1,
 		maxAccountSwitchesGemini: 1,
 	}

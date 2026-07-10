@@ -194,7 +194,6 @@ func (r *ModelPricingResolver) applyRequestTierOverrides(chPricing *ChannelModel
 }
 
 // filterValidIntervals
-//
 func filterValidIntervals(intervals []PricingInterval) []PricingInterval {
 	var valid []PricingInterval
 	for _, iv := range intervals {
@@ -208,7 +207,6 @@ func filterValidIntervals(intervals []PricingInterval) []PricingInterval {
 }
 
 // GetIntervalPricing
-//
 func (r *ModelPricingResolver) GetIntervalPricing(resolved *ResolvedPricing, totalContextTokens int) *ModelPricing {
 	if len(resolved.Intervals) == 0 {
 		return resolved.BasePricing

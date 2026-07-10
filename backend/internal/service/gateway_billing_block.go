@@ -10,10 +10,6 @@ import (
 )
 
 // fingerprintSalt
-//
-//
-//
-//
 const fingerprintSalt = "59cf53e54c78"
 
 // computeClaudeCodeFingerprint
@@ -21,7 +17,6 @@ const fingerprintSalt = "59cf53e54c78"
 //  1. =user
 //  2. '0'
 //  3. SHA256(SALT + chars + cc_version)
-//
 //
 // =X.Y.Z.{fp}
 func computeClaudeCodeFingerprint(body []byte, version string) string {
@@ -73,13 +68,9 @@ func extractFirstUserText(body []byte) string {
 
 // buildBillingAttributionBlockJSON
 //
-//
-//
 //	{"type":"text","text":"x-anthropic-billing-header: cc_version=2.1.161.{fp}; cc_entrypoint=cli; cch=00000;"}
 //
 // cch=00000
-//
-//
 //
 // Claude Code prompt block
 func buildBillingAttributionBlockJSON(body []byte, cliVersion string) ([]byte, error) {

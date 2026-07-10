@@ -147,7 +147,6 @@ func (s *ErrorPassthroughService) Delete(ctx context.Context, id int64) error {
 }
 
 // MatchRule
-//
 func (s *ErrorPassthroughService) MatchRule(platform string, statusCode int, body []byte) *model.ErrorPassthroughRule {
 	rules := s.getCachedRules()
 	if len(rules) == 0 {
@@ -207,8 +206,6 @@ func (s *ErrorPassthroughService) refreshLocalCache(ctx context.Context) error {
 	return s.reloadRulesFromDB(ctx)
 }
 
-//
-//
 func (s *ErrorPassthroughService) reloadRulesFromDB(ctx context.Context) error {
 	rules, err := s.repo.List(ctx)
 	if err != nil {

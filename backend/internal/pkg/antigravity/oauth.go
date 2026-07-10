@@ -227,13 +227,11 @@ func (u *URLAvailability) IsAvailable(url string) bool {
 }
 
 // GetAvailableURLs
-//
 func (u *URLAvailability) GetAvailableURLs() []string {
 	return u.GetAvailableURLsWithBase(BaseURLs)
 }
 
 // GetAvailableURLsWithBase
-//
 func (u *URLAvailability) GetAvailableURLsWithBase(baseURLs []string) []string {
 	u.mu.RLock()
 	defer u.mu.RUnlock()

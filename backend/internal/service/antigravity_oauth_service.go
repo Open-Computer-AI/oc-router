@@ -323,7 +323,6 @@ func (s *AntigravityOAuthService) RefreshAccountToken(ctx context.Context, accou
 }
 
 // loadCodeAssistResult
-//
 type loadCodeAssistResult struct {
 	ProjectID    string
 	Subscription *AntigravitySubscriptionResult

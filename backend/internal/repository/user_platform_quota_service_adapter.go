@@ -16,7 +16,6 @@ type userPlatformQuotaServiceAdapter struct {
 }
 
 // NewUserPlatformQuotaServiceAdapter
-//
 func NewUserPlatformQuotaServiceAdapter(repo UserPlatformQuotaRepository) service.UserPlatformQuotaRepository {
 	impl, ok := repo.(*userPlatformQuotaRepository)
 	if !ok {
@@ -95,7 +94,6 @@ func (a *userPlatformQuotaServiceAdapter) ResetExpiredWindow(ctx context.Context
 }
 
 // BatchSnapshotUsage []service.UserPlatformQuotaSnapshot → []UserPlatformQuotaSnapshot，
-//
 func (a *userPlatformQuotaServiceAdapter) BatchSnapshotUsage(ctx context.Context, snapshots []service.UserPlatformQuotaSnapshot, now time.Time) error {
 	repoSnaps := make([]UserPlatformQuotaSnapshot, len(snapshots))
 	for i, s := range snapshots {
@@ -191,7 +189,6 @@ func (a *genericUserPlatformQuotaAdapter) ResetExpiredWindow(ctx context.Context
 }
 
 // BatchSnapshotUsage []service.UserPlatformQuotaSnapshot → []UserPlatformQuotaSnapshot（
-//
 func (a *genericUserPlatformQuotaAdapter) BatchSnapshotUsage(ctx context.Context, snapshots []service.UserPlatformQuotaSnapshot, now time.Time) error {
 	repoSnaps := make([]UserPlatformQuotaSnapshot, len(snapshots))
 	for i, s := range snapshots {

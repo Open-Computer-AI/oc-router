@@ -7,7 +7,6 @@ import (
 )
 
 // SubscriptionMaintenanceQueue "+ "
-//
 type SubscriptionMaintenanceQueue struct {
 	queue  chan func()
 	wg     sync.WaitGroup
@@ -49,8 +48,6 @@ func NewSubscriptionMaintenanceQueue(workerCount, queueSize int) *SubscriptionMa
 }
 
 // TryEnqueue
-//
-//
 func (q *SubscriptionMaintenanceQueue) TryEnqueue(task func()) error {
 	if q == nil {
 		return fmt.Errorf("maintenance queue is nil")

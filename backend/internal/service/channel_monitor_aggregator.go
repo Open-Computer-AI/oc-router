@@ -11,7 +11,6 @@ import (
 
 // BatchMonitorStatusSummary + 7d +1）。
 //
-//
 //   - ids:
 //   - primaryByID: monitor ID -> primary model（
 //   - extrasByID: monitor ID -> extra models
@@ -127,7 +126,6 @@ func pickLatest(rows []*ChannelMonitorLatest, model string) *ChannelMonitorLates
 }
 
 // GetUserDetail
-//
 func (s *ChannelMonitorService) GetUserDetail(ctx context.Context, id int64) (*UserMonitorDetail, error) {
 	m, err := s.repo.GetByID(ctx, id)
 	if err != nil {
@@ -191,7 +189,6 @@ func indexAvailabilityByModel(rows []*ChannelMonitorAvailability) map[string]*Ch
 }
 
 // buildStatusSummary + availability
-//
 func buildStatusSummary(
 	latestByModel map[string]*ChannelMonitorLatest,
 	availByModel map[string]*ChannelMonitorAvailability,
@@ -260,7 +257,6 @@ func buildTimelinePoints(entries []*ChannelMonitorHistoryEntry) []UserMonitorTim
 }
 
 // mergeModelDetails + availability
-//
 func mergeModelDetails(
 	m *ChannelMonitor,
 	latest []*ChannelMonitorLatest,

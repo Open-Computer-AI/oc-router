@@ -6,8 +6,6 @@ import (
 )
 
 // CleanJSONSchema
-//
-//
 func CleanJSONSchema(schema map[string]any) map[string]any {
 	if schema == nil {
 		return nil

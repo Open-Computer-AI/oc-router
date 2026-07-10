@@ -33,7 +33,6 @@ func (f *fakeIncrCache) IncrUserPlatformQuotaUsageCache(ctx context.Context, use
 }
 
 // IncrementUserPlatformQuotaUsage
-//
 func TestIncrementUserPlatformQuotaUsage_SyncCallsCache(t *testing.T) {
 	fake := &fakeIncrCache{}
 	cfg := &config.Config{}
@@ -198,7 +197,6 @@ func (f *fakeFullCache) ReaddDirtyUserPlatformQuotaKeys(_ context.Context, keys 
 }
 
 // BatchGetUserPlatformQuotaCache → nil），
-//
 func (f *fakeFullCache) BatchGetUserPlatformQuotaCache(_ context.Context, keys []UserPlatformQuotaKey) ([]*UserPlatformQuotaCacheEntry, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -524,7 +522,6 @@ func (f *fakeZeroQuotaCache) SetUserPlatformQuotaCache(_ context.Context, _ int6
 }
 
 // GetSubscriptionCache
-//
 func (f *fakeZeroQuotaCache) GetSubscriptionCache(_ context.Context, _ int64, _ int64) (*SubscriptionCacheData, error) {
 	return &SubscriptionCacheData{
 		Status:       SubscriptionStatusActive,
@@ -768,9 +765,9 @@ func TestHasUserPlatformQuotaLimit(t *testing.T) {
 	daily := 5.0
 
 	tests := []struct {
-		name    string
-		setup   func() *BillingCacheService
-		want    bool
+		name  string
+		setup func() *BillingCacheService
+		want  bool
 	}{
 		{
 			name: "has_limit",

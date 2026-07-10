@@ -186,8 +186,6 @@ func (p *AntigravityTokenProvider) shouldAttemptBackfill(accountID int64) bool {
 }
 
 // markTempUnschedulable
-//
-//
 func (p *AntigravityTokenProvider) markTempUnschedulable(account *Account, refreshErr error) {
 	if p.accountRepo == nil || account == nil {
 		return

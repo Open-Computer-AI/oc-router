@@ -17,28 +17,29 @@ import (
 
 // SoftDeleteMixin
 //
-//   -
-//   - ""
-//   - (ctx)
+//	  -
+//	  - ""
+//	  - (ctx)
 //
-//   -
-//   - = NOW()
+//	  -
+//	  - = NOW()
 //
 //
-//	func (User) Mixin() []ent.Mixin {
-//	    return []ent.Mixin{
-//	        mixins.SoftDeleteMixin{},
-//	    }
-//	}
+//		func (User) Mixin() []ent.Mixin {
+//		    return []ent.Mixin{
+//		        mixins.SoftDeleteMixin{},
+//		    }
+//		}
 type SoftDeleteMixin struct {
 	mixin.Schema
 }
 
 // Fields
 // deleted_at
-//   -
-//   - Optional
-//   - NULL
+//
+//	-
+//	- Optional
+//	- NULL
 func (SoftDeleteMixin) Fields() []ent.Field {
 	return []ent.Field{
 		field.Time("deleted_at").
@@ -55,8 +56,6 @@ type softDeleteKey struct{}
 
 // SkipSoftDelete
 //
-//
-//
 //	users, err := client.User.Query().All(mixins.SkipSoftDelete(ctx))
 //
 //	client.User.DeleteOneID(id).Exec(mixins.SkipSoftDelete(ctx))
@@ -65,7 +64,6 @@ func SkipSoftDelete(parent context.Context) context.Context {
 }
 
 // Interceptors
-//
 func (d SoftDeleteMixin) Interceptors() []ent.Interceptor {
 	return []ent.Interceptor{
 		intercept.TraverseFunc(func(ctx context.Context, q intercept.Query) error {

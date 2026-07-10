@@ -55,7 +55,6 @@ type Channel struct {
 }
 
 // AccountStatsPricingRule
-//
 type AccountStatsPricingRule struct {
 	ID         int64
 	ChannelID  int64
@@ -245,7 +244,6 @@ func (c *Channel) IsWebSearchEmulationEnabled(platform string) bool {
 }
 
 // IsBedrockCCCompatEnabled
-//
 func (c *Channel) IsBedrockCCCompatEnabled(platform string) bool {
 	if c == nil || c.FeaturesConfig == nil {
 		return false
@@ -275,7 +273,6 @@ func deepCopyFeaturesConfig(src map[string]any) map[string]any {
 //     =nil）
 //   - BillingModePerRequest / BillingModeImage：
 //     (1K/2K/4K )
-//
 //
 // >= 0；MaxTokens > 0 > MinTokens；
 // >= 0。
@@ -390,8 +387,6 @@ const wildcardSuffix = "*"
 //	"claude-opus-*"  → ("claude-opus-", true)
 //	"claude-opus-4"  → ("claude-opus-4", false)
 //	"*"              → ("", true)
-//
-//
 func splitWildcardSuffix(pattern string) (prefix string, isWildcard bool) {
 	if strings.HasSuffix(pattern, wildcardSuffix) {
 		return strings.TrimSuffix(pattern, wildcardSuffix), true
@@ -400,7 +395,6 @@ func splitWildcardSuffix(pattern string) (prefix string, isWildcard bool) {
 }
 
 // GetModelPricingByPlatform
-//
 func (c *Channel) GetModelPricingByPlatform(platform, model string) *ChannelModelPricing {
 	if c == nil {
 		return nil
@@ -422,10 +416,7 @@ func (c *Channel) GetModelPricingByPlatform(platform, model string) *ChannelMode
 
 // platformPricingIndex
 //
-//
-//
 // byLower
-//
 type platformPricingIndex struct {
 	byLower      map[string]*ChannelModelPricing // lowercased model name → pricing (Clone'd)
 	originalCase map[string]string               // lowercased model name → original-case model name
@@ -470,12 +461,15 @@ func buildPricingIndex(pricings []ChannelModelPricing) map[string]*platformPrici
 // ∪ pricing
 //
 //   - Pass A（mapping）：
+//
 //   - → target：= src（
 //     （mapping ""）。
 //     target
+//
 //   - "claude-3-*"）：
 //
 //   - "*" →
+//
 //   - Pass B（pricing-only）：
 //     ——= =
 //

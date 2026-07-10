@@ -1,8 +1,4 @@
 // Package proxyurl
-//
-//
-//
-//
 package proxyurl
 
 import (
@@ -22,13 +18,19 @@ var allowedSchemes = map[string]bool{
 // Parse
 //
 //   - → ("", nil, nil)，
+//
 //   - → (trimmed, *url.URL, nil)
+//
 //   - → ("", nil, error)，fail-fast
 //
 //   - TrimSpace
+//
 //   - url.Parse
+//
 //   - Host ()
+//
 //   - Scheme
+//
 //   - socks5://
 func Parse(raw string) (trimmed string, parsed *url.URL, err error) {
 	trimmed = strings.TrimSpace(raw)

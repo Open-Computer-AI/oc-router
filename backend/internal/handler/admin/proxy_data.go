@@ -175,12 +175,12 @@ func (h *ProxyHandler) ImportData(c *gin.Context) {
 					FallbackMode:   existingFallbackMode,
 					BackupProxyID:  existingBackupProxyID,
 					ExpiryWarnDays: item.ExpiryWarnDays,
-					Name:     existing.Name,
-					Protocol: existing.Protocol,
-					Host:     existing.Host,
-					Port:     existing.Port,
-					Username: existing.Username,
-					Password: existing.Password,
+					Name:           existing.Name,
+					Protocol:       existing.Protocol,
+					Host:           existing.Host,
+					Port:           existing.Port,
+					Username:       existing.Username,
+					Password:       existing.Password,
 				}
 				if _, err := h.adminService.UpdateProxy(ctx, existing.ID, updateInput); err != nil {
 					result.Errors = append(result.Errors, DataImportError{

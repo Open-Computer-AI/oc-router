@@ -68,8 +68,6 @@ const (
 )
 
 // DefaultAntigravityModelMapping
-//
-//
 var DefaultAntigravityModelMapping = map[string]string{
 	// Claude
 	"claude-fable-5":             "claude-fable-5",           // official model

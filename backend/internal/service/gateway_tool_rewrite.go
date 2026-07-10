@@ -33,7 +33,6 @@ var fakeToolNamePrefixes = []string{
 }
 
 // dynamicToolMapThreshold
-//
 const dynamicToolMapThreshold = 5
 
 // ToolNameRewrite
@@ -51,14 +50,12 @@ type ToolNameRewrite struct {
 
 // buildDynamicToolMap
 //
-//
 //   - tools ≤ dynamicToolMapThreshold
-//   -
+//     -
 //
 // Parrot `random.Random(hash(tuple(tool_names)))` + shuffle
 // Go """"
 // (strings.Join(names, "\x00"))
-//
 func buildDynamicToolMap(toolNames []string) map[string]string {
 	if len(toolNames) <= dynamicToolMapThreshold {
 		return nil
@@ -90,7 +87,6 @@ func buildDynamicToolMap(toolNames []string) map[string]string {
 }
 
 // sanitizeToolName
-//
 func sanitizeToolName(name string, dynamic map[string]string) string {
 	if dynamic != nil {
 		if fake, ok := dynamic[name]; ok {
@@ -117,8 +113,6 @@ func shouldMimicToolName(toolType string) bool {
 
 // buildToolNameRewriteFromBody [*].name，
 // +
-//
-//
 func buildToolNameRewriteFromBody(body []byte) *ToolNameRewrite {
 	tools := gjson.GetBytes(body, "tools")
 	if !tools.IsArray() {
@@ -253,8 +247,6 @@ func applyToolNameRewriteToBody(body []byte, rw *ToolNameRewrite) []byte {
 //
 //   - →
 //   - {"type":"ephemeral","ttl": claude.DefaultCacheControlTTL}
-//
-//
 func applyToolsLastCacheBreakpoint(body []byte) []byte {
 	tools := gjson.GetBytes(body, "tools")
 	if !tools.IsArray() {

@@ -460,7 +460,6 @@ func (s *OpenAIGatewayService) IsModelRestricted(ctx context.Context, groupID in
 }
 
 // ResolveChannelMappingAndRestrict
-//
 func (s *OpenAIGatewayService) ResolveChannelMappingAndRestrict(ctx context.Context, groupID *int64, model string) (ChannelMappingResult, bool) {
 	if s.channelService == nil {
 		return ChannelMappingResult{MappedModel: model}, false
@@ -938,7 +937,6 @@ func getAPIKeyIDFromContext(c *gin.Context) int64 {
 }
 
 // isolateOpenAISessionID
-//
 func isolateOpenAISessionID(apiKeyID int64, raw string) string {
 	raw = strings.TrimSpace(raw)
 	if raw == "" {
@@ -1242,8 +1240,6 @@ func (s *OpenAIGatewayService) GenerateSessionHash(c *gin.Context, body []byte) 
 }
 
 // GenerateSessionHashWithFallback
-//
-//
 func (s *OpenAIGatewayService) GenerateSessionHashWithFallback(c *gin.Context, body []byte, fallbackSeed string) string {
 	sessionHash := s.GenerateSessionHash(c, body)
 	if sessionHash != "" {
@@ -1662,7 +1658,6 @@ func (s *OpenAIGatewayService) selectAccountForModelWithExclusions(ctx context.C
 
 // tryStickySessionHit
 //
-//
 // tryStickySessionHit attempts to get account from sticky session.
 // Returns account if hit and usable; clears session and returns nil if account is unavailable.
 func (s *OpenAIGatewayService) tryStickySessionHit(ctx context.Context, groupID *int64, sessionHash, requestedModel string, excludedIDs map[int64]struct{}, requireCompact bool, stickyAccountID int64, requiredCapability OpenAIEndpointCapability) *Account {
@@ -1720,7 +1715,6 @@ func (s *OpenAIGatewayService) tryStickySessionHit(ctx context.Context, groupID 
 }
 
 // selectBestAccount + LRU）。
-//
 //
 // selectBestAccount selects the best account from candidates (priority + LRU).
 // Returns nil if no available account. The second return reports whether at
@@ -4204,9 +4198,6 @@ func (s *OpenAIGatewayService) buildUpstreamRequest(ctx context.Context, c *gin.
 }
 
 // overrideBrowserUserAgent
-//
-//
-//
 func (s *OpenAIGatewayService) overrideBrowserUserAgent(ctx context.Context, account *Account, req *http.Request) {
 	if req == nil || account == nil {
 		return
@@ -6608,11 +6599,13 @@ func (e *OpenAIFastBlockedError) Error() string { return e.Message }
 // (BetaPolicyActionPass, "") so callers can short-circuit safely.
 //
 // Matching rules:
+//
 //   - Scope filters by account type (all / oauth / apikey / bedrock)
+//
 //   - ServiceTier must be empty (= any), "all", or equal the normalized tier
+//
 //   - ModelWhitelist narrows the rule to specific models; FallbackAction
 //     handles the non-matching case (default: pass)
-//
 //
 //   - BetaPolicy
 //
@@ -6672,17 +6665,14 @@ func evaluateOpenAIFastPolicyWithSettings(settings *OpenAIFastPolicySettings, ac
 
 // openAIFastPolicyCtxKey
 //
-//
 // Trade-off：
 // —— """"
 // BetaPolicy
-//
 type openAIFastPolicyCtxKeyType struct{}
 
 var openAIFastPolicyCtxKey = openAIFastPolicyCtxKeyType{}
 
 // withOpenAIFastPolicyContext
-//
 func withOpenAIFastPolicyContext(ctx context.Context, settings *OpenAIFastPolicySettings) context.Context {
 	if ctx == nil || settings == nil {
 		return ctx
@@ -6708,9 +6698,7 @@ func openAIFastPolicySettingsFromContext(ctx context.Context) *OpenAIFastPolicyS
 //
 // Rationale for normalize-on-pass: chat-completions / messages
 //
-//
 // "fast"
-//
 func (s *OpenAIGatewayService) applyOpenAIFastPolicyToBody(ctx context.Context, account *Account, model string, body []byte) ([]byte, error) {
 	if len(body) == 0 {
 		return body, nil

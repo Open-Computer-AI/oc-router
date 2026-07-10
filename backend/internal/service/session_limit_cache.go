@@ -7,10 +7,8 @@ import (
 
 // SessionLimitCache
 //
-//
 // Key {accountID}
 // (member=sessionUUID, score=timestamp)
-//
 type SessionLimitCache interface {
 	// RegisterSession
 	// -

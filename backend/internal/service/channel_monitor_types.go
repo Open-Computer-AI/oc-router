@@ -19,8 +19,6 @@ const (
 //
 //   - chat_completions  OpenAI-compatible Chat Completions: /v1/chat/completions + messages
 //   - responses         OpenAI Responses API: /v1/responses + instructions/input
-//
-//
 const (
 	MonitorAPIModeChatCompletions = "chat_completions"
 	MonitorAPIModeResponses       = "responses"
