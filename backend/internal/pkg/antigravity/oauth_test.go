@@ -332,7 +332,7 @@ func TestSessionStore_SetAndGet(t *testing.T) {
 	}
 }
 
-func TestSessionStore_Get_does not exist(t *testing.T) {
+func TestSessionStore_Get_does_not_exist(t *testing.T) {
 	store := NewSessionStore()
 	defer store.Stop()
 
@@ -377,7 +377,7 @@ func TestSessionStore_Delete(t *testing.T) {
 	}
 }
 
-func TestSessionStore_Delete_does not exist(t *testing.T) {
+func TestSessionStore_Delete_does_not_exist(t *testing.T) {
 	store := NewSessionStore()
 	defer store.Stop()
 

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestParse_empty stringdirect connect(t *testing.T) {
+func TestParse_empty_stringdirect_connect(t *testing.T) {
 	trimmed, parsed, err := Parse("")
 	if err != nil {
 		t.Fatalf("empty stringshould use direct connection: %v", err)
@@ -18,7 +18,7 @@ func TestParse_empty stringdirect connect(t *testing.T) {
 	}
 }
 
-func TestParse_whitespace stringdirect connect(t *testing.T) {
+func TestParse_whitespace_stringdirect_connect(t *testing.T) {
 	trimmed, parsed, err := Parse("   ")
 	if err != nil {
 		t.Fatalf("whitespace string should use direct connection: %v", err)
@@ -31,7 +31,7 @@ func TestParse_whitespace stringdirect connect(t *testing.T) {
 	}
 }
 
-func TestParse_valid HTTP proxy(t *testing.T) {
+func TestParse_valid_HTTP_proxy(t *testing.T) {
 	trimmed, parsed, err := Parse("http://proxy.example.com:8080")
 	if err != nil {
 		t.Fatalf("valid HTTP proxy should succeed: %v", err)
@@ -47,7 +47,7 @@ func TestParse_valid HTTP proxy(t *testing.T) {
 	}
 }
 
-func TestParse_valid HTTPS proxy(t *testing.T) {
+func TestParse_valid_HTTPS_proxy(t *testing.T) {
 	_, parsed, err := Parse("https://proxy.example.com:443")
 	if err != nil {
 		t.Fatalf("valid HTTPS proxy should succeed: %v", err)
@@ -57,7 +57,7 @@ func TestParse_valid HTTPS proxy(t *testing.T) {
 	}
 }
 
-func TestParse_valid SOCKS5 proxy auto-upgraded to SOCKS5H(t *testing.T) {
+func TestParse_valid_SOCKS5_proxy_auto_upgraded_to_SOCKS5H(t *testing.T) {
 	trimmed, parsed, err := Parse("socks5://127.0.0.1:1080")
 	if err != nil {
 		t.Fatalf("valid SOCKS5 proxy should succeed: %v", err)
@@ -71,7 +71,7 @@ func TestParse_valid SOCKS5 proxy auto-upgraded to SOCKS5H(t *testing.T) {
 	}
 }
 
-func TestParse_invalid URL(t *testing.T) {
+func TestParse_invalid_URL(t *testing.T) {
 	_, _, err := Parse("://invalid")
 	if err == nil {
 		t.Fatal("invalid URL should return error")
@@ -81,7 +81,7 @@ func TestParse_invalid URL(t *testing.T) {
 	}
 }
 
-func TestParse_missing host(t *testing.T) {
+func TestParse_missing_host(t *testing.T) {
 	_, _, err := Parse("http://")
 	if err == nil {
 		t.Fatal("missing host should return error")
@@ -91,7 +91,7 @@ func TestParse_missing host(t *testing.T) {
 	}
 }
 
-func TestParse_unsupported scheme(t *testing.T) {
+func TestParse_unsupported_scheme(t *testing.T) {
 	_, _, err := Parse("ftp://proxy.example.com:21")
 	if err == nil {
 		t.Fatal("unsupported scheme should return error")
@@ -101,7 +101,7 @@ func TestParse_unsupported scheme(t *testing.T) {
 	}
 }
 
-func TestParse_URL with password redaction(t *testing.T) {
+func TestParse_URL_with_password_redaction(t *testing.T) {
 	//
 	trimmed, parsed, err := Parse("socks5://user:secret_password@proxy.local:1080")
 	if err != nil {
@@ -133,7 +133,7 @@ func TestParse_URL with password redaction(t *testing.T) {
 	}
 }
 
-func TestParse_valid URL with whitespace(t *testing.T) {
+func TestParse_valid_URL_with_whitespace(t *testing.T) {
 	trimmed, parsed, err := Parse("  http://proxy.example.com:8080  ")
 	if err != nil {
 		t.Fatalf("valid URL with whitespace should succeed: %v", err)
@@ -146,7 +146,7 @@ func TestParse_valid URL with whitespace(t *testing.T) {
 	}
 }
 
-func TestParse_Schemecase insensitive(t *testing.T) {
+func TestParse_Schemecase_insensitive(t *testing.T) {
 	//
 	trimmed, parsed, err := Parse("SOCKS5://proxy.example.com:1080")
 	if err != nil {
@@ -166,7 +166,7 @@ func TestParse_Schemecase insensitive(t *testing.T) {
 	}
 }
 
-func TestParse_valid proxy with authentication(t *testing.T) {
+func TestParse_valid_proxy_with_authentication(t *testing.T) {
 	trimmed, parsed, err := Parse("http://user:pass@proxy.example.com:8080")
 	if err != nil {
 		t.Fatalf("proxy URL with authentication should succeed: %v", err)
@@ -179,7 +179,7 @@ func TestParse_valid proxy with authentication(t *testing.T) {
 	}
 }
 
-func TestParse_IPv6 address(t *testing.T) {
+func TestParse_IPv6_address(t *testing.T) {
 	trimmed, parsed, err := Parse("http://[::1]:8080")
 	if err != nil {
 		t.Fatalf("IPv6 proxy URL should succeed: %v", err)
@@ -192,7 +192,7 @@ func TestParse_IPv6 address(t *testing.T) {
 	}
 }
 
-func TestParse_SOCKS5H remains unchanged(t *testing.T) {
+func TestParse_SOCKS5H_remains_unchanged(t *testing.T) {
 	trimmed, parsed, err := Parse("socks5h://proxy.local:1080")
 	if err != nil {
 		t.Fatalf("valid SOCKS5H proxy should succeed: %v", err)
@@ -206,7 +206,7 @@ func TestParse_SOCKS5H remains unchanged(t *testing.T) {
 	}
 }
 
-func TestParse_bare address without scheme(t *testing.T) {
+func TestParse_bare_address_without_scheme(t *testing.T) {
 	//
 	_, _, err := Parse("proxy.example.com:8080")
 	if err == nil {

@@ -19,7 +19,7 @@ import (
 // NewAPIRequestWithURL
 // ---------------------------------------------------------------------------
 
-func TestNewAPIRequestWithURL_standard request(t *testing.T) {
+func TestNewAPIRequestWithURL_standard_request(t *testing.T) {
 	ctx := context.Background()
 	baseURL := "https://example.com"
 	action := "generateContent"
@@ -53,7 +53,7 @@ func TestNewAPIRequestWithURL_standard request(t *testing.T) {
 	}
 }
 
-func TestNewAPIRequestWithURL_streaming request(t *testing.T) {
+func TestNewAPIRequestWithURL_streaming_request(t *testing.T) {
 	ctx := context.Background()
 	baseURL := "https://example.com"
 	action := "streamGenerateContent"
@@ -71,7 +71,7 @@ func TestNewAPIRequestWithURL_streaming request(t *testing.T) {
 	}
 }
 
-func TestNewAPIRequestWithURL_empty body(t *testing.T) {
+func TestNewAPIRequestWithURL_empty_body(t *testing.T) {
 	ctx := context.Background()
 	req, err := NewAPIRequestWithURL(ctx, "https://example.com", "test", "tok", nil)
 	if err != nil {
@@ -86,7 +86,7 @@ func TestNewAPIRequestWithURL_empty body(t *testing.T) {
 // NewAPIRequest
 // ---------------------------------------------------------------------------
 
-func TestNewAPIRequest_using default URL(t *testing.T) {
+func TestNewAPIRequest_using_default_URL(t *testing.T) {
 	ctx := context.Background()
 	req, err := NewAPIRequest(ctx, "generateContent", "tok", []byte(`{}`))
 	if err != nil {
@@ -103,7 +103,7 @@ func TestNewAPIRequest_using default URL(t *testing.T) {
 // TierInfo.UnmarshalJSON
 // ---------------------------------------------------------------------------
 
-func TestTierInfo_UnmarshalJSON_string format(t *testing.T) {
+func TestTierInfo_UnmarshalJSON_string_format(t *testing.T) {
 	data := []byte(`"free-tier"`)
 	var tier TierInfo
 	if err := tier.UnmarshalJSON(data); err != nil {
@@ -117,7 +117,7 @@ func TestTierInfo_UnmarshalJSON_string format(t *testing.T) {
 	}
 }
 
-func TestTierInfo_UnmarshalJSON_object format(t *testing.T) {
+func TestTierInfo_UnmarshalJSON_object_format(t *testing.T) {
 	data := []byte(`{"id":"g1-pro-tier","name":"Pro","description":"Pro plan"}`)
 	var tier TierInfo
 	if err := tier.UnmarshalJSON(data); err != nil {
@@ -145,7 +145,7 @@ func TestTierInfo_UnmarshalJSON_null(t *testing.T) {
 	}
 }
 
-func TestTierInfo_UnmarshalJSON_empty data(t *testing.T) {
+func TestTierInfo_UnmarshalJSON_empty_data(t *testing.T) {
 	data := []byte(``)
 	var tier TierInfo
 	if err := tier.UnmarshalJSON(data); err != nil {
@@ -156,7 +156,7 @@ func TestTierInfo_UnmarshalJSON_empty data(t *testing.T) {
 	}
 }
 
-func TestTierInfo_UnmarshalJSON_whitespace-wrapped null(t *testing.T) {
+func TestTierInfo_UnmarshalJSON_whitespace_wrapped_null(t *testing.T) {
 	data := []byte(`  null  `)
 	var tier TierInfo
 	if err := tier.UnmarshalJSON(data); err != nil {
@@ -167,7 +167,7 @@ func TestTierInfo_UnmarshalJSON_whitespace-wrapped null(t *testing.T) {
 	}
 }
 
-func TestTierInfo_UnmarshalJSON_via JSON nested structure(t *testing.T) {
+func TestTierInfo_UnmarshalJSON_via_JSON_nested_structure(t *testing.T) {
 	//
 	jsonData := `{"currentTier":"free-tier","paidTier":{"id":"g1-ultra-tier","name":"Ultra"}}`
 	var resp LoadCodeAssistResponse
@@ -186,7 +186,7 @@ func TestTierInfo_UnmarshalJSON_via JSON nested structure(t *testing.T) {
 // LoadCodeAssistResponse.GetTier
 // ---------------------------------------------------------------------------
 
-func TestGetTier_PaidTier takes priority(t *testing.T) {
+func TestGetTier_PaidTier_takes_priority(t *testing.T) {
 	resp := &LoadCodeAssistResponse{
 		CurrentTier: &TierInfo{ID: "free-tier"},
 		PaidTier:    &PaidTierInfo{ID: "g1-pro-tier"},
@@ -196,7 +196,7 @@ func TestGetTier_PaidTier takes priority(t *testing.T) {
 	}
 }
 
-func TestGetTier_fallback to CurrentTier(t *testing.T) {
+func TestGetTier_fallback_to_CurrentTier(t *testing.T) {
 	resp := &LoadCodeAssistResponse{
 		CurrentTier: &TierInfo{ID: "free-tier"},
 	}
@@ -205,7 +205,7 @@ func TestGetTier_fallback to CurrentTier(t *testing.T) {
 	}
 }
 
-func TestGetTier_PaidTier with empty ID(t *testing.T) {
+func TestGetTier_PaidTier_with_empty_ID(t *testing.T) {
 	resp := &LoadCodeAssistResponse{
 		CurrentTier: &TierInfo{ID: "free-tier"},
 		PaidTier:    &PaidTierInfo{ID: ""},
@@ -242,7 +242,7 @@ func TestGetAvailableCredits(t *testing.T) {
 	}
 }
 
-func TestGetTier_both are nil(t *testing.T) {
+func TestGetTier_both_are_nil(t *testing.T) {
 	resp := &LoadCodeAssistResponse{}
 	if got := resp.GetTier(); got != "" {
 		t.Errorf("should return empty string when both are nil: got %s", got)
@@ -283,7 +283,7 @@ func mustNewClient(t *testing.T, proxyURL string) *Client {
 	return client
 }
 
-func TestNewClient_no proxy(t *testing.T) {
+func TestNewClient_no_proxy(t *testing.T) {
 	client, err := NewClient("")
 	if err != nil {
 		t.Fatalf("NewClient returned error: %v", err)
@@ -303,7 +303,7 @@ func TestNewClient_no proxy(t *testing.T) {
 	}
 }
 
-func TestNewClient_with proxy(t *testing.T) {
+func TestNewClient_with_proxy(t *testing.T) {
 	client, err := NewClient("http://proxy.example.com:8080")
 	if err != nil {
 		t.Fatalf("NewClient returned error: %v", err)
@@ -316,7 +316,7 @@ func TestNewClient_with proxy(t *testing.T) {
 	}
 }
 
-func TestNewClient_whitespace proxy(t *testing.T) {
+func TestNewClient_whitespace_proxy(t *testing.T) {
 	client, err := NewClient("   ")
 	if err != nil {
 		t.Fatalf("NewClient returned error: %v", err)
@@ -329,7 +329,7 @@ func TestNewClient_whitespace proxy(t *testing.T) {
 	}
 }
 
-func TestNewClient_invalid proxy URL(t *testing.T) {
+func TestNewClient_invalid_proxy_URL(t *testing.T) {
 	//
 	_, err := NewClient("://invalid")
 	if err == nil {
@@ -350,7 +350,7 @@ func TestIsConnectionError_nil(t *testing.T) {
 	}
 }
 
-func TestIsConnectionError_timeout error(t *testing.T) {
+func TestIsConnectionError_timeout_error(t *testing.T) {
 	//
 	err := &net.OpError{
 		Op:  "dial",
@@ -391,14 +391,14 @@ func TestIsConnectionError_urlError(t *testing.T) {
 	}
 }
 
-func TestIsConnectionError_ordinary error(t *testing.T) {
+func TestIsConnectionError_ordinary_error(t *testing.T) {
 	err := fmt.Errorf("some random error")
 	if IsConnectionError(err) {
 		t.Error("ordinary error should not be classified as connection error")
 	}
 }
 
-func TestIsConnectionError_wrapped netOpError(t *testing.T) {
+func TestIsConnectionError_wrapped_netOpError(t *testing.T) {
 	inner := &net.OpError{
 		Op:  "dial",
 		Net: "tcp",
@@ -414,14 +414,14 @@ func TestIsConnectionError_wrapped netOpError(t *testing.T) {
 // shouldFallbackToNextURL
 // ---------------------------------------------------------------------------
 
-func TestShouldFallbackToNextURL_connection error(t *testing.T) {
+func TestShouldFallbackToNextURL_connection_error(t *testing.T) {
 	err := &net.OpError{Op: "dial", Net: "tcp", Err: fmt.Errorf("refused")}
 	if !shouldFallbackToNextURL(err, 0) {
 		t.Error("connection error should trigger URL fallback")
 	}
 }
 
-func TestShouldFallbackToNextURL_status code(t *testing.T) {
+func TestShouldFallbackToNextURL_status_code(t *testing.T) {
 	tests := []struct {
 		name       string
 		statusCode int
@@ -450,7 +450,7 @@ func TestShouldFallbackToNextURL_status code(t *testing.T) {
 	}
 }
 
-func TestShouldFallbackToNextURL_no error with 200(t *testing.T) {
+func TestShouldFallbackToNextURL_no_error_with_200(t *testing.T) {
 	if shouldFallbackToNextURL(nil, http.StatusOK) {
 		t.Error("no error with 200 should not trigger URL fallback")
 	}
@@ -552,7 +552,7 @@ func TestClient_ExchangeCode_success(t *testing.T) {
 	}
 }
 
-func TestClient_ExchangeCode_no ClientSecret(t *testing.T) {
+func TestClient_ExchangeCode_no_ClientSecret(t *testing.T) {
 	old := defaultClientSecret
 	defaultClientSecret = ""
 	t.Cleanup(func() { defaultClientSecret = old })
@@ -567,7 +567,7 @@ func TestClient_ExchangeCode_no ClientSecret(t *testing.T) {
 	}
 }
 
-func TestClient_ExchangeCode_server returned error(t *testing.T) {
+func TestClient_ExchangeCode_server_returned_error(t *testing.T) {
 	old := defaultClientSecret
 	defaultClientSecret = "test-secret"
 	t.Cleanup(func() { defaultClientSecret = old })
@@ -655,7 +655,7 @@ func TestClient_RefreshToken_MockServer(t *testing.T) {
 	}
 }
 
-func TestClient_RefreshToken_no ClientSecret(t *testing.T) {
+func TestClient_RefreshToken_no_ClientSecret(t *testing.T) {
 	old := defaultClientSecret
 	defaultClientSecret = ""
 	t.Cleanup(func() { defaultClientSecret = old })
@@ -723,7 +723,7 @@ func TestClient_GetUserInfo_success(t *testing.T) {
 	}
 }
 
-func TestClient_GetUserInfo_server returned error(t *testing.T) {
+func TestClient_GetUserInfo_server_returned_error(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		_, _ = w.Write([]byte(`{"error":"invalid_token"}`))
@@ -745,7 +745,7 @@ func TestClient_GetUserInfo_server returned error(t *testing.T) {
 // TokenResponse / UserInfo JSON
 // ---------------------------------------------------------------------------
 
-func TestTokenResponse_JSON serialization(t *testing.T) {
+func TestTokenResponse_JSON_serialization(t *testing.T) {
 	jsonData := `{"access_token":"at","expires_in":3600,"token_type":"Bearer","scope":"openid","refresh_token":"rt"}`
 	var resp TokenResponse
 	if err := json.Unmarshal([]byte(jsonData), &resp); err != nil {
@@ -762,7 +762,7 @@ func TestTokenResponse_JSON serialization(t *testing.T) {
 	}
 }
 
-func TestUserInfo_JSON serialization(t *testing.T) {
+func TestUserInfo_JSON_serialization(t *testing.T) {
 	jsonData := `{"email":"a@b.com","name":"Alice"}`
 	var info UserInfo
 	if err := json.Unmarshal([]byte(jsonData), &info); err != nil {
@@ -780,7 +780,7 @@ func TestUserInfo_JSON serialization(t *testing.T) {
 // LoadCodeAssistResponse JSON
 // ---------------------------------------------------------------------------
 
-func TestLoadCodeAssistResponse_complete JSON(t *testing.T) {
+func TestLoadCodeAssistResponse_complete_JSON(t *testing.T) {
 	jsonData := `{
 		"cloudaicompanionProject": "proj-123",
 		"currentTier": "free-tier",
