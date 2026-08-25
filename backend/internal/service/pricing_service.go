@@ -35,6 +35,54 @@ var (
 		Mode:                            "chat",
 		SupportsPromptCaching:           true,
 	}
+	openAIGPT56SolFallbackPricing = &LiteLLMModelPricing{
+		InputCostPerToken:               4e-06,
+		InputCostPerTokenPriority:       8e-06,
+		OutputCostPerToken:              2e-05,
+		OutputCostPerTokenPriority:      4e-05,
+		CacheCreationInputTokenCost:     5e-06,
+		CacheReadInputTokenCost:         4e-07,
+		CacheReadInputTokenCostPriority: 8e-07,
+		LongContextInputTokenThreshold:  openAIGPT54LongContextInputThreshold,
+		LongContextInputCostMultiplier:  openAIGPT54LongContextInputMultiplier,
+		LongContextOutputCostMultiplier: openAIGPT54LongContextOutputMultiplier,
+		SupportsServiceTier:             true,
+		LiteLLMProvider:                 "openai",
+		Mode:                            "chat",
+		SupportsPromptCaching:           true,
+	}
+	openAIGPT56TerraFallbackPricing = &LiteLLMModelPricing{
+		InputCostPerToken:               2e-06,
+		InputCostPerTokenPriority:       4e-06,
+		OutputCostPerToken:              1.2e-05,
+		OutputCostPerTokenPriority:      2.4e-05,
+		CacheCreationInputTokenCost:     2.5e-06,
+		CacheReadInputTokenCost:         2e-07,
+		CacheReadInputTokenCostPriority: 4e-07,
+		LongContextInputTokenThreshold:  openAIGPT54LongContextInputThreshold,
+		LongContextInputCostMultiplier:  openAIGPT54LongContextInputMultiplier,
+		LongContextOutputCostMultiplier: openAIGPT54LongContextOutputMultiplier,
+		SupportsServiceTier:             true,
+		LiteLLMProvider:                 "openai",
+		Mode:                            "chat",
+		SupportsPromptCaching:           true,
+	}
+	openAIGPT56LunaFallbackPricing = &LiteLLMModelPricing{
+		InputCostPerToken:               2e-07,
+		InputCostPerTokenPriority:       4e-07,
+		OutputCostPerToken:              1.2e-06,
+		OutputCostPerTokenPriority:      2.4e-06,
+		CacheCreationInputTokenCost:     2.5e-07,
+		CacheReadInputTokenCost:         2e-08,
+		CacheReadInputTokenCostPriority: 4e-08,
+		LongContextInputTokenThreshold:  openAIGPT54LongContextInputThreshold,
+		LongContextInputCostMultiplier:  openAIGPT54LongContextInputMultiplier,
+		LongContextOutputCostMultiplier: openAIGPT54LongContextOutputMultiplier,
+		SupportsServiceTier:             true,
+		LiteLLMProvider:                 "openai",
+		Mode:                            "chat",
+		SupportsPromptCaching:           true,
+	}
 	openAIGPT54MiniFallbackPricing = &LiteLLMModelPricing{
 		InputCostPerToken:       7.5e-07,
 		OutputCostPerToken:      4.5e-06,
@@ -513,6 +561,9 @@ func (s *PricingService) GetModelPricing(modelName string) *LiteLLMModelPricing 
 
 	// "models/xxx"、VertexAI
 	modelLower := strings.ToLower(strings.TrimSpace(modelName))
+	if canonical := canonicalizeOpenAIModelAliasSpelling(modelLower); strings.HasPrefix(canonical, "gpt-5.6") {
+		return matchOpenAIGPT56Pricing(canonical)
+	}
 	lookupCandidates := s.buildModelLookupCandidates(modelLower)
 
 	for _, candidate := range lookupCandidates {
@@ -815,6 +866,19 @@ func (s *PricingService) matchOpenAIModel(model string) *LiteLLMModelPricing {
 	}
 
 	return nil
+}
+
+func matchOpenAIGPT56Pricing(model string) *LiteLLMModelPricing {
+	switch normalizeKnownOpenAICodexModel(model) {
+	case "gpt-5.6-sol":
+		return openAIGPT56SolFallbackPricing
+	case "gpt-5.6-terra":
+		return openAIGPT56TerraFallbackPricing
+	case "gpt-5.6-luna":
+		return openAIGPT56LunaFallbackPricing
+	default:
+		return nil
+	}
 }
 
 // generateOpenAIModelVariants

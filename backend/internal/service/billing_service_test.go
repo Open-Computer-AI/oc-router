@@ -137,6 +137,39 @@ func TestGetModelPricing_OpenAIGPT54Fallback(t *testing.T) {
 	require.InDelta(t, 1.5, pricing.LongContextOutputMultiplier, 1e-12)
 }
 
+func TestGetModelPricing_OpenAIGPT56Fallback(t *testing.T) {
+	svc := newTestBillingService()
+
+	tests := []struct {
+		model       string
+		inputPrice  float64
+		outputPrice float64
+	}{
+		{model: "gpt-5.6", inputPrice: 4e-6, outputPrice: 20e-6},
+		{model: "gpt-5.6-sol", inputPrice: 4e-6, outputPrice: 20e-6},
+		{model: "gpt-5.6-terra", inputPrice: 2e-6, outputPrice: 12e-6},
+		{model: "gpt-5.6-luna", inputPrice: 0.2e-6, outputPrice: 1.2e-6},
+	}
+	for _, tt := range tests {
+		t.Run(tt.model, func(t *testing.T) {
+			pricing, err := svc.GetModelPricing(tt.model)
+			require.NoError(t, err)
+			require.NotNil(t, pricing)
+			require.InDelta(t, tt.inputPrice, pricing.InputPricePerToken, 1e-12)
+			require.InDelta(t, tt.outputPrice, pricing.OutputPricePerToken, 1e-12)
+		})
+	}
+}
+
+func TestCalculateCost_OpenAIGPT56PriorityPricesCacheWritesAtPriorityRate(t *testing.T) {
+	svc := newTestBillingService()
+	tokens := UsageTokens{InputTokens: 10, OutputTokens: 10, CacheCreationTokens: 10, CacheReadTokens: 10}
+
+	cost, err := svc.CalculateCostWithServiceTier("gpt-5.6-luna", tokens, 1.0, "priority")
+	require.NoError(t, err)
+	require.InDelta(t, float64(tokens.CacheCreationTokens)*0.25e-6*2, cost.CacheCreationCost, 1e-12)
+}
+
 func TestGetModelPricing_OpenAICompactAliasesFallback(t *testing.T) {
 	svc := newTestBillingService()
 

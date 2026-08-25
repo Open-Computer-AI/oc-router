@@ -218,6 +218,19 @@ func TestResolveOpenAICompactForwardModel(t *testing.T) {
 
 func TestNormalizeCodexModel(t *testing.T) {
 	cases := map[string]string{
+		"gpt-5.6":                   "gpt-5.6-sol",
+		"gpt-5.6-xhigh":             "gpt-5.6-sol",
+		"gpt-5.6-max":               "gpt-5.6-sol",
+		"gpt-5.6-sol":               "gpt-5.6-sol",
+		"gpt-5.6-sol-xhigh":         "gpt-5.6-sol",
+		"gpt-5.6-terra":             "gpt-5.6-terra",
+		"gpt-5.6-terra-xhigh":       "gpt-5.6-terra",
+		"gpt-5.6-luna":              "gpt-5.6-luna",
+		"gpt-5.6-luna-xhigh":        "gpt-5.6-luna",
+		"gpt-5.6-future":            "gpt-5.6-future",
+		"gpt-5.6-solar":             "gpt-5.6-solar",
+		"gpt-5.6-terrestrial":       "gpt-5.6-terrestrial",
+		"gpt-5.6-lunatic":           "gpt-5.6-lunatic",
 		"gpt-5.3-codex-spark":       "gpt-5.3-codex-spark",
 		"gpt-5.3-codex-spark-high":  "gpt-5.3-codex-spark",
 		"gpt-5.3-codex-spark-xhigh": "gpt-5.3-codex-spark",
@@ -243,6 +256,30 @@ func TestNormalizeOpenAIModelForUpstream(t *testing.T) {
 		model   string
 		want    string
 	}{
+		{
+			name:    "oauth maps base gpt 5.6 to sol",
+			account: &Account{Type: AccountTypeOAuth},
+			model:   "gpt-5.6",
+			want:    "gpt-5.6-sol",
+		},
+		{
+			name:    "oauth preserves gpt 5.6 sol",
+			account: &Account{Type: AccountTypeOAuth},
+			model:   "gpt-5.6-sol",
+			want:    "gpt-5.6-sol",
+		},
+		{
+			name:    "oauth preserves gpt 5.6 terra",
+			account: &Account{Type: AccountTypeOAuth},
+			model:   "gpt-5.6-terra",
+			want:    "gpt-5.6-terra",
+		},
+		{
+			name:    "oauth preserves gpt 5.6 luna",
+			account: &Account{Type: AccountTypeOAuth},
+			model:   "gpt-5.6-luna",
+			want:    "gpt-5.6-luna",
+		},
 		{
 			name:    "oauth preserves unknown non codex model",
 			account: &Account{Type: AccountTypeOAuth},
@@ -278,6 +315,18 @@ func TestNormalizeOpenAIModelForUpstream(t *testing.T) {
 			account: &Account{Type: AccountTypeAPIKey},
 			model:   "gpt-4.1",
 			want:    "gpt-4.1",
+		},
+		{
+			name:    "apikey normalizes gpt 5.6 reasoning suffix",
+			account: &Account{Type: AccountTypeAPIKey},
+			model:   "gpt-5.6-luna-xhigh",
+			want:    "gpt-5.6-luna",
+		},
+		{
+			name:    "apikey preserves unknown gpt 5.6 model",
+			account: &Account{Type: AccountTypeAPIKey},
+			model:   "gpt-5.6-future",
+			want:    "gpt-5.6-future",
 		},
 	}
 

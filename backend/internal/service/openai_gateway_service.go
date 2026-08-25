@@ -2515,6 +2515,11 @@ func (s *OpenAIGatewayService) Forward(ctx context.Context, c *gin.Context, acco
 			reqModel = upstreamModel
 			markPatchSet("model", upstreamModel)
 		}
+		if strings.TrimSpace(gjson.GetBytes(body, "reasoning.effort").String()) == "" {
+			if effort := deriveOpenAIReasoningEffortFromModel(modelForNormalize); effort != "" {
+				markPatchSet("reasoning.effort", effort)
+			}
+		}
 	}
 	if strings.TrimSpace(gjson.GetBytes(body, "reasoning.effort").String()) == "minimal" {
 		markPatchSet("reasoning.effort", "none")
@@ -6284,7 +6289,14 @@ func deriveOpenAIReasoningEffortFromModel(model string) string {
 		return ""
 	}
 
-	return normalizeOpenAIReasoningEffort(parts[len(parts)-1])
+	effort := normalizeOpenAIReasoningEffort(parts[len(parts)-1])
+	if effort == "max" {
+		normalizedModel := normalizeKnownOpenAICodexModel(modelID)
+		if !strings.HasPrefix(normalizedModel, "gpt-5.6") {
+			return ""
+		}
+	}
+	return effort
 }
 
 type openAIRequestView struct {
@@ -7119,7 +7131,7 @@ func normalizeOpenAIReasoningEffort(raw string) string {
 	switch value {
 	case "none", "minimal":
 		return ""
-	case "low", "medium", "high":
+	case "low", "medium", "high", "max":
 		return value
 	case "xhigh", "extrahigh":
 		return "xhigh"

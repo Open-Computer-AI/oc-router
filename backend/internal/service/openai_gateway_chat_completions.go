@@ -72,6 +72,9 @@ func (s *OpenAIGatewayService) ForwardAsChatCompletions(
 	}
 	originalModel := chatReq.Model
 	clientStream := chatReq.Stream
+	if chatReq.ReasoningEffort == "" {
+		chatReq.ReasoningEffort = deriveOpenAIReasoningEffortFromModel(originalModel)
+	}
 
 	// 2. Resolve model mapping early so compat prompt_cache_key injection can
 	// derive a stable seed from the final upstream model family.
@@ -122,6 +125,12 @@ func (s *OpenAIGatewayService) ForwardAsChatCompletions(
 		responsesBody, normalizedServiceTier, err := normalizeResponsesBodyServiceTier(responsesBody)
 		if err != nil {
 			return nil, fmt.Errorf("normalize service_tier in responses-shape body: %w", err)
+		}
+		if gjson.GetBytes(responsesBody, "reasoning.effort").String() == "" && chatReq.ReasoningEffort != "" {
+			responsesBody, err = sjson.SetBytes(responsesBody, "reasoning.effort", chatReq.ReasoningEffort)
+			if err != nil {
+				return nil, fmt.Errorf("derive reasoning.effort from model suffix: %w", err)
+			}
 		}
 		// Minimal stub populated from the raw body so downstream billing
 		// propagation (ServiceTier, ReasoningEffort) keeps working.
