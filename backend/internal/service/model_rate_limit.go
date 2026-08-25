@@ -78,6 +78,9 @@ func (a *Account) modelRateLimitKeysForRequest(ctx context.Context, requestedMod
 			keys = append(keys, antigravityGeminiModelRateLimitKey)
 		}
 	case PlatformOpenAI:
+		if canonicalModelKey := normalizeKnownOpenAICodexModel(modelKey); strings.HasPrefix(canonicalModelKey, "gpt-5.6") && canonicalModelKey != modelKey {
+			keys = append(keys, canonicalModelKey)
+		}
 		if openAIImageGenerationRateLimitApplies(ctx, requestedModel, modelKey) && modelKey != openAIImageGenerationRateLimitKey {
 			keys = append(keys, openAIImageGenerationRateLimitKey)
 		}

@@ -1063,6 +1063,37 @@ func TestOpenAIGatewayService_SelectAccountForModelWithExclusions_ModelRateLimit
 	require.Equal(t, int64(32101), account.ID)
 }
 
+func TestOpenAIGatewayService_SelectAccountForModelWithExclusions_GPT56AliasSkipsUnsupportedAccount(t *testing.T) {
+	ctx := context.Background()
+	resetAt := time.Now().Add(30 * time.Minute).Format(time.RFC3339)
+	unsupported := Account{
+		ID:          32111,
+		Platform:    PlatformOpenAI,
+		Type:        AccountTypeOAuth,
+		Status:      StatusActive,
+		Schedulable: true,
+		Concurrency: 1,
+		Priority:    0,
+		Extra: map[string]any{
+			modelRateLimitsKey: map[string]any{
+				"gpt-5.6-sol": map[string]any{
+					"rate_limit_reset_at": resetAt,
+				},
+			},
+		},
+	}
+	supported := Account{ID: 32112, Platform: PlatformOpenAI, Type: AccountTypeOAuth, Status: StatusActive, Schedulable: true, Concurrency: 1, Priority: 5}
+	svc := &OpenAIGatewayService{
+		accountRepo: schedulerTestOpenAIAccountRepo{accounts: []Account{unsupported, supported}},
+		cfg:         &config.Config{},
+	}
+
+	account, err := svc.SelectAccountForModelWithExclusions(ctx, nil, "", "gpt-5.6", nil)
+	require.NoError(t, err)
+	require.NotNil(t, account)
+	require.Equal(t, supported.ID, account.ID)
+}
+
 func TestOpenAIGatewayService_SelectAccountWithScheduler_SessionStickyDBRuntimeRecheckSkipsStaleCachedAccount(t *testing.T) {
 	ctx := context.Background()
 	groupID := int64(10103)

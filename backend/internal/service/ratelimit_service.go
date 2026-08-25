@@ -1704,7 +1704,9 @@ func parseOpenAIImageTryAgainCooldown(body []byte) time.Duration {
 }
 
 const upstreamModelNotFoundCooldown = 30 * time.Minute
+const upstreamModelUnsupportedCooldown = 24 * time.Hour
 const upstreamModelNotFoundReason = "upstream_404_model_not_found"
+const upstreamModelUnsupportedReason = "upstream_400_model_unsupported"
 const tempUnschedBodyMaxBytes = 64 << 10
 const tempUnschedMessageMaxBytes = 2048
 
@@ -1715,15 +1717,21 @@ func (s *RateLimitService) HandleUpstreamModelNotFound(ctx context.Context, acco
 	if !account.ShouldHandleErrorCode(statusCode) {
 		return false
 	}
-	if !isUpstreamModelNotFoundError(statusCode, responseBody) {
+	if !isUpstreamModelUnavailableError(statusCode, responseBody) {
 		return false
 	}
 	modelKey := modelRateLimitKeyForUpstreamModelNotFound(ctx, account, requestedModel)
 	if modelKey == "" {
 		return false
 	}
-	resetAt := time.Now().Add(upstreamModelNotFoundCooldown)
-	if err := s.accountRepo.SetModelRateLimit(ctx, account.ID, modelKey, resetAt, upstreamModelNotFoundReason); err != nil {
+	cooldown := upstreamModelNotFoundCooldown
+	reason := upstreamModelNotFoundReason
+	if statusCode == http.StatusBadRequest {
+		cooldown = upstreamModelUnsupportedCooldown
+		reason = upstreamModelUnsupportedReason
+	}
+	resetAt := time.Now().Add(cooldown)
+	if err := s.accountRepo.SetModelRateLimit(ctx, account.ID, modelKey, resetAt, reason); err != nil {
 		slog.Warn("upstream_model_not_found_set_model_rate_limit_failed", "account_id", account.ID, "model", modelKey, "error", err)
 		return true
 	}

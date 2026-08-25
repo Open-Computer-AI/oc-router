@@ -18,6 +18,18 @@ func isUpstreamModelNotFoundError(statusCode int, body []byte) bool {
 	return containsModelNotFoundKeyword(normalized)
 }
 
+func isUpstreamModelUnavailableError(statusCode int, body []byte) bool {
+	if isUpstreamModelNotFoundError(statusCode, body) {
+		return true
+	}
+	if statusCode != http.StatusBadRequest {
+		return false
+	}
+	normalized := normalizeModelNotFoundBody(body)
+	return strings.Contains(normalized, "model") &&
+		strings.Contains(normalized, "is not supported when using codex with a chatgpt account")
+}
+
 func isModelNotFoundError(statusCode int, body []byte) bool {
 	return isUpstreamModelNotFoundError(statusCode, body) || statusCode == http.StatusNotFound
 }
