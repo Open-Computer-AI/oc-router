@@ -77,6 +77,13 @@ func (s *OpenAIGatewayService) forwardAsRawChatCompletions(
 	if upstreamModel != originalModel {
 		upstreamBody = ReplaceModelInBody(body, upstreamModel)
 	}
+	if !gjson.GetBytes(upstreamBody, "reasoning_effort").Exists() && reasoningEffort != nil {
+		var err error
+		upstreamBody, err = sjson.SetBytes(upstreamBody, "reasoning_effort", *reasoningEffort)
+		if err != nil {
+			return nil, fmt.Errorf("derive reasoning_effort from model suffix: %w", err)
+		}
+	}
 
 	// 4. Apply OpenAI fast policy on the CC body
 	updatedBody, policyErr := s.applyOpenAIFastPolicyToBody(ctx, account, upstreamModel, upstreamBody)

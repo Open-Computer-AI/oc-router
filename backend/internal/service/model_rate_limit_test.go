@@ -88,6 +88,38 @@ func TestIsModelRateLimited(t *testing.T) {
 			expected:       false,
 		},
 		{
+			name: "openai gpt-5.6 base alias uses sol capability key",
+			account: &Account{
+				Platform: PlatformOpenAI,
+				Type:     AccountTypeOAuth,
+				Extra: map[string]any{
+					modelRateLimitsKey: map[string]any{
+						"gpt-5.6-sol": map[string]any{
+							"rate_limit_reset_at": future,
+						},
+					},
+				},
+			},
+			requestedModel: "gpt-5.6",
+			expected:       true,
+		},
+		{
+			name: "openai gpt-5.6 variant effort suffix uses canonical capability key",
+			account: &Account{
+				Platform: PlatformOpenAI,
+				Type:     AccountTypeOAuth,
+				Extra: map[string]any{
+					modelRateLimitsKey: map[string]any{
+						"gpt-5.6-terra": map[string]any{
+							"rate_limit_reset_at": future,
+						},
+					},
+				},
+			},
+			requestedModel: "gpt-5.6-terra-xhigh",
+			expected:       true,
+		},
+		{
 			name:           "no rate limit - empty model",
 			account:        &Account{},
 			requestedModel: "",

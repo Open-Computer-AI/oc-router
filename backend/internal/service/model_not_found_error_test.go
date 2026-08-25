@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestIsUpstreamModelNotFoundError(t *testing.T) {
+func TestIsUpstreamModelUnavailableError(t *testing.T) {
 	tests := []struct {
 		name       string
 		statusCode int
@@ -48,12 +48,24 @@ func TestIsUpstreamModelNotFoundError(t *testing.T) {
 			body:       []byte(`{"error":{"message":"model not found"}}`),
 			want:       false,
 		},
+		{
+			name:       "400 ChatGPT account does not support model",
+			statusCode: http.StatusBadRequest,
+			body:       []byte(`{"error":{"message":"The 'gpt-5.6-sol' model is not supported when using Codex with a ChatGPT account.","type":"invalid_request_error"}}`),
+			want:       true,
+		},
+		{
+			name:       "400 unsupported parameter is not model capability",
+			statusCode: http.StatusBadRequest,
+			body:       []byte(`{"error":{"message":"Unsupported parameter: temperature","type":"invalid_request_error"}}`),
+			want:       false,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := isUpstreamModelNotFoundError(tt.statusCode, tt.body); got != tt.want {
-				t.Fatalf("isUpstreamModelNotFoundError() = %v, want %v", got, tt.want)
+			if got := isUpstreamModelUnavailableError(tt.statusCode, tt.body); got != tt.want {
+				t.Fatalf("isUpstreamModelUnavailableError() = %v, want %v", got, tt.want)
 			}
 		})
 	}

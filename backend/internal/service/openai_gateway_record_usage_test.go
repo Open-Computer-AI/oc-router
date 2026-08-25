@@ -983,6 +983,14 @@ func TestNormalizeOpenAIServiceTier(t *testing.T) {
 	})
 }
 
+func TestDeriveOpenAIReasoningEffortFromGPT56Model(t *testing.T) {
+	require.Equal(t, "xhigh", deriveOpenAIReasoningEffortFromModel("gpt-5.6-luna-xhigh"))
+	require.Equal(t, "max", deriveOpenAIReasoningEffortFromModel("gpt-5.6-sol-max"))
+	require.Empty(t, deriveOpenAIReasoningEffortFromModel("gpt-5.6-terra"))
+	require.Empty(t, deriveOpenAIReasoningEffortFromModel("gpt-5.1-codex-max"))
+	require.Empty(t, deriveOpenAIReasoningEffortFromModel("gpt-5.6-future-max"))
+}
+
 func TestExtractOpenAIServiceTier(t *testing.T) {
 	require.Equal(t, "priority", *extractOpenAIServiceTier(map[string]any{"service_tier": "fast"}))
 	require.Equal(t, "flex", *extractOpenAIServiceTier(map[string]any{"service_tier": "flex"}))

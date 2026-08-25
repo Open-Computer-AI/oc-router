@@ -65,6 +65,20 @@ func normalizeKnownOpenAICodexModel(model string) string {
 	}
 
 	switch {
+	case isGPT56VariantAlias(normalized, "gpt-5.6-sol"):
+		return "gpt-5.6-sol"
+	case isGPT56VariantAlias(normalized, "gpt-5.6-terra"):
+		return "gpt-5.6-terra"
+	case isGPT56VariantAlias(normalized, "gpt-5.6-luna"):
+		return "gpt-5.6-luna"
+	case normalized == "gpt-5.6":
+		return "gpt-5.6-sol"
+	case strings.HasPrefix(normalized, "gpt-5.6-"):
+		suffix := strings.TrimPrefix(normalized, "gpt-5.6-")
+		if suffix == "max" || isKnownCodexModelSuffix(suffix) {
+			return "gpt-5.6-sol"
+		}
+		return ""
 	case strings.Contains(normalized, "gpt-5.5"):
 		return "gpt-5.5"
 	case strings.Contains(normalized, "gpt-5.4-mini"):
@@ -88,6 +102,14 @@ func normalizeKnownOpenAICodexModel(model string) string {
 	default:
 		return ""
 	}
+}
+
+func isGPT56VariantAlias(model string, variant string) bool {
+	if model == variant {
+		return true
+	}
+	suffix, ok := strings.CutPrefix(model, variant+"-")
+	return ok && (suffix == "max" || isKnownCodexModelSuffix(suffix))
 }
 
 func appendUsageBillingModelCandidate(candidates []string, seen map[string]struct{}, model string) []string {

@@ -268,6 +268,43 @@ func (s *BillingService) initFallbackPricing() {
 	}
 	// GPT-5.5
 	s.fallbackPrices["gpt-5.5"] = s.fallbackPrices["gpt-5.4"]
+	// OpenAI GPT-5.6 official prices (USD/token). Cache writes cost 1.25x input.
+	s.fallbackPrices["gpt-5.6-sol"] = &ModelPricing{
+		InputPricePerToken:             4e-6,
+		InputPricePerTokenPriority:     8e-6,
+		OutputPricePerToken:            20e-6,
+		OutputPricePerTokenPriority:    40e-6,
+		CacheCreationPricePerToken:     5e-6,
+		CacheReadPricePerToken:         0.4e-6,
+		CacheReadPricePerTokenPriority: 0.8e-6,
+		LongContextInputThreshold:      openAIGPT54LongContextInputThreshold,
+		LongContextInputMultiplier:     openAIGPT54LongContextInputMultiplier,
+		LongContextOutputMultiplier:    openAIGPT54LongContextOutputMultiplier,
+	}
+	s.fallbackPrices["gpt-5.6-terra"] = &ModelPricing{
+		InputPricePerToken:             2e-6,
+		InputPricePerTokenPriority:     4e-6,
+		OutputPricePerToken:            12e-6,
+		OutputPricePerTokenPriority:    24e-6,
+		CacheCreationPricePerToken:     2.5e-6,
+		CacheReadPricePerToken:         0.2e-6,
+		CacheReadPricePerTokenPriority: 0.4e-6,
+		LongContextInputThreshold:      openAIGPT54LongContextInputThreshold,
+		LongContextInputMultiplier:     openAIGPT54LongContextInputMultiplier,
+		LongContextOutputMultiplier:    openAIGPT54LongContextOutputMultiplier,
+	}
+	s.fallbackPrices["gpt-5.6-luna"] = &ModelPricing{
+		InputPricePerToken:             0.2e-6,
+		InputPricePerTokenPriority:     0.4e-6,
+		OutputPricePerToken:            1.2e-6,
+		OutputPricePerTokenPriority:    2.4e-6,
+		CacheCreationPricePerToken:     0.25e-6,
+		CacheReadPricePerToken:         0.02e-6,
+		CacheReadPricePerTokenPriority: 0.04e-6,
+		LongContextInputThreshold:      openAIGPT54LongContextInputThreshold,
+		LongContextInputMultiplier:     openAIGPT54LongContextInputMultiplier,
+		LongContextOutputMultiplier:    openAIGPT54LongContextOutputMultiplier,
+	}
 
 	s.fallbackPrices["gpt-5.4-mini"] = &ModelPricing{
 		InputPricePerToken:     7.5e-7,
@@ -344,6 +381,12 @@ func (s *BillingService) getFallbackPricing(model string) *ModelPricing {
 	// OpenAI
 	if normalized := normalizeKnownOpenAICodexModel(modelLower); normalized != "" {
 		switch normalized {
+		case "gpt-5.6-sol":
+			return s.fallbackPrices["gpt-5.6-sol"]
+		case "gpt-5.6-terra":
+			return s.fallbackPrices["gpt-5.6-terra"]
+		case "gpt-5.6-luna":
+			return s.fallbackPrices["gpt-5.6-luna"]
 		case "gpt-5.5":
 			return s.fallbackPrices["gpt-5.5"]
 		case "gpt-5.4-mini":
@@ -527,6 +570,7 @@ func (s *BillingService) computeTokenBreakdown(
 	tierMultiplier := 1.0
 
 	if usePriorityServiceTierPricing(serviceTier, pricing) {
+		cacheCreationMultiplier = serviceTierCostMultiplier(serviceTier)
 		if pricing.InputPricePerTokenPriority > 0 {
 			inputPrice = pricing.InputPricePerTokenPriority
 		}
@@ -548,7 +592,7 @@ func (s *BillingService) computeTokenBreakdown(
 		cacheReadPrice *= pricing.LongContextInputMultiplier
 		//
 		// *，
-		cacheCreationMultiplier = pricing.LongContextInputMultiplier
+		cacheCreationMultiplier *= pricing.LongContextInputMultiplier
 	}
 
 	bd := &CostBreakdown{}
@@ -697,7 +741,8 @@ func isOpenAIGPT54Model(model string) bool {
 	// normalizeCodexModel *、gemini-*、gpt-4o）
 	//
 	normalized := normalizeKnownOpenAICodexModel(model)
-	return normalized == "gpt-5.4" || normalized == "gpt-5.5"
+	return normalized == "gpt-5.4" || normalized == "gpt-5.5" ||
+		normalized == "gpt-5.6-sol" || normalized == "gpt-5.6-terra" || normalized == "gpt-5.6-luna"
 }
 
 // CalculateCostWithConfig
